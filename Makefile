@@ -29,7 +29,7 @@ composer_check:
 
 .PHONY: phan
 phan:
-	@mkdir -p ./phan/${DATE}
+	@mkdir -p ./.phan/${DATE}
 	@./vendor/bin/phan --no-progress-bar --output ./.phan/${DATE}/${DATETIME}.txt
 
 .PHONY: insights

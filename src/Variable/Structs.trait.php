@@ -3,14 +3,12 @@
 declare(strict_types=1);
 
 /**
- * @copyright   Copyright 2019, CitrusFramework. All Rights Reserved.
+ * @copyright   Copyright 2020, CitrusVariables. All Rights Reserved.
  * @author      take64 <take64@citrus.tk>
  * @license     http://www.citrus.tk/
  */
 
 namespace Citrus\Variable;
-
-use Citrus\Logger;
 
 /**
  * 共通オブジェクト操作
@@ -18,12 +16,12 @@ use Citrus\Logger;
 trait Structs
 {
     /**
-     * compare object
+     * オブジェクト比較
      *
      * @param mixed $object
      * @return bool
      */
-    public function equals($object)
+    public function equals($object): bool
     {
         return ($this === $object);
     }
@@ -31,7 +29,7 @@ trait Structs
 
 
     /**
-     * obeject vars getter
+     * プロパティ取得
      *
      * @return array
      */
@@ -43,7 +41,7 @@ trait Structs
 
 
     /**
-     * obeject vars serialize getter
+     * シリアライズ
      *
      * @return string
      */
@@ -55,7 +53,7 @@ trait Structs
 
 
     /**
-     * class name getter
+     * クラス名取得
      *
      * @return string
      */
@@ -67,7 +65,7 @@ trait Structs
 
 
     /**
-     * instance clone getter method
+     * オブジェクトのクローン
      *
      * @return self
      */
@@ -79,7 +77,7 @@ trait Structs
 
 
     /**
-     * general getter method
+     * 汎用ゲッター
      *
      * @param  string $key
      * @return mixed
@@ -96,13 +94,13 @@ trait Structs
 
 
     /**
-     * general setter method
+     * 汎用セッター
      *
      * @param mixed $key
      * @param mixed $value
      * @param bool  $strict
      */
-    public function set($key, $value, bool $strict = false)
+    public function set($key, $value, bool $strict = false): void
     {
         if (true === $strict)
         {
@@ -120,16 +118,16 @@ trait Structs
 
 
     /**
-     * general adder method
+     * 汎用追加処理
      *
      * @param string $key
      * @param mixed  $value
      */
-    public function add($key, $value)
+    public function add($key, $value): void
     {
         $add = &$this->$key;
 
-        if ($add == null)
+        if (true === is_null($add))
         {
             if (true === is_array($value))
             {
@@ -151,7 +149,7 @@ trait Structs
                 array_push($add, $value);
             }
         }
-        else if (is_array($add) === false)
+        else if (false === is_array($add))
         {
             $add = [$add, $value];
         }
@@ -160,11 +158,11 @@ trait Structs
 
 
     /**
-     * general remover method
+     * 汎用削除
      *
      * @param array|string $key
      */
-    public function remove($key)
+    public function remove($key): void
     {
         if (true === is_array($key))
         {
@@ -182,20 +180,18 @@ trait Structs
 
 
     /**
-     * general remover method is empty
+     * 汎用の空情報の削除
      *
-     * @param array|string $key
+     * @param string|string[] $key
      */
-    public function removeIsEmpty($key)
+    public function removeIsEmpty($key): void
     {
         if (true === is_array($key))
         {
             foreach ($key as $one)
             {
-                if (true === empty($this->$one))
-                {
-                    unset($this->$one);
-                }
+                // 再起
+                $this->removeIsEmpty($one);
             }
         }
         else
@@ -210,11 +206,10 @@ trait Structs
 
 
     /**
-     * general bind method
+     * 汎用当て込み処理
      *
      * @param array|null $array
      * @param bool|null  $strict
-     * @return void
      */
     public function bind(?array $array = null, ?bool $strict = false): void
     {
@@ -224,11 +219,10 @@ trait Structs
 
 
     /**
-     * general bind array method
+     * 配列当て込み処理
      *
      * @param array|null $array
      * @param bool|null  $strict
-     * @return void
      */
     public function bindArray(?array $array = null, ?bool $strict = false): void
     {
@@ -245,11 +239,10 @@ trait Structs
 
 
     /**
-     * general bind object method
+     * オブジェクト当て込み処理
      *
      * @param mixed|null $object
      * @param bool|null  $strict
-     * @return void
      */
     public function bindObject($object = null, ?bool $strict = false): void
     {
@@ -269,7 +262,7 @@ trait Structs
      * @param string $context
      * @return mixed
      */
-    public function getFromContext($context)
+    public function getFromContext(string $context)
     {
         $context_list = explode('.', $context);
         $context_size = count($context_list);
@@ -305,7 +298,7 @@ trait Structs
      * @param string $context
      * @param mixed  $value
      */
-    public function setFromContext(string $context, $value)
+    public function setFromContext(string $context, $value): void
     {
         // condition.rowid -> [ 'condition', 'rowid' ]
         $context_list = explode('.', $context);
@@ -328,9 +321,8 @@ trait Structs
                 $method_name = 'call' . ucfirst($property_name);
                 $target = $object->$method_name();
             }
-            if (is_null($target) === true)
+            if (true === is_null($target))
             {
-                Logger::error('[%s]はnullのプロパティです', $property_name);
                 break;
             }
             $object = $target;
@@ -340,9 +332,11 @@ trait Structs
 
 
     /**
-     * object vars getter of not null property
+     * null以外のプロパティを取得
+     *
+     * @return array
      */
-    public function notNullProperties()
+    public function notNullProperties(): array
     {
         $properties = $this->properties();
 
