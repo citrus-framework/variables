@@ -18,11 +18,38 @@ class Strings
     /**
      * 厳密な文字列チェック(空文字 or null)
      *
-     * @param string|null $var
-     * @return bool
+     * @param string|null $value
+     * @return bool true:(空文字 or null)
      */
-    public static function isEmpty(?string $var): bool
+    public static function isEmpty(?string $value): bool
     {
-        return (true === is_null($var) or '' === $var);
+        return (true === is_null($value) or '' === $value);
+    }
+
+
+
+    /**
+     * パスの先頭文字を大文字化して返却
+     *
+     * /hoge/fuga => /Hoge/Fuga
+     *
+     * @param string $path      パス
+     * @param string $delimiter デリミタ
+     * @return string
+     */
+    public static function pathUpperFirst(string $path, string $delimiter = '/'): string
+    {
+        // デリミタで分割
+        $paths = explode($delimiter, $path);
+
+        // 先頭文字だけ大文字化
+        $results = [];
+        foreach ($paths as $row)
+        {
+            $results[] = ucfirst(strtolower($row));
+        }
+
+        // デリミタで結合
+        return implode($delimiter, $results);
     }
 }
