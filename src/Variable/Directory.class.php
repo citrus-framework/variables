@@ -74,7 +74,7 @@ class Directory
      * @param string $delimiter デリミタ
      * @return string
      */
-    public static function pathUpperFirst(string $path, string $delimiter = '/'): string
+    public static function upperFirstPath(string $path, string $delimiter = '/'): string
     {
         // デリミタで分割
         $paths = explode($delimiter, $path);
