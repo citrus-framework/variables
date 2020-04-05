@@ -30,21 +30,4 @@ class StringsTest extends TestCase
         // 0
         $this->assertfalse(Strings::isEmpty('0'));
     }
-
-
-
-    /**
-     * @test
-     */
-    public function pathUpperFirst_想定通り()
-    {
-        // 先頭スラッシュ無し
-        $this->assertSame('Hoge/Fuga', Strings::pathUpperFirst('hoge/fuga'));
-
-        // 先頭スラッシュ有り
-        $this->assertSame('/Hoge/Fuga', Strings::pathUpperFirst('/hoge/fuga'));
-
-        // 先頭以外は小文字化する
-        $this->assertSame('/Hoge/Fuga', Strings::pathUpperFirst('/HOGE/FUGA'));
-    }
 }

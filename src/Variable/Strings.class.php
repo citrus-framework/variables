@@ -25,31 +25,4 @@ class Strings
     {
         return (true === is_null($value) or '' === $value);
     }
-
-
-
-    /**
-     * パスの先頭文字を大文字化して返却
-     *
-     * /hoge/fuga => /Hoge/Fuga
-     *
-     * @param string $path      パス
-     * @param string $delimiter デリミタ
-     * @return string
-     */
-    public static function pathUpperFirst(string $path, string $delimiter = '/'): string
-    {
-        // デリミタで分割
-        $paths = explode($delimiter, $path);
-
-        // 先頭文字だけ大文字化
-        $results = [];
-        foreach ($paths as $row)
-        {
-            $results[] = ucfirst(strtolower($row));
-        }
-
-        // デリミタで結合
-        return implode($delimiter, $results);
-    }
 }
