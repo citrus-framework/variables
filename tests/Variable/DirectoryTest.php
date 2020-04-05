@@ -59,15 +59,15 @@ class DirectoryTest extends TestCase
     /**
      * @test
      */
-    public function pathUpperFirst_想定通り()
+    public function upperFirstPath_想定通り()
     {
         // 先頭スラッシュ無し
-        $this->assertSame('Hoge/Fuga', Directory::pathUpperFirst('hoge/fuga'));
+        $this->assertSame('Hoge/Fuga', Directory::upperFirstPath('hoge/fuga'));
 
         // 先頭スラッシュ有り
-        $this->assertSame('/Hoge/Fuga', Directory::pathUpperFirst('/hoge/fuga'));
+        $this->assertSame('/Hoge/Fuga', Directory::upperFirstPath('/hoge/fuga'));
 
         // 先頭以外は小文字化する
-        $this->assertSame('/Hoge/Fuga', Directory::pathUpperFirst('/HOGE/FUGA'));
+        $this->assertSame('/Hoge/Fuga', Directory::upperFirstPath('/HOGE/FUGA'));
     }
 }
