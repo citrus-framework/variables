@@ -28,11 +28,6 @@ composer_check:
 	$(call highlight,#### ---- composer diag ---- ####)
 	@composer diag
 
-.PHONY: phan
-phan:
-	@mkdir -p ./.phan/${DATE}
-	@./vendor/bin/phan --no-progress-bar --output ./.phan/${DATE}/${DATETIME}.txt
-
 .PHONY: insights
 insights:
 	@./vendor/bin/phpinsights analyse ./src
