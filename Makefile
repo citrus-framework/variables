@@ -12,6 +12,7 @@ test_all:
 .PHONY: composer_reload
 composer_reload:
 	@composer clear-cache
+	@composer update -vvv
 	@composer dump-autoload
 
 .PHONY: composer_develop
