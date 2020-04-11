@@ -14,8 +14,7 @@
     "require-dev": {
         "php": "^7.3",
         "phpunit/phpunit": "^8.4",
-        "nunomaduro/phpinsights": "^v1.13",
-        "phan/phan": "^2.6"
+        "nunomaduro/phpinsights": "^v1.13"
     },
     "autoload": {
         "psr-4": {
