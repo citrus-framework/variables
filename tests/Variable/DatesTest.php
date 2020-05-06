@@ -72,8 +72,8 @@ class DatesTest extends TestCase
      */
     public function フォーマット_タイムゾーン付き_想定どおり()
     {
-        $dt1 = Dates::now()->formatTimestamp();
-        $dt2 = Dates::now()->format('Y-m-d H:i:s');
+        $dt1 = Dates::now()->formatTimestampWithTimezone();
+        $dt2 = Dates::now()->format('Y-m-d H:i:sO');
 
         // 検算(時間文字列が一致)
         $this->assertSame($dt1, $dt2);
