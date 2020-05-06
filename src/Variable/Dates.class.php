@@ -59,4 +59,28 @@ class Dates extends DateTime
 
         return self::$NOW;
     }
+
+
+
+    /**
+     * よく使われる 2020-01-02 03:04:05 のフォーマットで返す
+     *
+     * @return string
+     */
+    public function formatTimestamp(): string
+    {
+        return $this->format('Y-m-d H:i:s');
+    }
+
+
+
+    /**
+     * よく使われる 2020-01-02 03:04:05+0900 のフォーマットで返す
+     *
+     * @return string
+     */
+    public function formatTimestampWithTimezone(): string
+    {
+        return $this->format('Y-m-d H:i:sO');
+    }
 }

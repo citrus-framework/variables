@@ -50,4 +50,32 @@ class DatesTest extends TestCase
         // 検算(時間はマイクロ秒で同じ)
         $this->assertSame($dt1->format('u'), $dt2->format('u'));
     }
+
+
+
+    /**
+     * @test
+     */
+    public function フォーマット_想定どおり()
+    {
+        $dt1 = Dates::now()->formatTimestamp();
+        $dt2 = Dates::now()->format('Y-m-d H:i:s');
+
+        // 検算(時間文字列が一致)
+        $this->assertSame($dt1, $dt2);
+    }
+
+
+
+    /**
+     * @test
+     */
+    public function フォーマット_タイムゾーン付き_想定どおり()
+    {
+        $dt1 = Dates::now()->formatTimestamp();
+        $dt2 = Dates::now()->format('Y-m-d H:i:s');
+
+        // 検算(時間文字列が一致)
+        $this->assertSame($dt1, $dt2);
+    }
 }
