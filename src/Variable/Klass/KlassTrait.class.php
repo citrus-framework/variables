@@ -13,7 +13,7 @@ namespace Citrus\Variable\Klass;
 use Citrus\Variable\FQNs;
 
 /**
- * クラストレイト
+ * klassトレイト
  */
 class KlassTrait
 {

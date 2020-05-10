@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Citrus\Variable\Klass;
 
 /**
- * クラスフォーマット
+ * klassフォーマット
  */
 class KlassFormat
 {

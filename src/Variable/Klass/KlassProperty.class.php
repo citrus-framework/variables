@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Citrus\Variable\Klass;
 
 /**
- * クラスプロパティ
+ * klassプロパティ
  */
 class KlassProperty
 {
