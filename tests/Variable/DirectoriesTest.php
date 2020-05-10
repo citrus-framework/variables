@@ -10,14 +10,14 @@ declare(strict_types=1);
 
 namespace Test\Variable;
 
-use Citrus\Variable\Directory;
+use Citrus\Variable\Directories;
 use Citrus\Variable\Strings;
 use PHPUnit\Framework\TestCase;
 
 /**
  * ディレクトリ処理のテスト
  */
-class DirectoryTest extends TestCase
+class DirectoriesTest extends TestCase
 {
     /**
      * @test
@@ -29,7 +29,7 @@ class DirectoryTest extends TestCase
         // 期待するパス
         $expected_path = '/var/www/html/public/app/src/citrus-configure.php';
         // 適切な形に変換
-        $suitable_path = Directory::suitablePath($source_path);
+        $suitable_path = Directories::suitablePath($source_path);
         // 検算
         $this->assertSame($expected_path, $suitable_path);
 
@@ -39,7 +39,7 @@ class DirectoryTest extends TestCase
         // 期待するパス
         $expected_path = '/var/www/html/public/app/src/citrus-configure.php';
         // 適切な形に変換
-        $suitable_path = Directory::suitablePath($source_path);
+        $suitable_path = Directories::suitablePath($source_path);
         // 検算
         $this->assertSame($expected_path, $suitable_path);
 
@@ -49,7 +49,7 @@ class DirectoryTest extends TestCase
         // 期待するパス
         $expected_path = '/var/www/html/public/app/src/citrus-configure.php';
         // 適切な形に変換
-        $suitable_path = Directory::suitablePath($source_path);
+        $suitable_path = Directories::suitablePath($source_path);
         // 検算
         $this->assertSame($expected_path, $suitable_path);
     }
@@ -62,12 +62,12 @@ class DirectoryTest extends TestCase
     public function upperFirstPath_想定通り()
     {
         // 先頭スラッシュ無し
-        $this->assertSame('Hoge/Fuga', Directory::upperFirstPath('hoge/fuga'));
+        $this->assertSame('Hoge/Fuga', Directories::upperFirstPath('hoge/fuga'));
 
         // 先頭スラッシュ有り
-        $this->assertSame('/Hoge/Fuga', Directory::upperFirstPath('/hoge/fuga'));
+        $this->assertSame('/Hoge/Fuga', Directories::upperFirstPath('/hoge/fuga'));
 
         // 先頭以外は小文字化する
-        $this->assertSame('/Hoge/Fuga', Directory::upperFirstPath('/HOGE/FUGA'));
+        $this->assertSame('/Hoge/Fuga', Directories::upperFirstPath('/HOGE/FUGA'));
     }
 }

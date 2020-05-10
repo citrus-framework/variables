@@ -13,7 +13,7 @@ namespace Citrus\Variable;
 /**
  * ディレクトリ処理のクラス
  */
-class Directory
+class Directories
 {
     /**
      * 引数のディレクトリ文字列を適切な形に修飾する
