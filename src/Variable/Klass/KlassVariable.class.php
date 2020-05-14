@@ -42,6 +42,11 @@ FORMAT;
 {{TYPE}}{{WITH_NULL}}
 FORMAT;
 
+    /** @var string デフォルト値フォーマット */
+    private $default_value_format = <<<FORMAT
+{{WITH_DEFAULT_VALUE}}
+FORMAT;
+
 
 
     /**
@@ -101,5 +106,40 @@ FORMAT;
 
         // 置換して返却
         return Strings::patternReplace($replace_patterns, $this->comment_type_format);
+    }
+
+
+
+    /**
+     * デフォルト値の返却
+     *
+     * @return string
+     */
+    public function toWithDefaultValueString(): string
+    {
+        // デフォルト値
+        $default_value = $this->default_value;
+        // デフォルト値がnull、且つ、変数がnullableの場合
+        if (true === is_null($this->default_value) and true === $this->nullable)
+        {
+            $default_value = 'null';
+        }
+        else
+        // デフォルト値に指定がある、且つ、型がboolの場合
+        if (false === is_null($this->default_value) and 'bool' === $this->type)
+        {
+            $default_value = (true === $this->default_value ? 'true' : 'false');
+        }
+
+        // デフォルト値の文字列がある場合は、イコールを付与
+        $with_default_value = (false === is_null($default_value) ? sprintf(' = %s', $default_value) : '');
+
+        // 置換パターン
+        $replace_patterns = [
+            '{{WITH_DEFAULT_VALUE}}' => $with_default_value,
+        ];
+
+        // 置換して返却
+        return Strings::patternReplace($replace_patterns, $this->default_value_format);
     }
 }

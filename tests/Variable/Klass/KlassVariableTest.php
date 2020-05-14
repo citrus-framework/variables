@@ -87,4 +87,40 @@ mixed
 EXPECTED;
         $this->assertSame($expected, $variable->toCommentTypeString());
     }
+
+
+
+    /**
+     * @test
+     */
+    public function toWithDefaultValueString_想定通り()
+    {
+        // パターン1
+        $variable = new KlassVariable('string', 'name', null, true);
+        $expected = <<<EXPECTED
+ = null
+EXPECTED;
+        $this->assertSame($expected, $variable->toWithDefaultValueString());
+
+        // パターン2
+        $variable = new KlassVariable('string', 'name', null, false);
+        $expected = <<<EXPECTED
+
+EXPECTED;
+        $this->assertSame($expected, $variable->toWithDefaultValueString());
+
+        // パターン3
+        $variable = new KlassVariable('bool', 'name', true, true);
+        $expected = <<<EXPECTED
+ = true
+EXPECTED;
+        $this->assertSame($expected, $variable->toWithDefaultValueString());
+
+        // パターン4
+        $variable = new KlassVariable('bool', 'name', true, false);
+        $expected = <<<EXPECTED
+ = true
+EXPECTED;
+        $this->assertSame($expected, $variable->toWithDefaultValueString());
+    }
 }
