@@ -41,7 +41,7 @@ EXPECTED;
         // パターン3
         $argument = new KlassArgument('bool', 'is_name', true);
         $expected = <<<EXPECTED
-bool \$name = true
+bool \$is_name = true
 EXPECTED;
         $this->assertSame($expected, $argument->toArgumentString(new KlassFormat()));
     }
