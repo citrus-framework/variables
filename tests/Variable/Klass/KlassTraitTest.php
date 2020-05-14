@@ -16,7 +16,7 @@ use Citrus\Variable\Klass\KlassTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * クラストレイトのテスト
+ * klassトレイトのテスト
  */
 class KlassTraitTest extends TestCase
 {
