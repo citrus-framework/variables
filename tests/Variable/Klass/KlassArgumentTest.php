@@ -22,21 +22,28 @@ class KlassArgumentTest extends TestCase
     /**
      * @test
      */
-    public function toString_想定通り()
+    public function toArgumentString_想定通り()
     {
         // パターン1
         $argument = new KlassArgument('string', 'name', null, true);
         $expected = <<<EXPECTED
-?string \$name
+?string \$name = null
 EXPECTED;
-        $this->assertSame($expected, $argument->toString(new KlassFormat()));
+        $this->assertSame($expected, $argument->toArgumentString(new KlassFormat()));
 
         // パターン2
         $argument = new KlassArgument('mixed', 'name');
         $expected = <<<EXPECTED
 \$name
 EXPECTED;
-        $this->assertSame($expected, $argument->toString(new KlassFormat()));
+        $this->assertSame($expected, $argument->toArgumentString(new KlassFormat()));
+
+        // パターン3
+        $argument = new KlassArgument('bool', 'is_name', true);
+        $expected = <<<EXPECTED
+bool \$name = true
+EXPECTED;
+        $this->assertSame($expected, $argument->toArgumentString(new KlassFormat()));
     }
 
 

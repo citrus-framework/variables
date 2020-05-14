@@ -13,52 +13,17 @@ namespace Citrus\Variable\Klass;
 /**
  * klass引数
  */
-class KlassArgument
+class KlassArgument extends KlassVariable
 {
-    /** @var string 型 */
-    private $type;
-
-    /** @var string 変数名 */
-    private $name;
-
-    /** @var mixed|null デフォルト値 */
-    private $default_value;
-
-    /** @var bool null許容 */
-    private $nullable = false;
-
-    /** @var string コメント */
-    private $comment;
-
     /** @var string 出力フォーマット */
     private $output_format = <<<FORMAT
-{{MARK_NULLABLE}}{{TYPE}}{{TYPE_SEPARATE}}\${{NAME}}{{WITH_DEFAULT_VALUE}}
+{{TYPE}}{{TYPE_SEPARATE}}\${{NAME}}{{WITH_DEFAULT_VALUE}}
 FORMAT;
 
     /** @var string 出力フォーマット */
     private $comment_format = <<<FORMAT
-{{INDENT}} * @param {{TYPE}}{{WITH_NULL}}{{ALIGNMENT_SPACE1}}\${{NAME}}{{ALIGNMENT_SPACE2}}{{COMMENT}}
+{{INDENT}} * @param {{TYPE}}{{ALIGNMENT_SPACE1}}\${{NAME}}{{ALIGNMENT_SPACE2}}{{COMMENT}}
 FORMAT;
-
-
-
-    /**
-     * constructor.
-     *
-     * @param string      $type          型
-     * @param string      $name          変数名
-     * @param mixed|null  $default_value デフォルト値
-     * @param bool|null   $nullable      true:null許可
-     * @param string|null $comment       コメント
-     */
-    public function __construct(string $type, string $name, $default_value = null, bool $nullable = false, string $comment = null)
-    {
-        $this->type = $type;
-        $this->name = $name;
-        $this->default_value = $default_value;
-        $this->nullable = $nullable;
-        $this->comment = $comment;
-    }
 
 
 
@@ -68,15 +33,10 @@ FORMAT;
      * @param KlassFormat $format フォーマット定義
      * @return string
      */
-    public function toString(KlassFormat $format): string
+    public function toArgumentString(KlassFormat $format): string
     {
-        // タイプ
-        $type = $this->type;
-        // mixedの場合、もしくは|(セパレータある場合)
-        if (false !== strpos($type, 'mixed') or false !== strpos($type, '|'))
-        {
-            $type = '';
-        }
+        // タイプ文字列
+        $type = $this->toArgumentTypeString();
 
         // タイプセパレータ
         $type_separate = ('' === $type ? '' : ' ');
@@ -101,7 +61,6 @@ FORMAT;
 
         // 置換パターン
         $replace_patterns = [
-            '{{MARK_NULLABLE}}' => (true === $this->nullable ? '?' : ''),
             '{{TYPE}}' => $type,
             '{{TYPE_SEPARATE}}' => $type_separate,
             '{{NAME}}' => $this->name,
@@ -123,19 +82,16 @@ FORMAT;
     public function toCommentString(KlassFormat $format): string
     {
         // タイプ
-        $type = $this->type;
-//        // mixedの場合、もしくは|(セパレータある場合)
-//        if (false !== strpos($type, 'mixed') or false !== strpos($type, '|'))
-//        {
-//            $type = '';
-//        }
+        $type = $this->toCommentTypeString();
 
         // デフォルト値
         $default_value = $this->default_value;
         // デフォルト値がnullではない場合
-        if (false === is_null($default_value)) {
+        if (false === is_null($default_value))
+        {
             // タイプがstringの場合
-            if ('string' === $this->type) {
+            if ('string' === $this->type)
+            {
                 $default_value = sprintf('\'%s\'', $default_value);
             }
         }
@@ -144,7 +100,6 @@ FORMAT;
         $replace_patterns = [
             '{{INDENT}}' => $format->indent,
             '{{TYPE}}' => $type,
-            '{{WITH_NULL}}' => (true === $this->nullable ? '|null' : ''),
             '{{ALIGNMENT_SPACE1}}' => ' ',
             '{{ALIGNMENT_SPACE2}}' => (false === is_null($this->comment) ? ' ' : ''),
             '{{NAME}}' => $this->name,

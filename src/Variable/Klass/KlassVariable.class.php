@@ -18,19 +18,19 @@ use Citrus\Variable\Strings;
 class KlassVariable
 {
     /** @var string 型 */
-    private $type;
+    protected $type;
 
     /** @var string 変数名 */
-    private $name;
+    protected $name;
 
     /** @var mixed|null デフォルト値 */
-    private $default_value;
+    protected $default_value;
 
     /** @var bool null許容 */
-    private $nullable = false;
+    protected $nullable = false;
 
     /** @var string コメント */
-    private $comment;
+    protected $comment;
 
     /** @var string 引数の変数型フォーマット */
     private $argument_type_format = <<<FORMAT
@@ -58,7 +58,7 @@ FORMAT;
      * @param bool|null   $nullable      true:null許可
      * @param string|null $comment       コメント
      */
-    public function __construct(string $type, string $name, $default_value = null, bool $nullable = false, string $comment = null)
+    public function __construct(string $type, string $name, $default_value = null, bool $nullable = false, ?string $comment = null)
     {
         $this->type = $type;
         $this->name = $name;
