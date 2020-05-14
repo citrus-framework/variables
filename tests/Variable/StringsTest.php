@@ -30,4 +30,23 @@ class StringsTest extends TestCase
         // 0
         $this->assertfalse(Strings::isEmpty('0'));
     }
+
+
+
+    /**
+     * @test
+     */
+    public function patternReplace_想定通り()
+    {
+        $patterns = [
+            'he' => 'she',
+            'Jesse' => 'Jessica',
+        ];
+        $subject = 'he is Jesse';
+        $expected = 'she is Jessica';
+
+        // 検算
+        $this->assertSame($expected, Strings::patternReplace($patterns, $subject));
+
+    }
 }

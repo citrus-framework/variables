@@ -25,4 +25,18 @@ class Strings
     {
         return (true === is_null($value) or '' === $value);
     }
+
+
+
+    /**
+     * 配列での文字列置換
+     *
+     * @param array  $patterns ['search' => 'replace', 'search' => 'replace'... ] 検索文字列と置換文字列の配列
+     * @param string $subject  置換対象の文字列
+     * @return string 置換後文字列
+     */
+    public static function patternReplace(array $patterns, string $subject): string
+    {
+        return str_replace(array_keys($patterns), array_values($patterns), $subject);
+    }
 }
