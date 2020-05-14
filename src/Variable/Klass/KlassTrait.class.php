@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Citrus\Variable\Klass;
 
 use Citrus\Variable\FQNs;
+use Citrus\Variable\Strings;
 
 /**
  * klassトレイト
@@ -57,6 +58,6 @@ FORMAT;
         ];
 
         // 置換して返却
-        return str_replace(array_keys($replace_patterns), array_values($replace_patterns), $this->output_format);
+        return Strings::patternReplace($replace_patterns, $this->output_format);
     }
 }
