@@ -64,7 +64,7 @@ FORMAT;
                                 $default_value = null,
                                 string $type = '',
                                 string $comment = '',
-                                string $visibility = self::VISIBILITY_PRIVATE
+                                string $visibility = KlassVisibility::TYPE_PUBLIC
     )
     {
         $this->field_name = $field_name;

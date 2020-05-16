@@ -12,6 +12,7 @@ namespace Test\Variable\Klass;
 
 use Citrus\Variable\Klass\KlassFormat;
 use Citrus\Variable\Klass\KlassProperty;
+use Citrus\Variable\Klass\KlassVisibility;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,7 +31,7 @@ class KlassPropertyTest extends TestCase
             'John',
             'string',
             '名前',
-            KlassProperty::VISIBILITY_PRIVATE);
+            KlassVisibility::TYPE_PRIVATE);
         $expected = <<<EXPECTED
     /** @var string 名前 */
     private \$name = 'John';
@@ -43,7 +44,7 @@ EXPECTED;
             null,
             'string',
             '名前',
-            KlassProperty::VISIBILITY_PRIVATE);
+            KlassVisibility::TYPE_PRIVATE);
         $expected = <<<EXPECTED
     /** @var string 名前 */
     private \$name = null;
