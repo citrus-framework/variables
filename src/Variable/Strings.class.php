@@ -39,4 +39,34 @@ class Strings
     {
         return str_replace(array_keys($patterns), array_values($patterns), $subject);
     }
+
+
+
+    /**
+     * 文字列中の重複した改行を取り除く
+     *
+     * @param string $value         処理対象文字列
+     * @param bool   $with_last_EOL true:最終文字列が改行だった場合に取り除く
+     * @return string 処理後文字列
+     */
+    public static function removeDuplicateEOL(string $value, bool $with_last_EOL = false): string
+    {
+        // 複数改行の置換
+        $from = PHP_EOL . PHP_EOL;
+        $to = PHP_EOL;
+        $replaced = str_replace($from, $to, $value);
+
+        // 更に複数改行があれば再起
+        if (false !== strpos($replaced, $from))
+        {
+            $replaced = self::removeDuplicateEOL($replaced);
+        }
+        // 最終文字列が改行だった場合取り除くフラグON 且つ 最終文字列が改行だった場合
+        if (true === $with_last_EOL and PHP_EOL === substr($replaced, -1))
+        {
+            $replaced = substr($replaced, 0, -1);
+        }
+
+        return $replaced;
+    }
 }

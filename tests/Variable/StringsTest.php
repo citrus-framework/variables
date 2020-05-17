@@ -47,6 +47,34 @@ class StringsTest extends TestCase
 
         // 検算
         $this->assertSame($expected, Strings::patternReplace($patterns, $subject));
+    }
 
+
+
+    /**
+     * @test
+     */
+    public function removeDuplicateEOL_想定通り()
+    {
+        // 改行5個分の文字列
+        $source = <<<SOURCE
+hoge
+
+
+
+
+SOURCE;
+        $expected1 = <<<EXPECTED
+hoge
+
+EXPECTED;
+        $expected2 = <<<EXPECTED
+hoge
+EXPECTED;
+
+        // 検算
+        $this->assertSame($expected1, Strings::removeDuplicateEOL($source));
+        // 検算(最終文字列が改行だった場合取り除く)
+        $this->assertSame($expected2, Strings::removeDuplicateEOL($source, true));
     }
 }
