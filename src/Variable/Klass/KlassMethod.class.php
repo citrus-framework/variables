@@ -169,10 +169,13 @@ FORMAT;
             $comment_exceptions = implode(PHP_EOL, $exceptions);
         }
 
+        // コメントセパレータ
+        $is_comment_separate = ('' !== $comment_params or '' !== $comment_returns or '' !== $comment_exceptions);
+
         // 置換パターン
         $replace_patterns = [
             '{{COMMENT}}' => $this->comment,
-            '{{COMMENT_SEPARATE}}' => ('' !== $comment_params ? '{{INDENT}} * ' . PHP_EOL : ''),
+            '{{COMMENT_SEPARATE}}' => (true === $is_comment_separate ? '{{INDENT}} *' . PHP_EOL : ''),
             '{{COMMENT_PARAMS}}' => $comment_params,
             '{{COMMENT_RETURNS}}' => $comment_returns,
             '{{COMMENT_THROWS}}' => $comment_exceptions,

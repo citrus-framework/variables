@@ -66,4 +66,23 @@ EXPECTED;
 EXPECTED;
         $this->assertSame($expected, $argument->toCommentString(new KlassFormat()));
     }
+
+
+    /**
+     * @test
+     */
+    public function toArgumentsString_想定通り()
+    {
+        // パターン1
+        $arguments = [
+            new KlassArgument('string', 'name1'),
+            new KlassArgument('bool', 'name2', true),
+            new KlassArgument('mixed', 'name3', null, true),
+            new KlassArgument('string', 'name4', null, true),
+        ];
+        $expected = <<<'EXPECTED'
+string $name1, bool $name2 = true, $name3 = null, ?string $name4 = null
+EXPECTED;
+        $this->assertSame($expected, KlassArgument::toArgumentsString($arguments, new KlassFormat()));
+    }
 }

@@ -107,4 +107,23 @@ FORMAT;
         // 置換して返却
         return Strings::patternReplace($replace_patterns, $this->comment_format);
     }
+
+
+
+    /**
+     * 引数要素の配列から文字列を生成する
+     *
+     * @param self[]      $arguments 引数要素の配列
+     * @param KlassFormat $format    フォーマット
+     * @return string
+     */
+    public static function toArgumentsString(array $arguments, KlassFormat $format): string
+    {
+        $list = [];
+        foreach ($arguments as $argument)
+        {
+            $list[] = $argument->toArgumentString($format);
+        }
+        return implode(', ', $list);
+    }
 }

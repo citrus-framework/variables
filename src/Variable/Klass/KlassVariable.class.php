@@ -78,11 +78,13 @@ FORMAT;
     {
         // mixedの場合
         $is_mixed = ('mixed' === $this->type);
+        // ?マークでnullを表す
+        $is_nullable_mark = (true === $this->nullable and false === $is_mixed);
 
         // 置換パターン
         $replace_patterns = [
             '{{TYPE}}' => (false === $is_mixed ? $this->type : ''),
-            '{{NULLABLE_MARK}}' => ((true === $this->nullable and false === $is_mixed) ? '?' : ''),
+            '{{NULLABLE_MARK}}' => (true === $is_nullable_mark ? '?' : ''),
         ];
 
         // 置換して返却
@@ -124,7 +126,6 @@ FORMAT;
         {
             $default_value = 'null';
         }
-        else
         // デフォルト値に指定がある、且つ、型がboolの場合
         if (false === is_null($this->default_value) and 'bool' === $this->type)
         {
