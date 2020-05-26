@@ -26,7 +26,7 @@ class KlassExceptionTest extends TestCase
     {
         // パターン1
         $return = new KlassException(\Exception::class);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
      * @throws Exception
 EXPECTED;
         $this->assertSame($expected, $return->toExceptionCommentString(new KlassFormat()));

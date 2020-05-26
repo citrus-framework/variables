@@ -32,9 +32,9 @@ class KlassPropertyTest extends TestCase
             'string',
             '名前',
             KlassVisibility::TYPE_PRIVATE);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
     /** @var string 名前 */
-    private \$name = 'John';
+    private $name = 'John';
 EXPECTED;
         $this->assertSame($expected, $property->toString(new KlassFormat()));
 
@@ -45,9 +45,9 @@ EXPECTED;
             'string',
             '名前',
             KlassVisibility::TYPE_PRIVATE);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
     /** @var string 名前 */
-    private \$name = null;
+    private $name = null;
 EXPECTED;
         $this->assertSame($expected, $property->toString(new KlassFormat()));
     }

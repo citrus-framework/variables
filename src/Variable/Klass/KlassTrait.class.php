@@ -22,7 +22,7 @@ class KlassTrait
     private $fqn;
 
     /** @var string 出力フォーマット */
-    private $output_format = <<<FORMAT
+    private $output_format = <<<'FORMAT'
 {{INDENT}}use {{TRAIT_NAME}};
 FORMAT;
 

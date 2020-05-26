@@ -27,12 +27,12 @@ class KlassReturn
     protected $comment;
 
     /** @var string 返却ヒントのフォーマット */
-    private $return_hint_format = <<<FORMAT
+    private $return_hint_format = <<<'FORMAT'
 {{CONJUNCTION_MARK}}{{NULLABLE_MARK}}{{TYPE}}
 FORMAT;
 
     /** @var string 返却コメントのフォーマット */
-    private $return_comment_format = <<<FORMAT
+    private $return_comment_format = <<<'FORMAT'
 {{INDENT}} * @return {{TYPE}}{{WITH_NULL}}{{WITH_COMMENT_SPACE}}{{COMMENT}}
 FORMAT;
 

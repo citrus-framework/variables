@@ -30,7 +30,7 @@ class KlassMethodTest extends TestCase
     {
         // パターン1
         $method = new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge');
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
     public function hoge()
     {
 
@@ -40,7 +40,7 @@ EXPECTED;
 
         // パターン2
         $method = new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge', true);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
     public static function hoge()
     {
 
@@ -51,8 +51,8 @@ EXPECTED;
         // パターン3
         $method = (new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge'))
             ->addArgument(new KlassArgument('string', 'fuga', null, true));
-        $expected = <<<EXPECTED
-    public function hoge(?string \$fuga = null)
+        $expected = <<<'EXPECTED'
+    public function hoge(?string $fuga = null)
     {
 
     }
@@ -63,8 +63,8 @@ EXPECTED;
         $method = (new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge'))
             ->addArgument(new KlassArgument('string', 'fuga', null, true))
             ->setReturn(new KlassReturn('bool'));
-        $expected = <<<EXPECTED
-    public function hoge(?string \$fuga = null): bool
+        $expected = <<<'EXPECTED'
+    public function hoge(?string $fuga = null): bool
     {
 
     }
@@ -75,12 +75,12 @@ EXPECTED;
         $method = (new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge'))
             ->addArgument(new KlassArgument('string', 'fuga', null, true))
             ->setReturn(new KlassReturn('bool'))
-            ->setBody(<<<BODY
+            ->setBody(<<<'BODY'
         return true;
 BODY
             );
-        $expected = <<<EXPECTED
-    public function hoge(?string \$fuga = null): bool
+        $expected = <<<'EXPECTED'
+    public function hoge(?string $fuga = null): bool
     {
         return true;
     }
@@ -97,7 +97,7 @@ EXPECTED;
     {
         // パターン1
         $method = new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge', false, 'hoge hoge hoge');
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
     /**
      * hoge hoge hoge
      */
@@ -108,12 +108,12 @@ EXPECTED;
         $method = (new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge', false, 'hoge hoge hoge'))
             ->addArgument(new KlassArgument('string', 'fuga', null, false, 'ふが'))
             ->addArgument(new KlassArgument('bool', 'enable', true, true, '有効化'));
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
     /**
      * hoge hoge hoge
-     * 
-     * @param string \$fuga ふが
-     * @param bool|null \$enable 有効化
+     *
+     * @param string $fuga ふが
+     * @param bool|null $enable 有効化
      */
 EXPECTED;
         $this->assertSame($expected, $method->toCommentString(new KlassFormat()));
@@ -124,12 +124,12 @@ EXPECTED;
             ->addArgument(new KlassArgument('bool', 'enable', true, true, '有効化'))
             ->setReturn(new KlassReturn('string', true, 'hoge and hoge'));
 
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
     /**
      * hoge hoge hoge
-     * 
-     * @param string \$fuga ふが
-     * @param bool|null \$enable 有効化
+     *
+     * @param string $fuga ふが
+     * @param bool|null $enable 有効化
      * @return string|null hoge and hoge
      */
 EXPECTED;
@@ -142,12 +142,12 @@ EXPECTED;
             ->setReturn(new KlassReturn('string', true, 'hoge and hoge'))
             ->addException(new KlassException(self::class));
 
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
     /**
      * hoge hoge hoge
-     * 
-     * @param string \$fuga ふが
-     * @param bool|null \$enable 有効化
+     *
+     * @param string $fuga ふが
+     * @param bool|null $enable 有効化
      * @return string|null hoge and hoge
      * @throws Test\Variable\Klass\KlassMethodTest
      */

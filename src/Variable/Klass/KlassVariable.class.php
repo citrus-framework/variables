@@ -33,17 +33,17 @@ class KlassVariable
     protected $comment;
 
     /** @var string 引数の変数型フォーマット */
-    private $argument_type_format = <<<FORMAT
+    private $argument_type_format = <<<'FORMAT'
 {{NULLABLE_MARK}}{{TYPE}}
 FORMAT;
 
     /** @var string コメントの変数型フォーマット */
-    private $comment_type_format = <<<FORMAT
+    private $comment_type_format = <<<'FORMAT'
 {{TYPE}}{{WITH_NULL}}
 FORMAT;
 
     /** @var string デフォルト値フォーマット */
-    private $default_value_format = <<<FORMAT
+    private $default_value_format = <<<'FORMAT'
 {{WITH_DEFAULT_VALUE}}
 FORMAT;
 

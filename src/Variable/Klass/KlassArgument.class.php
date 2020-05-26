@@ -18,13 +18,13 @@ use Citrus\Variable\Strings;
 class KlassArgument extends KlassVariable
 {
     /** @var string 出力フォーマット */
-    private $output_format = <<<FORMAT
-{{TYPE}}{{TYPE_SEPARATE}}\${{NAME}}{{WITH_DEFAULT_VALUE}}
+    private $output_format = <<<'FORMAT'
+{{TYPE}}{{TYPE_SEPARATE}}${{NAME}}{{WITH_DEFAULT_VALUE}}
 FORMAT;
 
     /** @var string 出力フォーマット */
-    private $comment_format = <<<FORMAT
-{{INDENT}} * @param {{TYPE}}{{ALIGNMENT_SPACE1}}\${{NAME}}{{ALIGNMENT_SPACE2}}{{COMMENT}}
+    private $comment_format = <<<'FORMAT'
+{{INDENT}} * @param {{TYPE}}{{ALIGNMENT_SPACE1}}${{NAME}}{{ALIGNMENT_SPACE2}}{{COMMENT}}
 FORMAT;
 
 

@@ -17,17 +17,6 @@ use Citrus\Variable\Strings;
  */
 class KlassProperty
 {
-    /** @var string アクセス権限 PUBLIC */
-    public const VISIBILITY_PUBLIC = 'public';
-
-    /** @var string アクセス権限 PRIVATE */
-    public const VISIBILITY_PRIVATE = 'private';
-
-    /** @var string アクセス権限 protected */
-    public const VISIBILITY_PROTECTED = 'protected';
-
-
-
     /** @var string フィールド名 */
     private $field_name;
 
@@ -44,9 +33,9 @@ class KlassProperty
     private $default_value;
 
     /** @var string 出力フォーマット */
-    private $output_format = <<<FORMAT
+    private $output_format = <<<'FORMAT'
 {{INDENT}}/** @var {{TYPE}} {{COMMENT}} */
-{{INDENT}}{{VISIBILITY}} \${{FIELD_NAME}} = {{DEFAULT_VALUE}};
+{{INDENT}}{{VISIBILITY}} ${{FIELD_NAME}} = {{DEFAULT_VALUE}};
 FORMAT;
 
 
@@ -96,8 +85,6 @@ FORMAT;
         {
             $default_value = sprintf('\'%s\'', $default_value);
         }
-
-
 
         // 置換パターン
         $replace_patterns = [

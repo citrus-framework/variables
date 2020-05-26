@@ -57,18 +57,18 @@ class StringsTest extends TestCase
     public function removeDuplicateEOL_想定通り()
     {
         // 改行5個分の文字列
-        $source = <<<SOURCE
+        $source = <<<'SOURCE'
 hoge
 
 
 
 
 SOURCE;
-        $expected1 = <<<EXPECTED
+        $expected1 = <<<'EXPECTED'
 hoge
 
 EXPECTED;
-        $expected2 = <<<EXPECTED
+        $expected2 = <<<'EXPECTED'
 hoge
 EXPECTED;
 

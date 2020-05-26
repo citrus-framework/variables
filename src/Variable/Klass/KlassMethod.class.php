@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Citrus\Variable\Klass;
 
-use Citrus\Variable\FQNs;
 use Citrus\Variable\Strings;
 
 /**
@@ -43,7 +42,7 @@ class KlassMethod
     private $body = '';
 
     /** @var string コメント内容フォーマット */
-    private $comment_format = <<<FORMAT
+    private $comment_format = <<<'FORMAT'
 {{INDENT}}/**
 {{INDENT}} * {{COMMENT}}
 {{COMMENT_SEPARATE}}
@@ -54,7 +53,7 @@ class KlassMethod
 FORMAT;
 
     /** @var string メソッド内容フォーマット */
-    private $method_format = <<<FORMAT
+    private $method_format = <<<'FORMAT'
 {{INDENT}}{{VISIBILITY}}{{WITH_STATIC}} function {{NAME}}({{ARGUMENTS}}){{RETURN}}
 {{INDENT}}{
 {{BODY}}

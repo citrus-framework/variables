@@ -21,7 +21,7 @@ class KlassException
     protected $type;
 
     /** @var string 例外コメントのフォーマット */
-    private $exception_comment_format = <<<FORMAT
+    private $exception_comment_format = <<<'FORMAT'
 {{INDENT}} * @throws {{TYPE}}
 FORMAT;
 

@@ -26,28 +26,28 @@ class KlassReturnTest extends TestCase
     {
         // パターン1
         $return = new KlassReturn('string', true);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
 : ?string
 EXPECTED;
         $this->assertSame($expected, $return->toReturnHintString());
 
         // パターン2
         $return = new KlassReturn('string', false);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
 : string
 EXPECTED;
         $this->assertSame($expected, $return->toReturnHintString());
 
         // パターン3
         $return = new KlassReturn('mixed', true);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
 
 EXPECTED;
         $this->assertSame($expected, $return->toReturnHintString());
 
         // パターン4
         $return = new KlassReturn('mixed', false);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
 
 EXPECTED;
         $this->assertSame($expected, $return->toReturnHintString());
@@ -62,28 +62,28 @@ EXPECTED;
     {
         // パターン1
         $return = new KlassReturn('string', true);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
      * @return string|null
 EXPECTED;
         $this->assertSame($expected, $return->toReturnCommentString(new KlassFormat()));
 
         // パターン2
         $return = new KlassReturn('string', false);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
      * @return string
 EXPECTED;
         $this->assertSame($expected, $return->toReturnCommentString(new KlassFormat()));
 
         // パターン3
         $return = new KlassReturn('mixed', true, '名前を返します');
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
      * @return mixed|null 名前を返します
 EXPECTED;
         $this->assertSame($expected, $return->toReturnCommentString(new KlassFormat()));
 
         // パターン4
         $return = new KlassReturn('mixed', false, '名前を返します');
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
      * @return mixed 名前を返します
 EXPECTED;
         $this->assertSame($expected, $return->toReturnCommentString(new KlassFormat()));

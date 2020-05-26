@@ -25,28 +25,28 @@ class KlassVariableTest extends TestCase
     {
         // パターン1
         $variable = new KlassVariable('string', 'name', null, true);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
 ?string
 EXPECTED;
         $this->assertSame($expected, $variable->toArgumentTypeString());
 
         // パターン2
         $variable = new KlassVariable('string', 'name', null, false);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
 string
 EXPECTED;
         $this->assertSame($expected, $variable->toArgumentTypeString());
 
         // パターン3
         $variable = new KlassVariable('mixed', 'name', null, true);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
 
 EXPECTED;
         $this->assertSame($expected, $variable->toArgumentTypeString());
 
         // パターン4
         $variable = new KlassVariable('mixed', 'name', null, false);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
 
 EXPECTED;
         $this->assertSame($expected, $variable->toArgumentTypeString());
@@ -61,28 +61,28 @@ EXPECTED;
     {
         // パターン1
         $variable = new KlassVariable('string', 'name', null, true);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
 string|null
 EXPECTED;
         $this->assertSame($expected, $variable->toCommentTypeString());
 
         // パターン2
         $variable = new KlassVariable('string', 'name', null, false);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
 string
 EXPECTED;
         $this->assertSame($expected, $variable->toCommentTypeString());
 
         // パターン3
         $variable = new KlassVariable('mixed', 'name', null, true);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
 mixed|null
 EXPECTED;
         $this->assertSame($expected, $variable->toCommentTypeString());
 
         // パターン4
         $variable = new KlassVariable('mixed', 'name', null, false);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
 mixed
 EXPECTED;
         $this->assertSame($expected, $variable->toCommentTypeString());
@@ -97,28 +97,28 @@ EXPECTED;
     {
         // パターン1
         $variable = new KlassVariable('string', 'name', null, true);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
  = null
 EXPECTED;
         $this->assertSame($expected, $variable->toWithDefaultValueString());
 
         // パターン2
         $variable = new KlassVariable('string', 'name', null, false);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
 
 EXPECTED;
         $this->assertSame($expected, $variable->toWithDefaultValueString());
 
         // パターン3
         $variable = new KlassVariable('bool', 'name', true, true);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
  = true
 EXPECTED;
         $this->assertSame($expected, $variable->toWithDefaultValueString());
 
         // パターン4
         $variable = new KlassVariable('bool', 'name', true, false);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
  = true
 EXPECTED;
         $this->assertSame($expected, $variable->toWithDefaultValueString());

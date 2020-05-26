@@ -26,22 +26,22 @@ class KlassArgumentTest extends TestCase
     {
         // パターン1
         $argument = new KlassArgument('string', 'name', null, true);
-        $expected = <<<EXPECTED
-?string \$name = null
+        $expected = <<<'EXPECTED'
+?string $name = null
 EXPECTED;
         $this->assertSame($expected, $argument->toArgumentString(new KlassFormat()));
 
         // パターン2
         $argument = new KlassArgument('mixed', 'name');
-        $expected = <<<EXPECTED
-\$name
+        $expected = <<<'EXPECTED'
+$name
 EXPECTED;
         $this->assertSame($expected, $argument->toArgumentString(new KlassFormat()));
 
         // パターン3
         $argument = new KlassArgument('bool', 'is_name', true);
-        $expected = <<<EXPECTED
-bool \$is_name = true
+        $expected = <<<'EXPECTED'
+bool $is_name = true
 EXPECTED;
         $this->assertSame($expected, $argument->toArgumentString(new KlassFormat()));
     }
@@ -50,19 +50,19 @@ EXPECTED;
     /**
      * @test
      */
-    public function toCommnetString_想定通り()
+    public function toCommentString_想定通り()
     {
         // パターン1
         $argument = new KlassArgument('string', 'name', null, true);
-        $expected = <<<EXPECTED
-     * @param string|null \$name
+        $expected = <<<'EXPECTED'
+     * @param string|null $name
 EXPECTED;
         $this->assertSame($expected, $argument->toCommentString(new KlassFormat()));
 
         // パターン2
         $argument = new KlassArgument('mixed', 'name', null, false, '名前');
-        $expected = <<<EXPECTED
-     * @param mixed \$name 名前
+        $expected = <<<'EXPECTED'
+     * @param mixed $name 名前
 EXPECTED;
         $this->assertSame($expected, $argument->toCommentString(new KlassFormat()));
     }

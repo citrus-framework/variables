@@ -27,7 +27,7 @@ class KlassTraitTest extends TestCase
     {
         // パターン
         $trait = new KlassTrait(self::class);
-        $expected = <<<EXPECTED
+        $expected = <<<'EXPECTED'
     use KlassTraitTest;
 EXPECTED;
         $this->assertSame($expected, $trait->toString(new KlassFormat()));
