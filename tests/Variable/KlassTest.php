@@ -42,7 +42,7 @@ BODY;
             ->setFileComment(KlassFileComment::getInstance()
                 ->addComment(KlassFileComment::ROW, 'generated Citrus Migration file at 2018-02-10 04:51:29')
             )
-            ->addProperty(new KlassProperty('object_name', 'users', 'string', 'テーブル|ビュー名'))
+            ->addProperty(new KlassProperty('string', 'object_name', 'users', 'テーブル|ビュー名'))
             ->addMethod((new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'up', false, 'up query'))
                 ->setReturn(new KlassReturn('string', false, 'SQL文字列'))
                 ->setBody($body)

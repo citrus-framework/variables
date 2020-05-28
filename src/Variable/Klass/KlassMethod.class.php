@@ -17,6 +17,8 @@ use Citrus\Variable\Strings;
  */
 class KlassMethod
 {
+    use Formatable;
+
     /** @var string コメント */
     private $comment;
 
@@ -24,7 +26,7 @@ class KlassMethod
     private $visibility;
 
     /** @var bool staticメソッドかどうか */
-    private $is_static = false;
+    private $is_static;
 
     /** @var string メソッド名 */
     private $name;
@@ -70,7 +72,7 @@ FORMAT;
      * @param bool|null   $is_static  staticかどうか
      * @param string|null $comment    コメント
      */
-    public function __construct(string $visibility, string $name, bool $is_static = false, string $comment = null)
+    public function __construct(string $visibility, string $name, bool $is_static = false, ?string $comment = null)
     {
         $this->visibility = $visibility;
         $this->name = $name;
@@ -139,35 +141,16 @@ FORMAT;
     /**
      * コメント出力
      *
-     * @param KlassFormat $format フォーマット定義
      * @return string
      */
-    public function toCommentString(KlassFormat $format): string
+    public function toCommentString(): string
     {
         // パラメータ部分
-        $comment_params = '';
-        if (0 < count($this->arguments))
-        {
-            $params = [];
-            foreach ($this->arguments as $argument)
-            {
-                $params[] = $argument->toCommentString($format);
-            }
-            $comment_params = implode(PHP_EOL, $params);
-        }
+        $comment_params = $this->buildCommentParameter();
         // 返却値部分
-        $comment_returns = (false === is_null($this->return) ? $this->return->toReturnCommentString($format) : '');
+        $comment_returns = $this->buildCommentReturn();
         // 例外部分
-        $comment_exceptions = '';
-        if (0 < count($this->exceptions))
-        {
-            $exceptions = [];
-            foreach ($this->exceptions as $exception)
-            {
-                $exceptions[] = $exception->toExceptionCommentString($format);
-            }
-            $comment_exceptions = implode(PHP_EOL, $exceptions);
-        }
+        $comment_exceptions = $this->buildCommentException();
 
         // コメントセパレータ
         $is_comment_separate = ('' !== $comment_params or '' !== $comment_returns or '' !== $comment_exceptions);
@@ -179,7 +162,7 @@ FORMAT;
             '{{COMMENT_PARAMS}}' => $comment_params,
             '{{COMMENT_RETURNS}}' => $comment_returns,
             '{{COMMENT_THROWS}}' => $comment_exceptions,
-            '{{INDENT}}' => $format->indent,
+            '{{INDENT}}' => $this->callFormat()->indent,
         ];
 
         // 置換して返却
@@ -192,23 +175,86 @@ FORMAT;
     /**
      * メソッド内容を返却
      *
-     * @param KlassFormat $format フォーマット定義
      * @return string
      */
-    public function toMethodString(KlassFormat $format): string
+    public function toMethodString(): string
     {
         // 置換パターン
         $replace_patterns = [
-            '{{INDENT}}' => $format->indent,
+            '{{INDENT}}' => $this->callFormat()->indent,
             '{{VISIBILITY}}' => $this->visibility,
             '{{WITH_STATIC}}' => (true === $this->is_static ? ' static' : ''),
             '{{NAME}}' => $this->name,
-            '{{ARGUMENTS}}' => KlassArgument::toArgumentsString($this->arguments, $format),
+            '{{ARGUMENTS}}' => KlassArgument::toArgumentsString($this->arguments, $this->callFormat()),
             '{{RETURN}}' => (false === is_null($this->return) ? $this->return->toReturnHintString() : ''),
             '{{BODY}}' => $this->body,
         ];
 
         // 置換して返却
         return Strings::patternReplace($replace_patterns, $this->method_format);
+    }
+
+
+
+    /**
+     * パラメータコメントを生成して返却
+     *
+     * @return string
+     */
+    private function buildCommentParameter(): string
+    {
+        $comment_params = '';
+        if (0 < count($this->arguments))
+        {
+            $params = [];
+            foreach ($this->arguments as $argument)
+            {
+                $argument->setFormat($this->callFormat());
+                $params[] = $argument->toCommentString();
+            }
+            $comment_params = implode(PHP_EOL, $params);
+        }
+        return $comment_params;
+    }
+
+
+
+    /**
+     * 返却値コメントを生成して返却
+     *
+     * @return string
+     */
+    private function buildCommentReturn(): string
+    {
+        $comment_returns = '';
+        if (false === is_null($this->return))
+        {
+            $this->return->setFormat($this->callFormat());
+            $comment_returns = $this->return->toReturnCommentString();
+        }
+        return $comment_returns;
+    }
+
+
+
+    /**
+     * 例外コメントを生成して返却
+     *
+     * @return string
+     */
+    private function buildCommentException(): string
+    {
+        $comment_exceptions = '';
+        if (0 < count($this->exceptions))
+        {
+            $exceptions = [];
+            foreach ($this->exceptions as $exception)
+            {
+                $exception->setFormat($this->callFormat());
+                $exceptions[] = $exception->toExceptionCommentString();
+            }
+            $comment_exceptions = implode(PHP_EOL, $exceptions);
+        }
+        return $comment_exceptions;
     }
 }

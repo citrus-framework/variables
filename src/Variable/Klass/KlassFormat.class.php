@@ -31,13 +31,13 @@ class KlassFormat
     public $indent;
 
     /** @var int プロパティ前後の空行数 */
-    public $blank_around_property = 1;
+    private $blank_around_property = 1;
 
     /** @var int メソッド前後の空行数 */
-    public $blank_around_method = 3;
+    private $blank_around_method = 3;
 
     /** @var int プロパティとメソッドなどブロック間の空行数 */
-    public $blank_between_block = 3;
+    private $blank_between_block = 3;
 
 
 
@@ -115,7 +115,7 @@ class KlassFormat
         {
             return '';
         }
-        
+
         // eachする場合に改行が減るので足す
         return str_repeat(PHP_EOL, ($this->blank_around_method + 1));
     }

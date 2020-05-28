@@ -25,25 +25,28 @@ class KlassArgumentTest extends TestCase
     public function toArgumentString_想定通り()
     {
         // パターン1
-        $argument = new KlassArgument('string', 'name', null, true);
+        $argument = (new KlassArgument('string', 'name', null, true))
+            ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
 ?string $name = null
 EXPECTED;
-        $this->assertSame($expected, $argument->toArgumentString(new KlassFormat()));
+        $this->assertSame($expected, $argument->toArgumentString());
 
         // パターン2
-        $argument = new KlassArgument('mixed', 'name');
+        $argument = (new KlassArgument('mixed', 'name'))
+            ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
 $name
 EXPECTED;
-        $this->assertSame($expected, $argument->toArgumentString(new KlassFormat()));
+        $this->assertSame($expected, $argument->toArgumentString());
 
         // パターン3
-        $argument = new KlassArgument('bool', 'is_name', true);
+        $argument = (new KlassArgument('bool', 'is_name', true))
+            ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
 bool $is_name = true
 EXPECTED;
-        $this->assertSame($expected, $argument->toArgumentString(new KlassFormat()));
+        $this->assertSame($expected, $argument->toArgumentString());
     }
 
 
@@ -53,18 +56,20 @@ EXPECTED;
     public function toCommentString_想定通り()
     {
         // パターン1
-        $argument = new KlassArgument('string', 'name', null, true);
+        $argument = (new KlassArgument('string', 'name', null, true))
+            ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
      * @param string|null $name
 EXPECTED;
-        $this->assertSame($expected, $argument->toCommentString(new KlassFormat()));
+        $this->assertSame($expected, $argument->toCommentString());
 
         // パターン2
-        $argument = new KlassArgument('mixed', 'name', null, false, '名前');
+        $argument = (new KlassArgument('mixed', 'name', null, false, '名前'))
+            ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
      * @param mixed $name 名前
 EXPECTED;
-        $this->assertSame($expected, $argument->toCommentString(new KlassFormat()));
+        $this->assertSame($expected, $argument->toCommentString());
     }
 
 

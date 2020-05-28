@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Citrus\Variable\Klass;
 
-use Citrus\Variable\Arrays;
 use Citrus\Variable\Instance;
 use Citrus\Variable\Strings;
 
@@ -36,6 +35,12 @@ class KlassFileComment
     /** @var string 引用 */
     public const SEE = 'see';
 
+    /** @var string TYPEスタック用のキー */
+    private const STACK_KEY_TYPE = 'type';
+
+    /** @var string CONTEXTスタック用のキー */
+    private const STACK_KEY_CONTEXT = 'context';
+
     /** @var string[] コメント配列[TYPE => CONTEXT] */
     private $comments = [];
 
@@ -60,12 +65,6 @@ FORMAT;
     private $comment_space_format = <<<'FORMAT'
  *
 FORMAT;
-
-    /** @var string TYPEスタック用のキー */
-    private const STACK_KEY_TYPE = 'type';
-
-    /** @var string CONTEXTスタック用のキー */
-    private const STACK_KEY_CONTEXT = 'context';
 
 
 
@@ -112,12 +111,11 @@ FORMAT;
             $context = $comment[self::STACK_KEY_CONTEXT];
             // コメントの分類
             $is_row = (self::ROW === $type);
-            $format = (true === $is_row ? $this->comment_row_format : $this->comment_one_format);
             // フォーマット
             $comment_contexts[] = Strings::patternReplace([
                 '{{TYPE}}' => $type,
                 '{{CONTEXT}}' => $context,
-            ], $format);
+            ], (true === $is_row ? $this->comment_row_format : $this->comment_one_format));
             // コメントスペースが必要でタイプが平文の場合はスペースを入れておく
             if (true === $is_need_space and true === $is_row)
             {

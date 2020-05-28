@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Citrus\Variable;
 
+use Citrus\Variable\Klass\Formatable;
 use Citrus\Variable\Klass\KlassFileComment;
 use Citrus\Variable\Klass\KlassFormat;
 use Citrus\Variable\Klass\KlassMethod;
@@ -20,6 +21,8 @@ use Citrus\Variable\Klass\KlassProperty;
  */
 class Klass
 {
+    use Formatable;
+
     /** @var string クラス名 */
     private $name;
 
@@ -52,7 +55,7 @@ class Klass
 FORMAT;
 
     /** @var string クラス出力用フォーマット、最終行には空行を入れておく */
-    private $format = <<<'FORMAT'
+    private $class_format = <<<'FORMAT'
 <?php
 {{WITH_STRICT_TYPES}}
 {{FILE_COMMENT}}
@@ -211,16 +214,17 @@ FORMAT;
         $each_properties = '';
         foreach ($this->properties as $property)
         {
+            $property->setFormat($this->callFormat());
             $each_properties .= $format->blankAroundProperty($property, $this->properties);
-            $each_properties .= $property->toString(new KlassFormat());
+            $each_properties .= $property->toString();
         }
         // メソッド
         $each_methods = '';
         foreach ($this->methods as $method)
         {
             $each_methods .= $format->blankAroundMethod($method, $this->methods);
-//            $each_methods .= ($method->toCommentString($format) . PHP_EOL . $method->toMethodString($format)) . PHP_EOL;
-            $each_methods .= ($method->toCommentString($format) . PHP_EOL . $method->toMethodString($format));
+            $method->setFormat($format);
+            $each_methods .= ($method->toCommentString() . PHP_EOL . $method->toMethodString());
         }
 
         // プロパティとメソッド間の空行
@@ -239,7 +243,7 @@ FORMAT;
         ];
 
         // 置換して返却
-        return Strings::patternReplace($replace_patterns, $this->format);
+        return Strings::patternReplace($replace_patterns, $this->class_format);
     }
 
 

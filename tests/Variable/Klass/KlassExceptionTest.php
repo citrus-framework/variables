@@ -25,10 +25,11 @@ class KlassExceptionTest extends TestCase
     public function toExceptionCommentString_想定通り()
     {
         // パターン1
-        $return = new KlassException(\Exception::class);
+        $return = (new KlassException(\Exception::class))
+            ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
      * @throws Exception
 EXPECTED;
-        $this->assertSame($expected, $return->toExceptionCommentString(new KlassFormat()));
+        $this->assertSame($expected, $return->toExceptionCommentString());
     }
 }

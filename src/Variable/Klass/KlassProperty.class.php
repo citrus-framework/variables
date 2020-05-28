@@ -17,8 +17,10 @@ use Citrus\Variable\Strings;
  */
 class KlassProperty
 {
+    use Formatable;
+
     /** @var string フィールド名 */
-    private $field_name;
+    private $name;
 
     /** @var string 型 */
     private $type;
@@ -43,20 +45,19 @@ FORMAT;
     /**
      * constructor.
      *
-     * @param string      $field_name    フィールド名
-     * @param mixed|null  $default_value デフォルト値
      * @param string|null $type          型
+     * @param string      $name          フィールド名
+     * @param mixed|null  $default_value デフォルト値
      * @param string|null $comment       コメント
      * @param string|null $visibility    アクセス権
      */
-    public function __construct(string $field_name,
+    public function __construct(string $type,
+                                string $name,
                                 $default_value = null,
-                                string $type = '',
                                 string $comment = '',
                                 string $visibility = KlassVisibility::TYPE_PUBLIC
-    )
-    {
-        $this->field_name = $field_name;
+    ) {
+        $this->name = $name;
         $this->default_value = $default_value;
         $this->type = $type;
         $this->comment = $comment;
@@ -68,10 +69,9 @@ FORMAT;
     /**
      * 出力
      *
-     * @param KlassFormat $format フォーマット定義
      * @return string
      */
-    public function toString(KlassFormat $format): string
+    public function toString(): string
     {
         // デフォルト値
         $default_value = $this->default_value;
@@ -80,19 +80,22 @@ FORMAT;
         {
             $default_value = $default_value ?: 'null';
         }
-        // タイプがstringの場合
-        else if ('string' === $this->type)
+        else
         {
-            $default_value = sprintf('\'%s\'', $default_value);
+            // タイプがstringの場合
+            if ('string' === $this->type)
+            {
+                $default_value = sprintf('\'%s\'', $default_value);
+            }
         }
 
         // 置換パターン
         $replace_patterns = [
-            '{{INDENT}}' => $format->indent,
+            '{{INDENT}}' => $this->callFormat()->indent,
             '{{TYPE}}' => $this->type,
             '{{COMMENT}}' => $this->comment,
             '{{VISIBILITY}}' => $this->visibility,
-            '{{FIELD_NAME}}' => $this->field_name,
+            '{{FIELD_NAME}}' => $this->name,
             '{{DEFAULT_VALUE}}' => $default_value,
         ];
 

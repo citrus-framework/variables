@@ -129,29 +129,25 @@ trait Structs
 
         if (true === is_null($add))
         {
-            if (true === is_array($value))
+            $add = (true === is_array($value) ? $value : [$value]);
+        }
+        else
+        {
+            if (true === is_array($add))
             {
-                $add = $value;
+                if (true === is_array($value))
+                {
+                    $add += $value;
+                }
+                else
+                {
+                    array_push($add, $value);
+                }
             }
             else
             {
-                $add = [$value];
+                $add = [$add, $value];
             }
-        }
-        else if (true === is_array($add))
-        {
-            if (true === is_array($value))
-            {
-                $add += $value;
-            }
-            else
-            {
-                array_push($add, $value);
-            }
-        }
-        else if (false === is_array($add))
-        {
-            $add = [$add, $value];
         }
     }
 

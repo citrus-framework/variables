@@ -61,31 +61,35 @@ EXPECTED;
     public function toReturnCommentString_想定通り()
     {
         // パターン1
-        $return = new KlassReturn('string', true);
+        $return = (new KlassReturn('string', true))
+            ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
      * @return string|null
 EXPECTED;
-        $this->assertSame($expected, $return->toReturnCommentString(new KlassFormat()));
+        $this->assertSame($expected, $return->toReturnCommentString());
 
         // パターン2
-        $return = new KlassReturn('string', false);
+        $return = (new KlassReturn('string', false))
+            ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
      * @return string
 EXPECTED;
-        $this->assertSame($expected, $return->toReturnCommentString(new KlassFormat()));
+        $this->assertSame($expected, $return->toReturnCommentString());
 
         // パターン3
-        $return = new KlassReturn('mixed', true, '名前を返します');
+        $return = (new KlassReturn('mixed', true, '名前を返します'))
+            ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
      * @return mixed|null 名前を返します
 EXPECTED;
-        $this->assertSame($expected, $return->toReturnCommentString(new KlassFormat()));
+        $this->assertSame($expected, $return->toReturnCommentString());
 
         // パターン4
-        $return = new KlassReturn('mixed', false, '名前を返します');
+        $return = (new KlassReturn('mixed', false, '名前を返します'))
+            ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
      * @return mixed 名前を返します
 EXPECTED;
-        $this->assertSame($expected, $return->toReturnCommentString(new KlassFormat()));
+        $this->assertSame($expected, $return->toReturnCommentString());
     }
 }

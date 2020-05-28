@@ -17,6 +17,8 @@ use Citrus\Variable\Strings;
  */
 class KlassException
 {
+    use Formatable;
+
     /** @var string 型 */
     protected $type;
 
@@ -42,14 +44,13 @@ FORMAT;
     /**
      * 例外コメント文字列の返却
      *
-     * @param KlassFormat $format フォーマット
      * @return string
      */
-    public function toExceptionCommentString(KlassFormat $format): string
+    public function toExceptionCommentString(): string
     {
         // 置換パターン
         $replace_patterns = [
-            '{{INDENT}}' => $format->indent,
+            '{{INDENT}}' => $this->callFormat()->indent,
             '{{TYPE}}' => $this->type,
         ];
 

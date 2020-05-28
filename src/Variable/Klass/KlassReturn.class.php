@@ -17,6 +17,8 @@ use Citrus\Variable\Strings;
  */
 class KlassReturn
 {
+    use Formatable;
+
     /** @var string 型 */
     protected $type;
 
@@ -84,11 +86,11 @@ FORMAT;
      *
      * @return string
      */
-    public function toReturnCommentString(KlassFormat $format): string
+    public function toReturnCommentString(): string
     {
         // 置換パターン
         $replace_patterns = [
-            '{{INDENT}}' => $format->indent,
+            '{{INDENT}}' => $this->callFormat()->indent,
             '{{TYPE}}' => $this->type,
             '{{WITH_NULL}}' => (true === $this->nullable ? '|null' : ''),
             '{{WITH_COMMENT_SPACE}}' => (false === Strings::isEmpty($this->comment) ? ' ' : ''),

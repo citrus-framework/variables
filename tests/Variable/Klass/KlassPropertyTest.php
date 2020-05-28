@@ -26,29 +26,31 @@ class KlassPropertyTest extends TestCase
     public function toString_想定通り()
     {
         // パターン1
-        $property = new KlassProperty(
+        $property = (new KlassProperty(
+            'string',
             'name',
             'John',
-            'string',
             '名前',
-            KlassVisibility::TYPE_PRIVATE);
+            KlassVisibility::TYPE_PRIVATE))
+            ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
     /** @var string 名前 */
     private $name = 'John';
 EXPECTED;
-        $this->assertSame($expected, $property->toString(new KlassFormat()));
+        $this->assertSame($expected, $property->toString());
 
         // パターン2
-        $property = new KlassProperty(
+        $property = (new KlassProperty(
+            'string',
             'name',
             null,
-            'string',
             '名前',
-            KlassVisibility::TYPE_PRIVATE);
+            KlassVisibility::TYPE_PRIVATE))
+            ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
     /** @var string 名前 */
     private $name = null;
 EXPECTED;
-        $this->assertSame($expected, $property->toString(new KlassFormat()));
+        $this->assertSame($expected, $property->toString());
     }
 }
