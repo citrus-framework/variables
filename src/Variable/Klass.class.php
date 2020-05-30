@@ -29,6 +29,9 @@ class Klass
     /** @var string|null クラスコメント */
     private $class_comment;
 
+    /** @var string|null ネームスペース */
+    private $namespace;
+
     /** @var string|null 継承親クラス名 */
     private $extends_name;
 
@@ -59,6 +62,7 @@ FORMAT;
 <?php
 {{WITH_STRICT_TYPES}}
 {{FILE_COMMENT}}
+{{WITH_NAMESPACE}}
 {{CLASS_COMMENT}}
 class {{NAME}}{{WITH_EXTENDS}}{{WITH_IMPLEMENTS}}
 {
@@ -79,6 +83,20 @@ FORMAT;
     public function __construct(string $name)
     {
         $this->name = $name;
+    }
+
+
+
+    /**
+     * ネームスペースの設定
+     *
+     * @param string $namespace ネームスペース
+     * @return $this
+     */
+    public function setNamespace(string $namespace): self
+    {
+        $this->namespace = $namespace;
+        return $this;
     }
 
 
@@ -198,6 +216,8 @@ FORMAT;
         }
         // ファイルコメント
         $file_comment = (false === is_null($this->fileComment) ? PHP_EOL . $this->fileComment->toCommentString() : '');
+        // ネームスペース
+        $with_namespace = (false === is_null($this->namespace) ? PHP_EOL . sprintf('namespace %s;', $this->namespace) : '');
         // 継承
         $with_extends = '';
         if (false === is_null($this->extends_name))
@@ -234,6 +254,7 @@ FORMAT;
         $replace_patterns = [
             '{{WITH_STRICT_TYPES}}' => $with_strict_types,
             '{{FILE_COMMENT}}' => $file_comment,
+            '{{WITH_NAMESPACE}}' => $with_namespace,
             '{{CLASS_COMMENT}}' => $this->toClassCommentString(),
             '{{NAME}}' => $this->name,
             '{{WITH_EXTENDS}}' => $with_extends,
