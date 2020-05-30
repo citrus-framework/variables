@@ -18,7 +18,6 @@ use Citrus\Variable\Strings;
  */
 class KlassArgument extends KlassVariable
 {
-    use Clonable;
     use Formatable;
 
     /** @var string 出力フォーマット */
