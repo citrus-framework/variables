@@ -65,22 +65,11 @@ trait Structs
 
 
     /**
-     * オブジェクトのクローン
-     *
-     * @return self
-     */
-    public function getClone()
-    {
-        return clone $this;
-    }
-
-
-
-    /**
      * 汎用ゲッター
      *
      * @param  string $key
      * @return mixed
+     * @deprecated
      */
     public function get($key)
     {
