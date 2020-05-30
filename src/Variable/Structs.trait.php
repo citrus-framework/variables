@@ -20,6 +20,7 @@ trait Structs
      *
      * @param mixed $object
      * @return bool
+     * @deprecated
      */
     public function equals($object): bool
     {
@@ -32,6 +33,7 @@ trait Structs
      * プロパティ取得
      *
      * @return array
+     * @deprecated
      */
     public function properties(): array
     {
@@ -44,6 +46,7 @@ trait Structs
      * シリアライズ
      *
      * @return string
+     * @deprecated
      */
     public function serialize(): string
     {
@@ -56,6 +59,7 @@ trait Structs
      * クラス名取得
      *
      * @return string
+     * @deprecated
      */
     public function getClass(): string
     {
@@ -65,22 +69,11 @@ trait Structs
 
 
     /**
-     * オブジェクトのクローン
-     *
-     * @return self
-     */
-    public function getClone()
-    {
-        return clone $this;
-    }
-
-
-
-    /**
      * 汎用ゲッター
      *
      * @param  string $key
      * @return mixed
+     * @deprecated
      */
     public function get($key)
     {
@@ -99,6 +92,7 @@ trait Structs
      * @param mixed $key
      * @param mixed $value
      * @param bool  $strict
+     * @deprecated
      */
     public function set($key, $value, bool $strict = false): void
     {
@@ -122,6 +116,7 @@ trait Structs
      *
      * @param string $key
      * @param mixed  $value
+     * @deprecated
      */
     public function add($key, $value): void
     {
@@ -157,6 +152,7 @@ trait Structs
      * 汎用削除
      *
      * @param array|string $key
+     * @deprecated
      */
     public function remove($key): void
     {
@@ -179,6 +175,7 @@ trait Structs
      * 汎用の空情報の削除
      *
      * @param string|string[] $key
+     * @deprecated
      */
     public function removeIsEmpty($key): void
     {
@@ -206,6 +203,7 @@ trait Structs
      *
      * @param array|null $array
      * @param bool|null  $strict
+     * @deprecated
      */
     public function bind(?array $array = null, ?bool $strict = false): void
     {
@@ -219,6 +217,7 @@ trait Structs
      *
      * @param array|null $array
      * @param bool|null  $strict
+     * @deprecated
      */
     public function bindArray(?array $array = null, ?bool $strict = false): void
     {
@@ -239,6 +238,7 @@ trait Structs
      *
      * @param mixed|null $object
      * @param bool|null  $strict
+     * @deprecated
      */
     public function bindObject($object = null, ?bool $strict = false): void
     {
@@ -257,6 +257,7 @@ trait Structs
      *
      * @param string $context
      * @return mixed
+     * @deprecated
      */
     public function getFromContext(string $context)
     {
@@ -293,6 +294,7 @@ trait Structs
      *
      * @param string $context
      * @param mixed  $value
+     * @deprecated
      */
     public function setFromContext(string $context, $value): void
     {
@@ -331,6 +333,7 @@ trait Structs
      * null以外のプロパティを取得
      *
      * @return array
+     * @deprecated
      */
     public function notNullProperties(): array
     {
