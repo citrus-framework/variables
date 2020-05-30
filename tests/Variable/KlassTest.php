@@ -38,6 +38,7 @@ BODY;
 
         $klass = (new Klass('Citrus_20180210045129_CreateTableUsers'))
             ->setExtends('\Citrus\Migration\Item')
+            ->setNamespace('Test\\Sample')
             ->setClassComment('Migrations')
             ->setFileComment(KlassFileComment::getInstance()
                 ->addComment(KlassFileComment::ROW, 'generated Citrus Migration file at 2018-02-10 04:51:29')
