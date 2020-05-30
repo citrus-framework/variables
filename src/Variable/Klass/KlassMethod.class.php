@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Citrus\Variable\Klass;
 
+use Citrus\Variable\Clonable;
 use Citrus\Variable\Strings;
 
 /**
@@ -17,6 +18,7 @@ use Citrus\Variable\Strings;
  */
 class KlassMethod
 {
+    use Clonable;
     use Formatable;
 
     /** @var string コメント */
@@ -133,6 +135,34 @@ FORMAT;
     public function setBody(string $body): self
     {
         $this->body = $body;
+        return $this;
+    }
+
+
+
+    /**
+     * 名称の設定
+     *
+     * @param string $name 名称
+     * @return self
+     */
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+
+
+    /**
+     * コメントの設定
+     *
+     * @param string $comment コメント
+     * @return self
+     */
+    public function setComment(string $comment): self
+    {
+        $this->comment = $comment;
         return $this;
     }
 

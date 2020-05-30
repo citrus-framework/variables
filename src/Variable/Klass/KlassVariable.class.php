@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Citrus\Variable\Klass;
 
+use Citrus\Variable\Clonable;
 use Citrus\Variable\Strings;
 
 /**
@@ -17,6 +18,8 @@ use Citrus\Variable\Strings;
  */
 class KlassVariable
 {
+    use Clonable;
+
     /** @var string 型 */
     protected $type;
 
