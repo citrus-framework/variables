@@ -58,4 +58,26 @@ BODY;
 
         $this->assertSame($expected, $klass->toString());
     }
+
+
+
+    /**
+     * @test
+     */
+    public function toString_想定通り_traitのみ()
+    {
+        // パターン1
+        $expected = file_get_contents(__DIR__ . '/../Sample/Integration/Condition/UserCondition.class.php');
+
+        $klass = (new Klass('UserCondition'))
+            ->setExtends('\\Test\\Sample\\Integration\\Property\\UserProperty')
+            ->setNamespace('Test\\Sample\\Integration\\Condition')
+            ->setClassComment('Class UserCondition')
+            ->setFileComment(KlassFileComment::getInstance()
+                ->addComment(KlassFileComment::ROW, 'generated Citrus Condition file at 2018-03-30 06:47:18')
+            )
+            ->addTrait(new KlassTrait('\\Citrus\\Sqlmap\\Condition'));
+
+        $this->assertSame($expected, $klass->toString());
+    }
 }

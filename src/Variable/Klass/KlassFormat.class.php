@@ -162,18 +162,18 @@ class KlassFormat
     /**
      * プロパティとメソッドなどブロック間の空行が必要かどうかを判断して返却
      *
-     * @param KlassProperty[] $properties
-     * @param KlassMethod[]   $methods
+     * @param array $targets1
+     * @param array $targets2
      * @return string
      */
-    public function blankBetweenBlock(array $properties, array $methods): string
+    public function blankBetweenBlock(array $targets1, array $targets2): string
     {
         // プロパティとメソッドの配列がどちらかでも0なら空行はいらない
-        if (0 === count($properties) or 0 === count($methods))
+        if (0 === count($targets1) or 0 === count($targets2))
         {
             return '';
         }
 
-        return str_repeat(PHP_EOL, $this->blank_between_block);
+        return str_repeat(PHP_EOL, ($this->blank_between_block + 1));
     }
 }
