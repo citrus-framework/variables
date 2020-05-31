@@ -15,6 +15,7 @@ use Citrus\Variable\Klass\KlassFileComment;
 use Citrus\Variable\Klass\KlassMethod;
 use Citrus\Variable\Klass\KlassProperty;
 use Citrus\Variable\Klass\KlassReturn;
+use Citrus\Variable\Klass\KlassTrait;
 use Citrus\Variable\Klass\KlassVisibility;
 use PHPUnit\Framework\TestCase;
 
@@ -37,12 +38,14 @@ SQL;
 BODY;
 
         $klass = (new Klass('Citrus_20180210045129_CreateTableUsers'))
-            ->setExtends('\Citrus\Migration\Item')
+            ->setExtends('\\Citrus\\Migration\\Item')
             ->setNamespace('Test\\Sample')
             ->setClassComment('Migrations')
             ->setFileComment(KlassFileComment::getInstance()
                 ->addComment(KlassFileComment::ROW, 'generated Citrus Migration file at 2018-02-10 04:51:29')
             )
+            ->addTrait(new KlassTrait('\\Citrus\\Variable\\Instance'))
+            ->addTrait(new KlassTrait('\\Citrus\\Variable\\Singleton'))
             ->addProperty(new KlassProperty('string', 'object_name', 'users', 'テーブル|ビュー名'))
             ->addMethod((new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'up', false, 'up query'))
                 ->setReturn(new KlassReturn('string', false, 'SQL文字列'))

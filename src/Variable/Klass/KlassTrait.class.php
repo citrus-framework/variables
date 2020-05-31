@@ -18,8 +18,10 @@ use Citrus\Variable\Strings;
  */
 class KlassTrait
 {
-    /** @var string FQN 完全修飾名(autoloadのuseに利用するため) */
-    private $fqn;
+    use Formatable;
+
+    /** @var string トレイト名 */
+    private $name;
 
     /** @var string 出力フォーマット */
     private $output_format = <<<'FORMAT'
@@ -31,11 +33,11 @@ FORMAT;
     /**
      * constructor.
      *
-     * @param string $fqn 完全修飾名
+     * @param string $name トレイト名
      */
-    public function __construct(string $fqn)
+    public function __construct(string $name)
     {
-        $this->fqn = $fqn;
+        $this->name = $name;
     }
 
 
@@ -43,18 +45,14 @@ FORMAT;
     /**
      * 出力
      *
-     * @param KlassFormat $format フォーマット定義
      * @return string
      */
-    public function toString(KlassFormat $format): string
+    public function toString(): string
     {
-        // FQNからトレイト名に変換
-        $trait_name = FQNs::convertClassName($this->fqn);
-
         // 置換パターン
         $replace_patterns = [
-            '{{INDENT}}' => $format->indent,
-            '{{TRAIT_NAME}}' => $trait_name,
+            '{{INDENT}}' => $this->callFormat()->indent,
+            '{{TRAIT_NAME}}' => $this->name,
         ];
 
         // 置換して返却

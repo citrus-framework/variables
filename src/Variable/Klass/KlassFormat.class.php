@@ -30,6 +30,9 @@ class KlassFormat
     /** @var string インデント */
     public $indent;
 
+    /** @var int トレイト前後の空行数 */
+    private $blank_around_trait = 0;
+
     /** @var int プロパティ前後の空行数 */
     private $blank_around_property = 1;
 
@@ -49,6 +52,20 @@ class KlassFormat
     public function __construct(string $indent = self::INDENT_SPACE4)
     {
         $this->indent = $indent;
+    }
+
+
+
+    /**
+     * トレイト前後の空行数
+     *
+     * @param int $blank_around_trait
+     * @return self
+     */
+    public function setBlankAroundTrait(int $blank_around_trait): self
+    {
+        $this->blank_around_trait = $blank_around_trait;
+        return $this;
     }
 
 
@@ -77,6 +94,26 @@ class KlassFormat
     {
         $this->blank_around_method = $blank_around_method;
         return $this;
+    }
+
+
+
+    /**
+     * トレイトの間の空行が必要かどうかを判断して返却
+     *
+     * @param KlassTrait   $target
+     * @param KlassTrait[] $traits
+     * @return string
+     */
+    public function blankAroundTrait(KlassTrait $target, array $traits): string
+    {
+        // 配列が0版目の場合は空行はいらない
+        if (0 === array_search($target, $traits))
+        {
+            return '';
+        }
+
+        return str_repeat(PHP_EOL, ($this->blank_around_trait + 1));
     }
 
 

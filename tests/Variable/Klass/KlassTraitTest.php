@@ -26,9 +26,9 @@ class KlassTraitTest extends TestCase
     public function toString_想定通り()
     {
         // パターン
-        $trait = new KlassTrait(self::class);
+        $trait = new KlassTrait('\\' . self::class);
         $expected = <<<'EXPECTED'
-    use KlassTraitTest;
+    use \Test\Variable\Klass\KlassTraitTest;
 EXPECTED;
         $this->assertSame($expected, $trait->toString(new KlassFormat()));
     }

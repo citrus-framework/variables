@@ -15,6 +15,7 @@ use Citrus\Variable\Klass\KlassFileComment;
 use Citrus\Variable\Klass\KlassFormat;
 use Citrus\Variable\Klass\KlassMethod;
 use Citrus\Variable\Klass\KlassProperty;
+use Citrus\Variable\Klass\KlassTrait;
 
 /**
  * クラスジェネレータ
@@ -41,6 +42,9 @@ class Klass
     /** @var KlassFileComment ファイルコメント */
     private $fileComment;
 
+    /** @var KlassTrait[] トレイト配列 */
+    private $traits = [];
+
     /** @var KlassProperty[] プロパティ配列 */
     private $properties = [];
 
@@ -66,6 +70,7 @@ FORMAT;
 {{CLASS_COMMENT}}
 class {{NAME}}{{WITH_EXTENDS}}{{WITH_IMPLEMENTS}}
 {
+{{EACH_TRAITS}}
 {{EACH_PROPERTIES}}
 {{EACH_METHODS}}
 }
@@ -158,6 +163,20 @@ FORMAT;
 
 
     /**
+     * トレイトの追加
+     *
+     * @param KlassTrait $trait
+     * @return $this
+     */
+    public function addTrait(KlassTrait $trait): self
+    {
+        $this->traits[] = $trait;
+        return $this;
+    }
+
+
+
+    /**
      * プロパティの追加
      *
      * @param KlassProperty $property
@@ -230,6 +249,14 @@ FORMAT;
         {
             $with_implements = sprintf(' implements %s', implode(', ', $this->implements_names));
         }
+        // トレイト
+        $each_traits = '';
+        foreach ($this->traits as $trait)
+        {
+            $trait->setFormat($this->callFormat());
+            $each_traits .= $format->blankAroundTrait($trait, $this->traits);
+            $each_traits .= $trait->toString();
+        }
         // プロパティ
         $each_properties = '';
         foreach ($this->properties as $property)
@@ -242,11 +269,13 @@ FORMAT;
         $each_methods = '';
         foreach ($this->methods as $method)
         {
-            $each_methods .= $format->blankAroundMethod($method, $this->methods);
             $method->setFormat($format);
+            $each_methods .= $format->blankAroundMethod($method, $this->methods);
             $each_methods .= ($method->toCommentString() . PHP_EOL . $method->toMethodString());
         }
 
+        // トレイトとプロパティ間の空行
+        $each_properties = $format->blankBetweenBlock($this->traits, $this->properties) . $each_properties;
         // プロパティとメソッド間の空行
         $each_methods = $format->blankBetweenBlock($this->properties, $this->methods) . $each_methods;
 
@@ -259,6 +288,7 @@ FORMAT;
             '{{NAME}}' => $this->name,
             '{{WITH_EXTENDS}}' => $with_extends,
             '{{WITH_IMPLEMENTS}}' => $with_implements,
+            '{{EACH_TRAITS}}' => $each_traits,
             '{{EACH_PROPERTIES}}' => $each_properties,
             '{{EACH_METHODS}}' => $each_methods,
         ];
