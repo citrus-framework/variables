@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Citrus\Variable\Klass;
 
-use Citrus\Variable\FQNs;
 use Citrus\Variable\Strings;
 
 /**
