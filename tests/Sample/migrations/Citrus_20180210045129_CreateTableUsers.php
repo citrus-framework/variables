@@ -13,6 +13,11 @@ namespace Test\Sample;
  */
 class Citrus_20180210045129_CreateTableUsers extends \Citrus\Migration\Item
 {
+    use \Citrus\Variable\Instance;
+    use \Citrus\Variable\Singleton;
+
+
+
     /** @var string テーブル|ビュー名 */
     public $object_name = 'users';
 
