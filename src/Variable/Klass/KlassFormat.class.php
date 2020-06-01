@@ -133,7 +133,7 @@ class KlassFormat
             return '';
         }
 
-        return str_repeat(PHP_EOL, $this->blank_around_property);
+        return str_repeat(PHP_EOL, ($this->blank_around_property + 1));
     }
 
 

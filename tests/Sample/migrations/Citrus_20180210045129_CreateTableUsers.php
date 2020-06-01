@@ -21,6 +21,9 @@ class Citrus_20180210045129_CreateTableUsers extends \Citrus\Migration\Item
     /** @var string テーブル|ビュー名 */
     public $object_name = 'users';
 
+    /** @var string スキーマ名 */
+    public $schema = 'citrus';
+
 
 
     /**
