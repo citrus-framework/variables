@@ -46,7 +46,7 @@ BODY;
             )
             ->addTrait(new KlassTrait('\\Citrus\\Variable\\Instance'))
             ->addTrait(new KlassTrait('\\Citrus\\Variable\\Singleton'))
-            ->addProperty(new KlassProperty('string', 'object_name', 'users', 'テーブル|ビュー名'))
+            ->addProperty(new KlassProperty('string', 'object_name', '\'users\'', 'テーブル|ビュー名'))
             ->addMethod((new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'up', false, 'up query'))
                 ->setReturn(new KlassReturn('string', false, 'SQL文字列'))
                 ->setBody($body)

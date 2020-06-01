@@ -39,7 +39,7 @@ class KlassProperty
     /** @var string 出力フォーマット */
     private $output_format = <<<'FORMAT'
 {{INDENT}}/** @var {{TYPE}} {{COMMENT}} */
-{{INDENT}}{{VISIBILITY}} ${{FIELD_NAME}} = {{DEFAULT_VALUE}};
+{{INDENT}}{{VISIBILITY}} ${{FIELD_NAME}}{{WITH_DEFAULT_VALUE}};
 FORMAT;
 
 
@@ -76,19 +76,11 @@ FORMAT;
     public function toString(): string
     {
         // デフォルト値
-        $default_value = $this->default_value;
-        // デフォルト値がnullの場合
-        if (true === is_null($default_value))
+        $with_default_value = '';
+        // デフォルト値がnull以外の場合
+        if (false === is_null($this->default_value))
         {
-            $default_value = $default_value ?: 'null';
-        }
-        else
-        {
-            // タイプがstringの場合
-            if ('string' === $this->type)
-            {
-                $default_value = sprintf('\'%s\'', $default_value);
-            }
+            $with_default_value = sprintf(' = %s', $this->default_value);
         }
 
         // 置換パターン
@@ -98,7 +90,7 @@ FORMAT;
             '{{COMMENT}}' => $this->comment,
             '{{VISIBILITY}}' => $this->visibility,
             '{{FIELD_NAME}}' => $this->name,
-            '{{DEFAULT_VALUE}}' => $default_value,
+            '{{WITH_DEFAULT_VALUE}}' => $with_default_value,
         ];
 
         // 置換して返却

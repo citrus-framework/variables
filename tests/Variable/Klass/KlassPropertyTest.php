@@ -29,7 +29,7 @@ class KlassPropertyTest extends TestCase
         $property = (new KlassProperty(
             'string',
             'name',
-            'John',
+            '\'John\'',
             '名前',
             KlassVisibility::TYPE_PRIVATE))
             ->setFormat(new KlassFormat());
@@ -49,7 +49,7 @@ EXPECTED;
             ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
     /** @var string 名前 */
-    private $name = null;
+    private $name;
 EXPECTED;
         $this->assertSame($expected, $property->toString());
     }
