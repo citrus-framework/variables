@@ -51,6 +51,13 @@ EXPECTED;
 
 EXPECTED;
         $this->assertSame($expected, $return->toReturnHintString());
+
+        // パターン5
+        $return = new KlassReturn('string[]', false);
+        $expected = <<<'EXPECTED'
+: array
+EXPECTED;
+        $this->assertSame($expected, $return->toReturnHintString());
     }
 
 

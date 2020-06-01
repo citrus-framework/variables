@@ -69,11 +69,18 @@ FORMAT;
         $is_mixed = ('mixed' === $this->type);
         // ?マークでnullを表す
         $is_nullable_mark = (true === $this->nullable and false === $is_mixed);
+        // 型
+        $type = (false === $is_mixed ? $this->type : '');
+        if ('[]' === substr($type, -2))
+        {
+            // string[]、int[]のような場合に配列に変換する
+            $type = 'array';
+        }
 
         // 置換パターン
         $replace_patterns = [
             '{{CONJUNCTION_MARK}}' => (false === $is_mixed ? ': ' : ''),
-            '{{TYPE}}' => (false === $is_mixed ? $this->type : ''),
+            '{{TYPE}}' => $type,
             '{{NULLABLE_MARK}}' => (true === $is_nullable_mark ? '?' : ''),
         ];
 
