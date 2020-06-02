@@ -6,7 +6,7 @@ declare(strict_types=1);
  * generated Citrus Migration file at 2018-02-10 04:51:29
  */
 
-namespace Test\Sample;
+namespace Test\Sample\migrations;
 
 /**
  * Migrations
