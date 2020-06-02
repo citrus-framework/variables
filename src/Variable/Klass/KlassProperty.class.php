@@ -59,9 +59,9 @@ FORMAT;
                                 string $comment = '',
                                 string $visibility = KlassVisibility::TYPE_PUBLIC
     ) {
+        $this->type = $type;
         $this->name = $name;
         $this->default_value = $default_value;
-        $this->type = $type;
         $this->comment = $comment;
         $this->visibility = $visibility;
     }
@@ -95,5 +95,20 @@ FORMAT;
 
         // 置換して返却
         return Strings::patternReplace($replace_patterns, $this->output_format);
+    }
+
+
+
+    /**
+     * protected な stringプロパティを生成して取得
+     *
+     * @param string      $name          フィールド名
+     * @param mixed|null  $default_value デフォルト値
+     * @param string|null $comment       コメント
+     * @return self
+     */
+    public static function newProtectedString(string $name, $default_value = null, string $comment = ''): self
+    {
+        return new self('string', $name, $default_value, $comment, KlassVisibility::TYPE_PROTECTED);
     }
 }

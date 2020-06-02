@@ -49,7 +49,7 @@ EXPECTED;
 
         // パターン3
         $fileComment = KlassFileComment::getInstance()
-            ->addComment(KlassFileComment::ROW, 'generated Citrus Migration file at 2018-02-10 04:51:29');
+            ->addComment(KlassFileComment::RAW, 'generated Citrus Migration file at 2018-02-10 04:51:29');
         $expected = <<<'EXPECTED'
 /**
  * generated Citrus Migration file at 2018-02-10 04:51:29
@@ -59,7 +59,7 @@ EXPECTED;
 
         // パターン4
         $fileComment = KlassFileComment::getInstance()
-            ->addComment(KlassFileComment::ROW, 'generated Citrus Migration file at 2018-02-10 04:51:29')
+            ->addComment(KlassFileComment::RAW, 'generated Citrus Migration file at 2018-02-10 04:51:29')
             ->addComment(KlassFileComment::COPYRIGHT, 'Copyright 2020, CitrusVariables. All Rights Reserved.')
             ->addComment(KlassFileComment::AUTHOR, 'take64 <take64@citrus.tk>')
             ->addComment(KlassFileComment::LICENSE, 'http://www.citrus.tk/')
@@ -77,5 +77,26 @@ EXPECTED;
  */
 EXPECTED;
         $this->assertSame($expected, $fileComment->toCommentString());
+    }
+
+
+
+    /**
+     * @test
+     */
+    public function newRaw_想定通り()
+    {
+        // 共通
+        $comment = 'generated Citrus klass';
+
+        // 想定
+        $expected = new KlassFileComment();
+        $expected->addComment(KlassFileComment::RAW, $comment);
+
+        // 検査対象
+        $actual = KlassFileComment::newRaw($comment);
+
+        // 検算
+        $this->assertEquals($expected, $actual);
     }
 }

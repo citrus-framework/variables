@@ -42,7 +42,7 @@ BODY;
             ->setNamespace('Test\\Sample')
             ->setClassComment('Migrations')
             ->setFileComment(KlassFileComment::getInstance()
-                ->addComment(KlassFileComment::ROW, 'generated Citrus Migration file at 2018-02-10 04:51:29')
+                ->addComment(KlassFileComment::RAW, 'generated Citrus Migration file at 2018-02-10 04:51:29')
             )
             ->addTrait(new KlassTrait('\\Citrus\\Variable\\Instance'))
             ->addTrait(new KlassTrait('\\Citrus\\Variable\\Singleton'))
@@ -75,7 +75,7 @@ BODY;
             ->setNamespace('Test\\Sample\\Integration\\Condition')
             ->setClassComment('Class UserCondition')
             ->setFileComment(KlassFileComment::getInstance()
-                ->addComment(KlassFileComment::ROW, 'generated Citrus Condition file at 2018-03-30 06:47:18')
+                ->addComment(KlassFileComment::RAW, 'generated Citrus Condition file at 2018-03-30 06:47:18')
             )
             ->addTrait(new KlassTrait('\\Citrus\\Sqlmap\\Condition'));
 
