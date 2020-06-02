@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Test\Variable\Klass;
 
+use Citrus\Variable\Klass\KlassFileComment;
 use Citrus\Variable\Klass\KlassFormat;
 use Citrus\Variable\Klass\KlassProperty;
 use Citrus\Variable\Klass\KlassVisibility;
@@ -53,4 +54,27 @@ EXPECTED;
 EXPECTED;
         $this->assertSame($expected, $property->toString());
     }
+
+
+
+    /**
+     * @test
+     */
+    public function newProtectedString_想定通り()
+    {
+        // 共通
+        $name = 'name';
+        $default_value = '\'John\'';
+        $comment = '名前';
+
+        // 想定
+        $expected = new KlassProperty('string', $name, $default_value, $comment, KlassVisibility::TYPE_PROTECTED);
+
+        // 検査対象
+        $actual = KlassProperty::newProtectedString($name, $default_value, $comment);
+
+        // 検算
+        $this->assertEquals($expected, $actual);
+    }
+
 }

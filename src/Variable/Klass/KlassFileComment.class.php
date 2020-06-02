@@ -21,7 +21,7 @@ class KlassFileComment
     use Instance;
 
     /** @var string ファイル自体のコメント */
-    public const ROW = 'row';
+    public const RAW = 'raw';
 
     /** @var string コピーライト */
     public const COPYRIGHT = 'copyright';
@@ -110,7 +110,7 @@ FORMAT;
             $type = $comment[self::STACK_KEY_TYPE];
             $context = $comment[self::STACK_KEY_CONTEXT];
             // コメントの分類
-            $is_row = (self::ROW === $type);
+            $is_row = (self::RAW === $type);
             // フォーマット
             $comment_contexts[] = Strings::patternReplace([
                 '{{TYPE}}' => $type,
@@ -144,7 +144,7 @@ FORMAT;
             // 平文コメントがあるか
             if (false === $is_row)
             {
-                $is_row = (self::ROW === $type);
+                $is_row = (self::RAW === $type);
             }
             // 平文以外のコメントがあるか
             if (false === $is_other)
@@ -165,5 +165,18 @@ FORMAT;
         }
 
         return $is_need_space;
+    }
+
+
+
+    /**
+     * 平文コメントを生成して取得
+     *
+     * @param string $comment
+     * @return static
+     */
+    public static function newRaw(string $comment): self
+    {
+        return (new self())->addComment(KlassFileComment::RAW, $comment);
     }
 }
