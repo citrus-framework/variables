@@ -129,6 +129,19 @@ FORMAT;
 
 
     /**
+     * 平文コメントを生成して取得
+     *
+     * @param string $comment
+     * @return static
+     */
+    public static function newRaw(string $comment): self
+    {
+        return (new self())->addComment(KlassFileComment::RAW, $comment);
+    }
+
+
+
+    /**
      * 平文コメントと＠コメントの間にスペースが必要かどうか
      *
      * @return bool true:スペースが必要
@@ -165,18 +178,5 @@ FORMAT;
         }
 
         return $is_need_space;
-    }
-
-
-
-    /**
-     * 平文コメントを生成して取得
-     *
-     * @param string $comment
-     * @return static
-     */
-    public static function newRaw(string $comment): self
-    {
-        return (new self())->addComment(KlassFileComment::RAW, $comment);
     }
 }
