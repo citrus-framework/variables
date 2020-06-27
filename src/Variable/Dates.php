@@ -44,8 +44,8 @@ class Dates extends DateTime
      * @see https://www.php.net/manual/ja/datetime.construct.php
      * > 5.3.0 time が 日付と時刻の書式 として無効な場合に、例外がスローされるようになりました。
      * 親のDateTimeの第1引数に起因する例外のため、未指定の今回は握りつぶす
-     *
      * @return self
+     * @throws VariableException
      */
     public static function clear(): self
     {
@@ -55,6 +55,7 @@ class Dates extends DateTime
         }
         catch (\Exception $e)
         {
+            throw VariableException::convert($e);
         }
 
         return self::$NOW;

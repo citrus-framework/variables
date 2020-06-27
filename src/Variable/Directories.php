@@ -18,15 +18,17 @@ class Directories
     /**
      * 引数のディレクトリ文字列を適切な形に修飾する
      *
+     * dir1//dir2 => dir1/dir2
+     * ./dir1/dir2 => dir1/dir2
+     * dir1/../dir2 => dir2
+     *
      * @param string $path
      * @return string
      */
     public static function suitablePath(string $path): string
     {
-        // パスを分解
-        $paths = explode('/', $path);
-        // 逆順
-        $paths = array_reverse($paths);
+        // パスを分解して逆順にする
+        $paths = array_reverse(explode('/', $path));
 
         // 相殺レベル
         $offset_level = 0;
@@ -39,7 +41,6 @@ class Directories
                 unset($paths[$ky]);
                 continue;
             }
-
             // 親指定がある場合は次にパスを削除する
             if ('..' === $vl)
             {
@@ -47,7 +48,6 @@ class Directories
                 $offset_level++;
                 continue;
             }
-
             // 相殺レベルがある場合は削除
             if (0 < $offset_level)
             {
@@ -56,11 +56,8 @@ class Directories
                 continue;
             }
         }
-
-        // 正順に戻す
-        $paths = array_reverse($paths);
-
-        return implode('/', $paths);
+        // 正順に戻して、返却
+        return implode('/', array_reverse($paths));
     }
 
 

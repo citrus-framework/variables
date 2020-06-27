@@ -61,7 +61,10 @@ FORMAT;
      * @param bool|null   $nullable      true:null許可
      * @param string|null $comment       コメント
      */
-    public function __construct(string $type, string $name, $default_value = null, bool $nullable = false, ?string $comment = null)
+    public function __construct(string $type,
+                                string $name, $default_value = null,
+                                bool $nullable = false,
+                                ?string $comment = null)
     {
         $this->type = $type;
         $this->name = $name;

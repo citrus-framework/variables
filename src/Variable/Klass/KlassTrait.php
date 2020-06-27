@@ -57,4 +57,25 @@ FORMAT;
         // 置換して返却
         return Strings::patternReplace($replace_patterns, $this->output_format);
     }
+
+
+
+    /**
+     * 配列を文字列出力する
+     *
+     * @param KlassTrait[] $traits 処理対象配列
+     * @param KlassFormat  $format フォーマット
+     * @return string
+     */
+    public static function eachToString(array $traits, KlassFormat $format): string
+    {
+        $each_traits = '';
+        foreach ($traits as $trait)
+        {
+            $trait->setFormat($format);
+            $each_traits .= $format->blankAroundTrait($trait, $traits);
+            $each_traits .= $trait->toString();
+        }
+        return $each_traits;
+    }
 }

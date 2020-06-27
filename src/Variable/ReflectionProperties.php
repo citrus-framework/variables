@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Citrus\Variable;
 
+use ReflectionException;
 use ReflectionProperty;
 
 /**
@@ -23,7 +24,7 @@ class ReflectionProperties
      * @param object $object オブジェクト
      * @param string $property プロパティ
      * @return mixed
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public static function call(object $object, string $property)
     {

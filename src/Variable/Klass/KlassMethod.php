@@ -227,6 +227,27 @@ FORMAT;
 
 
     /**
+     * 配列を文字列出力する
+     *
+     * @param KlassMethod[] $methods 処理対象配列
+     * @param KlassFormat   $format  フォーマット
+     * @return string
+     */
+    public static function eachToString(array $methods, KlassFormat $format): string
+    {
+        $each_methods = '';
+        foreach ($methods as $method)
+        {
+            $method->setFormat($format);
+            $each_methods .= $format->blankAroundMethod($method, $methods);
+            $each_methods .= ($method->toCommentString() . PHP_EOL . $method->toMethodString());
+        }
+        return $each_methods;
+    }
+
+
+
+    /**
      * パラメータコメントを生成して返却
      *
      * @return string
