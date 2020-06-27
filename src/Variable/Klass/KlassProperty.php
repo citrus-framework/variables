@@ -111,4 +111,25 @@ FORMAT;
     {
         return new self('string', $name, $default_value, $comment, KlassVisibility::TYPE_PROTECTED);
     }
+
+
+
+    /**
+     * 配列を文字列出力する
+     *
+     * @param KlassProperty[] $properties 処理対象配列
+     * @param KlassFormat     $format     フォーマット
+     * @return string
+     */
+    public static function eachToString(array $properties, KlassFormat $format): string
+    {
+        $each_properties = '';
+        foreach ($properties as $property)
+        {
+            $property->setFormat($format);
+            $each_properties .= $format->blankAroundProperty($property, $properties);
+            $each_properties .= $property->toString();
+        }
+        return $each_properties;
+    }
 }

@@ -12,7 +12,6 @@ namespace Citrus\Variable;
 
 use Citrus\Variable\Klass\Formatable;
 use Citrus\Variable\Klass\KlassFileComment;
-use Citrus\Variable\Klass\KlassFormat;
 use Citrus\Variable\Klass\KlassMethod;
 use Citrus\Variable\Klass\KlassProperty;
 use Citrus\Variable\Klass\KlassTrait;
@@ -74,7 +73,6 @@ class {{NAME}}{{WITH_EXTENDS}}{{WITH_IMPLEMENTS}}
 }
 
 FORMAT;
-
 
 
 
@@ -224,7 +222,7 @@ FORMAT;
     public function toString(): string
     {
         // フォーマット
-        $format = new KlassFormat();
+        $format = $this->callFormat();
         // 厳密な型検査
         $with_strict_types = '';
         if (true === $this->is_strict_types)
@@ -232,9 +230,13 @@ FORMAT;
             $with_strict_types = PHP_EOL . 'declare(strict_types=1);';
         }
         // ファイルコメント
-        $file_comment = (false === is_null($this->fileComment) ? PHP_EOL . $this->fileComment->toCommentString() : '');
+        $file_comment = (false === is_null($this->fileComment)
+            ? PHP_EOL . $this->fileComment->toCommentString()
+            : '');
         // ネームスペース
-        $with_namespace = (false === is_null($this->namespace) ? PHP_EOL . sprintf('namespace %s;', $this->namespace) : '');
+        $with_namespace = (false === is_null($this->namespace)
+            ? PHP_EOL . sprintf('namespace %s;', $this->namespace)
+            : '');
         // 継承
         $with_extends = '';
         if (false === is_null($this->extends_name))
@@ -248,29 +250,11 @@ FORMAT;
             $with_implements = sprintf(' implements %s', implode(', ', $this->implements_names));
         }
         // トレイト
-        $each_traits = '';
-        foreach ($this->traits as $trait)
-        {
-            $trait->setFormat($this->callFormat());
-            $each_traits .= $format->blankAroundTrait($trait, $this->traits);
-            $each_traits .= $trait->toString();
-        }
+        $each_traits = KlassTrait::eachToString($this->traits, $format);
         // プロパティ
-        $each_properties = '';
-        foreach ($this->properties as $property)
-        {
-            $property->setFormat($this->callFormat());
-            $each_properties .= $format->blankAroundProperty($property, $this->properties);
-            $each_properties .= $property->toString();
-        }
+        $each_properties = KlassProperty::eachToString($this->properties, $format);
         // メソッド
-        $each_methods = '';
-        foreach ($this->methods as $method)
-        {
-            $method->setFormat($format);
-            $each_methods .= $format->blankAroundMethod($method, $this->methods);
-            $each_methods .= ($method->toCommentString() . PHP_EOL . $method->toMethodString());
-        }
+        $each_methods = KlassMethod::eachToString($this->methods, $format);
 
         // トレイトとプロパティ間の空行
         $each_properties = $format->blankBetweenBlock($this->traits, $this->properties) . $each_properties;
