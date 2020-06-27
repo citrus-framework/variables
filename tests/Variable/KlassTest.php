@@ -68,7 +68,7 @@ BODY;
     public function toString_想定通り_traitのみ()
     {
         // パターン1
-        $expected = file_get_contents(__DIR__ . '/../Sample/Integration/Condition/UserCondition.class.php');
+        $expected = file_get_contents(__DIR__ . '/../Sample/Integration/Condition/UserCondition.php');
 
         $klass = (new Klass('UserCondition'))
             ->setExtends('\\Test\\Sample\\Integration\\Property\\UserProperty')

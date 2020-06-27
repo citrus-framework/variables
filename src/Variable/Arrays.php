@@ -16,7 +16,7 @@ namespace Citrus\Variable;
 class Arrays
 {
     /**
-     * 配列の回想をパスで取得
+     * 配列の階層をパスで取得
      *
      * @param array  $values 配列
      * @param string $path   ドット区切りパス指定
