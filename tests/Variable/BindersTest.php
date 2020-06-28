@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace Test\Variable;
 
 use Citrus\Variable\Binders;
-use Citrus\Variable\Dates;
 use PHPUnit\Framework\TestCase;
 
 /**
