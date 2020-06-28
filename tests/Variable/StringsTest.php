@@ -77,4 +77,15 @@ EXPECTED;
         // 検算(最終文字列が改行だった場合取り除く)
         $this->assertSame($expected2, Strings::removeDuplicateEOL($source, true));
     }
+
+
+    /**
+     * @test
+     */
+    public function upperCamelCase_想定通り()
+    {
+        $snake_case_context = 'application_name';
+        // 検算
+        $this->assertSame('ApplicationName', Strings::upperCamelCase($snake_case_context));
+    }
 }
