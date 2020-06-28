@@ -26,6 +26,7 @@ class Dates extends DateTime
      * 現時刻を(未設定であれば初期化して)取得
      *
      * @return self
+     * @throws VariableException
      */
     public static function now(): self
     {

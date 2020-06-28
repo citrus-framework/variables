@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Citrus\Variable;
 
+use Citrus\Collection;
+
 /**
  * 文字列拡張
  */
@@ -68,5 +70,26 @@ class Strings
         }
 
         return $replaced;
+    }
+
+
+
+    /**
+     * 文字列をアッパーキャメルケースに変換する
+     *
+     * @param string $context   対象文字列
+     * @param string $delimiter デリミタ
+     * @return string
+     */
+    public static function upperCamelCase(string $context, string $delimiter = '_'): string
+    {
+        // デリミタで分割する
+        $parts = explode($delimiter, $context);
+        $converted_parts = Collection::stream($parts)->map(function ($vl) {
+            // 小文字化して、先頭文字だけ大文字に変更
+            return ucfirst(strtolower($vl));
+        })->toValues();
+        // 連結して返却
+        return implode('', $converted_parts);
     }
 }
