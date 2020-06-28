@@ -30,7 +30,7 @@ class KlassTest extends TestCase
     public function toString_想定通り()
     {
         // パターン1
-        $expected = file_get_contents(__DIR__ . '/../Sample/migrations/Citrus_20180210045129_CreateTableUsers.php');
+        $expected = file_get_contents(__DIR__ . '/../Sample/Citrus_20180210045129_CreateTableUsers.php');
 
         $body = <<<'BODY'
         return <<<SQL
