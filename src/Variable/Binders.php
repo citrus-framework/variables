@@ -57,6 +57,64 @@ trait Binders
 
 
     /**
+     * 汎用追加処理
+     *
+     * @param string $key
+     * @param mixed  $value
+     */
+    public function add($key, $value): void
+    {
+        $add = &$this->$key;
+
+        if (true === is_null($add))
+        {
+            $add = (true === is_array($value) ? $value : [$value]);
+        }
+        else
+        {
+            if (true === is_array($add))
+            {
+                if (true === is_array($value))
+                {
+                    $add += $value;
+                }
+                else
+                {
+                    array_push($add, $value);
+                }
+            }
+            else
+            {
+                $add = [$add, $value];
+            }
+        }
+    }
+
+
+
+    /**
+     * 汎用削除
+     *
+     * @param array|string $key
+     */
+    public function remove($key): void
+    {
+        if (true === is_array($key))
+        {
+            foreach ($key as $one)
+            {
+                unset($this->$one);
+            }
+        }
+        else
+        {
+            unset($this->$key);
+        }
+    }
+
+
+
+    /**
      * 配列当て込み処理
      *
      * @param array|null $array
