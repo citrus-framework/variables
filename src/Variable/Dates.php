@@ -25,7 +25,7 @@ class Dates extends DateTime
     /**
      * 現時刻を(未設定であれば初期化して)取得
      *
-     * @return self
+     * @return $this
      * @throws VariableException
      */
     public static function now(): self
@@ -45,7 +45,7 @@ class Dates extends DateTime
      * @see https://www.php.net/manual/ja/datetime.construct.php
      * > 5.3.0 time が 日付と時刻の書式 として無効な場合に、例外がスローされるようになりました。
      * 親のDateTimeの第1引数に起因する例外のため、未指定の今回は握りつぶす
-     * @return self
+     * @return $this
      * @throws VariableException
      */
     public static function clear(): self
@@ -84,5 +84,54 @@ class Dates extends DateTime
     public function formatTimestampWithTimezone(): string
     {
         return $this->format('Y-m-d H:i:sO');
+    }
+
+
+
+    /**
+     * 秒数の加算
+     *
+     * @param int $second 追加秒数
+     * @return $this
+     * @throws VariableException
+     */
+    public function addSecond(int $second): self
+    {
+        return $this->add($this->buildInterval(sprintf('PT%dS', $second)));
+    }
+
+
+
+    /**
+     * 秒数の減算
+     *
+     * @param int $second 追加秒数
+     * @return $this
+     * @throws VariableException
+     */
+    public function subSecond(int $second): self
+    {
+        return $this->sub($this->buildInterval(sprintf('PT%dS', $second)));
+    }
+
+
+
+    /**
+     * DateIntervalを返却し、Exceptionを握りつぶす
+     *
+     * @param string $interval_spec
+     * @return \DateInterval
+     * @throws VariableException
+     */
+    private function buildInterval(string $interval_spec): \DateInterval
+    {
+        try
+        {
+            return new \DateInterval($interval_spec);
+        }
+        catch (\Exception $e)
+        {
+            throw VariableException::convert($e);
+        }
     }
 }
