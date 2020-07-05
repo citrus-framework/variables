@@ -93,6 +93,49 @@ class BindersTest extends TestCase
         $binderSample->bindObject($actual, true);
         $this->assertNull($binderSample->get('name2'));
     }
+
+
+
+    /**
+     * @test
+     */
+    public function add_想定通り()
+    {
+        $name = 'John';
+        $actual = new BinderSample();
+        $actual->set('name', [$name, $name]);
+
+        // プロパティに設定できる
+        $binderSample = new BinderSample();
+        $binderSample->add('name', $name);
+        $binderSample->add('name', $name);
+        $this->assertSame($binderSample->get('name'), $actual->get('name'));
+
+        // 存在しないプロパティに設定できる
+        $binderSample = new BinderSample();
+        $binderSample->add('name2', $name);
+        $binderSample->add('name2', $name);
+        $this->assertSame($binderSample->get('name2'), $actual->get('name'));
+    }
+
+
+
+    /**
+     * @test
+     */
+    public function remove_想定通り()
+    {
+        $name = 'John';
+
+        // プロパティを削除できる
+        $binderSample = new BinderSample();
+        // 一度設定する
+        $binderSample->set('name', $name);
+        $this->assertNotNull($binderSample->get('name'));
+        // 削除する
+        $binderSample->remove('name');
+        $this->assertNull($binderSample->get('name'));
+    }
 }
 
 
