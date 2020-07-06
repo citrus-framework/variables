@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Citrus\Variable;
 
+use DateInterval;
 use DateTime;
 
 /**
@@ -93,7 +94,6 @@ class Dates extends DateTime
      *
      * @param int $second 追加秒数
      * @return $this
-     * @throws VariableException
      */
     public function addSecond(int $second): self
     {
@@ -107,7 +107,6 @@ class Dates extends DateTime
      *
      * @param int $second 追加秒数
      * @return $this
-     * @throws VariableException
      */
     public function subSecond(int $second): self
     {
@@ -120,18 +119,17 @@ class Dates extends DateTime
      * DateIntervalを返却し、Exceptionを握りつぶす
      *
      * @param string $interval_spec
-     * @return \DateInterval
-     * @throws VariableException
+     * @return DateInterval|null
      */
-    private function buildInterval(string $interval_spec): \DateInterval
+    private function buildInterval(string $interval_spec): ?DateInterval
     {
         try
         {
-            return new \DateInterval($interval_spec);
+            return new DateInterval($interval_spec);
         }
         catch (\Exception $e)
         {
-            throw VariableException::convert($e);
         }
+        return null;
     }
 }
