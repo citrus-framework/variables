@@ -109,6 +109,12 @@ FORMAT;
      */
     public static function newProtectedString(string $name, $default_value = null, string $comment = ''): self
     {
+        // stringと決まっているので、''で囲む
+        if (false === is_null($default_value))
+        {
+            $default_value = sprintf('\'%s\'', $default_value);
+        }
+
         return new self('string', $name, $default_value, $comment, KlassVisibility::TYPE_PROTECTED);
     }
 
