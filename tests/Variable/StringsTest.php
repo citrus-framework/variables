@@ -88,4 +88,19 @@ EXPECTED;
         // 検算
         $this->assertSame('ApplicationName', Strings::upperCamelCase($snake_case_context));
     }
+
+
+    /**
+     * @test
+     */
+    public function snakeCase_想定通り()
+    {
+        // アッパーキャメルケース
+        $upper_camel_case_context = 'ApplicationName';
+        $this->assertSame('application_name', Strings::snakeCase($upper_camel_case_context));
+
+        // ロウアーキャメルケース
+        $lower_camel_case_context = 'applicationName';
+        $this->assertSame('application_name', Strings::snakeCase($lower_camel_case_context));
+    }
 }
