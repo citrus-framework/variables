@@ -64,11 +64,11 @@ EXPECTED;
     {
         // 共通
         $name = 'name';
-        $default_value = '\'John\'';
+        $default_value = 'John';
         $comment = '名前';
 
         // 想定
-        $expected = new KlassProperty('string', $name, $default_value, $comment, KlassVisibility::TYPE_PROTECTED);
+        $expected = new KlassProperty('string', $name, sprintf('\'%s\'', $default_value), $comment, KlassVisibility::TYPE_PROTECTED);
 
         // 検査対象
         $actual = KlassProperty::newProtectedString($name, $default_value, $comment);
