@@ -92,4 +92,38 @@ class Strings
         // 連結して返却
         return implode('', $converted_parts);
     }
+
+
+
+    /**
+     * 文字列をスネークケースに変換する
+     *
+     * @param string $context   対象文字列
+     * @param string $glue    グルー文字列
+     * @return string
+     */
+    public static function snakeCase(string $context, string $glue = '_'): string
+    {
+        $result = '';
+        $ascii_a = ord('A');
+        $ascii_z = ord('Z');
+
+        $length = strlen($context);
+        for ($pos = 0; $pos < $length; $pos++)
+        {
+            $char = substr($context, $pos, 1);
+            $ascii_dec = ord($char);
+            // 先頭文字以外で
+            // 文字が大文字の範囲
+            if (0 < $pos and ($ascii_a <= $ascii_dec and $ascii_dec <= $ascii_z))
+            {
+                // 大文字の前にグルー文字列をつける
+                $result .= $glue;
+            }
+
+            $result .= strtolower($char);
+        }
+
+        return $result;
+    }
 }
