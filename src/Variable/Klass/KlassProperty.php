@@ -109,13 +109,28 @@ FORMAT;
      */
     public static function newProtectedString(string $name, $default_value = null, string $comment = ''): self
     {
+        return new self('string', $name, $default_value, $comment, KlassVisibility::TYPE_PROTECTED);
+    }
+
+
+
+    /**
+     * protected な stringプロパティを生成して取得(文字列をクオートする)
+     *
+     * @param string      $name          フィールド名
+     * @param mixed|null  $default_value デフォルト値
+     * @param string|null $comment       コメント
+     * @return self
+     */
+    public static function newProtectedQuotedString(string $name, $default_value = null, string $comment = ''): self
+    {
         // stringと決まっているので、''で囲む
         if (false === is_null($default_value))
         {
             $default_value = sprintf('\'%s\'', $default_value);
         }
 
-        return new self('string', $name, $default_value, $comment, KlassVisibility::TYPE_PROTECTED);
+        return self::newProtectedString($name, $default_value, $comment);
     }
 
 

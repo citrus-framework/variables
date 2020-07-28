@@ -68,7 +68,7 @@ EXPECTED;
         $comment = '名前';
 
         // 想定
-        $expected = new KlassProperty('string', $name, sprintf('\'%s\'', $default_value), $comment, KlassVisibility::TYPE_PROTECTED);
+        $expected = new KlassProperty('string', $name, sprintf('%s', $default_value), $comment, KlassVisibility::TYPE_PROTECTED);
 
         // 検査対象
         $actual = KlassProperty::newProtectedString($name, $default_value, $comment);
@@ -77,4 +77,25 @@ EXPECTED;
         $this->assertEquals($expected, $actual);
     }
 
+
+
+    /**
+     * @test
+     */
+    public function newProtectedQuotedString_想定通り()
+    {
+        // 共通
+        $name = 'name';
+        $default_value = 'John';
+        $comment = '名前';
+
+        // 想定
+        $expected = new KlassProperty('string', $name, sprintf('\'%s\'', $default_value), $comment, KlassVisibility::TYPE_PROTECTED);
+
+        // 検査対象
+        $actual = KlassProperty::newProtectedQuotedString($name, $default_value, $comment);
+
+        // 検算
+        $this->assertEquals($expected, $actual);
+    }
 }
