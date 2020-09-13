@@ -97,4 +97,34 @@ class DatesTest extends TestCase
         // 検算(存在しない日付)
         $this->assertNull($dt2);
     }
+
+
+
+    /**
+     * @test
+     */
+    public function addDay_想定通り()
+    {
+        $dt1 = Dates::new('2020-03-04');
+        $dt2 = (clone $dt1)->addDay(1);
+
+        // 検算(日数差は1日)
+        $this->assertSame(1, $dt1->diff($dt2)->d);
+        $this->assertTrue($dt1 < $dt2);
+    }
+
+
+
+    /**
+     * @test
+     */
+    public function subDay_想定通り()
+    {
+        $dt1 = Dates::new('2020-03-04');
+        $dt2 = (clone $dt1)->subDay(1);
+
+        // 検算(日数差は1日)
+        $this->assertSame(1, $dt1->diff($dt2)->d);
+        $this->assertTrue($dt1 > $dt2);
+    }
 }

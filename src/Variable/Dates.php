@@ -109,6 +109,32 @@ class Dates extends DateTime
 
 
     /**
+     * 日付の加算
+     *
+     * @param int $day 加算日数
+     * @return $this
+     */
+    public function addDay(int $day): self
+    {
+        return $this->addSecond(60 * 60 * 24 * $day);
+    }
+
+
+
+    /**
+     * 日数の減算
+     *
+     * @param int $day 減算日数
+     * @return $this
+     */
+    public function subDay(int $day): self
+    {
+        return $this->subSecond(60 * 60 * 24 * $day);
+    }
+
+
+
+    /**
      * 秒数の加算
      *
      * @param int $second 追加秒数
@@ -116,7 +142,7 @@ class Dates extends DateTime
      */
     public function addSecond(int $second): self
     {
-        return $this->add($this->buildInterval(sprintf('PT%dS', $second)));
+        return $this->add(DateInterval::createFromDateString(sprintf('%d seconds', $second)));
     }
 
 
@@ -129,26 +155,6 @@ class Dates extends DateTime
      */
     public function subSecond(int $second): self
     {
-        return $this->sub($this->buildInterval(sprintf('PT%dS', $second)));
-    }
-
-
-
-    /**
-     * DateIntervalを返却し、Exceptionを握りつぶす
-     *
-     * @param string $interval_spec
-     * @return DateInterval|null
-     */
-    private function buildInterval(string $interval_spec): ?DateInterval
-    {
-        try
-        {
-            return new DateInterval($interval_spec);
-        }
-        catch (\Exception $e)
-        {
-        }
-        return null;
+        return $this->sub(DateInterval::createFromDateString(sprintf('%d seconds', $second)));
     }
 }
