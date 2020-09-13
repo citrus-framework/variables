@@ -78,4 +78,23 @@ class DatesTest extends TestCase
         // 検算(時間文字列が一致)
         $this->assertSame($dt1, $dt2);
     }
+
+
+
+    /**
+     * @test
+     */
+    public function new_想定通り()
+    {
+        // 普通の日付
+        $dt1 = Dates::new('2020-03-04');
+        // 存在しない日付
+        $dt2 = Dates::new('2020-05-67');
+
+        // 検算(普通の日付)
+        $this->assertSame('3', $dt1->format('n'));
+        $this->assertSame('4', $dt1->format('j'));
+        // 検算(存在しない日付)
+        $this->assertNull($dt2);
+    }
 }

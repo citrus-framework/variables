@@ -24,6 +24,25 @@ class Dates extends DateTime
 
 
     /**
+     * 日付文字列から生成する
+     *
+     * @param string $date 日付文字列
+     * @return $this|null
+     */
+    public static function new(string $date): ?self
+    {
+        try {
+            return new Dates($date);
+        }
+        catch (\Exception $e)
+        {
+            return null;
+        }
+    }
+
+
+
+    /**
      * 現時刻を(未設定であれば初期化して)取得
      *
      * @return $this
