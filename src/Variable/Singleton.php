@@ -22,11 +22,11 @@ trait Singleton
      */
     public static function sharedInstance(): self
     {
-        static $singleton;
-        if (true === is_null($singleton))
+        static $singletons = [];
+        if (false === array_key_exists(static::class, $singletons))
         {
-            $singleton = new static();
+            $singletons[static::class] = new static();
         }
-        return $singleton;
+        return $singletons[static::class];
     }
 }
