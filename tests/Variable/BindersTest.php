@@ -136,6 +136,26 @@ class BindersTest extends TestCase
         $binderSample->remove('name');
         $this->assertNull($binderSample->get('name'));
     }
+
+
+
+    /**
+     * @test
+     */
+    public function makeAndBind_想定通り()
+    {
+        $name = 'John';
+
+        // オブジェクトを生成できる
+        $binderSample = BinderSample::makeAndBind([
+            'name' => $name,
+        ]);
+
+        // オブジェクトを生成できている
+        $this->assertInstanceOf(BinderSample::class, $binderSample);
+        // プロパティが一致している
+        $this->assertEquals($name, $binderSample->name);
+    }
 }
 
 

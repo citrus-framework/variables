@@ -149,4 +149,29 @@ trait Binders
         $array = get_object_vars($object);
         $this->bindArray($array, $strict);
     }
+
+
+
+    /**
+     * インスタンスを生成して、変数をバインドする
+     *
+     * @param object|array $data バインドする変数
+     * @param bool         $strict 厳密設定
+     * @return self
+     */
+    public static function makeAndBind(object|array $data, ?bool $strict = false): self
+    {
+        $self = new static();
+
+        if (true === is_object($data))
+        {
+            $self->bindObject($data);
+        }
+        else if (true === is_array($data))
+        {
+            $self->bindArray($data);
+        }
+
+        return $self;
+    }
 }
