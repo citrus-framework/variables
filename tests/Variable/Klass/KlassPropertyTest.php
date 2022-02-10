@@ -36,7 +36,7 @@ class KlassPropertyTest extends TestCase
             ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
     /** @var string 名前 */
-    private $name = 'John';
+    private string $name = 'John';
 EXPECTED;
         $this->assertSame($expected, $property->toString());
 
@@ -50,7 +50,7 @@ EXPECTED;
             ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
     /** @var string 名前 */
-    private $name;
+    private string $name;
 EXPECTED;
         $this->assertSame($expected, $property->toString());
     }

@@ -22,24 +22,27 @@ class KlassProperty
     use Formatable;
 
     /** @var string フィールド名 */
-    private $name;
+    private string $name;
 
     /** @var string 型 */
-    private $type;
+    private string $type;
+
+    /** @var string フィールドに書けるphp型 */
+    private string $field_type;
 
     /** @var string コメント */
-    private $comment;
+    private string $comment;
 
     /** @var string アクセス権 */
-    private $visibility;
+    private string $visibility;
 
     /** @var mixed デフォルト値 */
-    private $default_value;
+    private mixed $default_value;
 
     /** @var string 出力フォーマット */
-    private $output_format = <<<'FORMAT'
+    private string $output_format = <<<'FORMAT'
 {{INDENT}}/** @var {{TYPE}} {{COMMENT}} */
-{{INDENT}}{{VISIBILITY}} ${{FIELD_NAME}}{{WITH_DEFAULT_VALUE}};
+{{INDENT}}{{VISIBILITY}} {{TYPE}} ${{FIELD_NAME}}{{WITH_DEFAULT_VALUE}};
 FORMAT;
 
 
@@ -47,15 +50,15 @@ FORMAT;
     /**
      * constructor.
      *
-     * @param string|null $type          型
-     * @param string      $name          フィールド名
-     * @param mixed|null  $default_value デフォルト値
-     * @param string|null $comment       コメント
-     * @param string|null $visibility    アクセス権
+     * @param string $type          型
+     * @param string $name          フィールド名
+     * @param mixed  $default_value デフォルト値
+     * @param string $comment       コメント
+     * @param string $visibility    アクセス権
      */
     public function __construct(string $type,
                                 string $name,
-                                $default_value = null,
+                                mixed $default_value = null,
                                 string $comment = '',
                                 string $visibility = KlassVisibility::TYPE_PUBLIC
     ) {
@@ -102,12 +105,12 @@ FORMAT;
     /**
      * protected な stringプロパティを生成して取得
      *
-     * @param string      $name          フィールド名
-     * @param mixed|null  $default_value デフォルト値
-     * @param string|null $comment       コメント
+     * @param string $name          フィールド名
+     * @param mixed  $default_value デフォルト値
+     * @param string $comment       コメント
      * @return self
      */
-    public static function newProtectedString(string $name, $default_value = null, string $comment = ''): self
+    public static function newProtectedString(string $name, mixed $default_value = null, string $comment = ''): self
     {
         return new self('string', $name, $default_value, $comment, KlassVisibility::TYPE_PROTECTED);
     }
@@ -117,12 +120,12 @@ FORMAT;
     /**
      * protected な stringプロパティを生成して取得(文字列をクオートする)
      *
-     * @param string      $name          フィールド名
-     * @param mixed|null  $default_value デフォルト値
-     * @param string|null $comment       コメント
+     * @param string $name          フィールド名
+     * @param mixed  $default_value デフォルト値
+     * @param string $comment       コメント
      * @return self
      */
-    public static function newProtectedQuotedString(string $name, $default_value = null, string $comment = ''): self
+    public static function newProtectedQuotedString(string $name, mixed $default_value = null, string $comment = ''): self
     {
         // stringと決まっているので、''で囲む
         if (false === is_null($default_value))
