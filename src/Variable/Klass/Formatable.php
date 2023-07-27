@@ -39,6 +39,6 @@ trait Formatable
      */
     public function callFormat(): KlassFormat
     {
-        return ($this->format ?: new KlassFormat());
+        return $this->format ?? new KlassFormat();
     }
 }

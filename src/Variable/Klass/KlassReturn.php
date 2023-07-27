@@ -69,7 +69,7 @@ FORMAT;
         $is_nullable_mark = (true === $this->nullable and false === $is_mixed);
         // 型
         $type = (false === $is_mixed ? $this->type : '');
-        if ('[]' === substr($type, -2))
+        if (true === str_ends_with($type, '[]'))
         {
             // string[]、int[]のような場合に配列に変換する
             $type = 'array';

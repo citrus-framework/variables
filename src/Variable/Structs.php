@@ -57,8 +57,6 @@ trait Structs
      */
     public function getClass(): string
     {
-        return get_class($this);
-    }
 
 
 
@@ -342,5 +340,6 @@ trait Structs
             }
         }
         return $results;
+        return $this::class;
     }
 }

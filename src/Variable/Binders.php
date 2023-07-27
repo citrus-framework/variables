@@ -153,11 +153,11 @@ trait Binders
 
         if (true === is_object($data))
         {
-            $self->bindObject($data);
+            $self->bindObject($data, $strict);
         }
         else if (true === is_array($data))
         {
-            $self->bindArray($data);
+            $self->bindArray($data, $strict);
         }
 
         return $self;

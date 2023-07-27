@@ -132,7 +132,7 @@ FORMAT;
      */
     public static function newRaw(string $comment): self
     {
-        return (new self())->addComment(KlassFileComment::RAW, $comment);
+        return (new static())->addComment(KlassFileComment::RAW, $comment);
     }
 
     /**

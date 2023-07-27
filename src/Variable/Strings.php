@@ -55,7 +55,7 @@ class Strings
         $replaced = str_replace($from, $to, $value);
 
         // 更に複数改行があれば再起
-        if (false !== strpos($replaced, $from))
+        if (false !== str_contains($replaced, $from))
         {
             $replaced = self::removeDuplicateEOL($replaced);
         }
