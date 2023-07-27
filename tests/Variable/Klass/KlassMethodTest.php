@@ -29,7 +29,7 @@ class KlassMethodTest extends TestCase
     public function toMethodString_想定通り()
     {
         // パターン1
-        $method = (new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge'))
+        $method = (new KlassMethod(KlassVisibility::PUBLIC, 'hoge'))
             ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
     public function hoge()
@@ -40,7 +40,7 @@ EXPECTED;
         $this->assertSame($expected, $method->toMethodString());
 
         // パターン2
-        $method = (new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge', true))
+        $method = (new KlassMethod(KlassVisibility::PUBLIC, 'hoge', true))
             ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
     public static function hoge()
@@ -51,7 +51,7 @@ EXPECTED;
         $this->assertSame($expected, $method->toMethodString());
 
         // パターン3
-        $method = (new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge'))
+        $method = (new KlassMethod(KlassVisibility::PUBLIC, 'hoge'))
             ->addArgument(new KlassArgument('string', 'fuga', null, true))
             ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
@@ -63,7 +63,7 @@ EXPECTED;
         $this->assertSame($expected, $method->toMethodString());
 
         // パターン4
-        $method = (new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge'))
+        $method = (new KlassMethod(KlassVisibility::PUBLIC, 'hoge'))
             ->addArgument(new KlassArgument('string', 'fuga', null, true))
             ->setReturn(new KlassReturn('bool'))
             ->setFormat(new KlassFormat());
@@ -76,7 +76,7 @@ EXPECTED;
         $this->assertSame($expected, $method->toMethodString());
 
         // パターン5
-        $method = (new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge'))
+        $method = (new KlassMethod(KlassVisibility::PUBLIC, 'hoge'))
             ->addArgument(new KlassArgument('string', 'fuga', null, true))
             ->setReturn(new KlassReturn('bool'))
             ->setBody(<<<'BODY'
@@ -93,15 +93,13 @@ EXPECTED;
         $this->assertSame($expected, $method->toMethodString());
     }
 
-
-
     /**
      * @test
      */
     public function toCommentString_想定通り()
     {
         // パターン1
-        $method = (new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge', false, 'hoge hoge hoge'))
+        $method = (new KlassMethod(KlassVisibility::PUBLIC, 'hoge', false, 'hoge hoge hoge'))
             ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
     /**
@@ -111,7 +109,7 @@ EXPECTED;
         $this->assertSame($expected, $method->toCommentString());
 
         // パターン2
-        $method = (new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge', false, 'hoge hoge hoge'))
+        $method = (new KlassMethod(KlassVisibility::PUBLIC, 'hoge', false, 'hoge hoge hoge'))
             ->addArgument(new KlassArgument('string', 'fuga', null, false, 'ふが'))
             ->addArgument(new KlassArgument('bool', 'enable', true, true, '有効化'))
             ->setFormat(new KlassFormat());;
@@ -126,7 +124,7 @@ EXPECTED;
         $this->assertSame($expected, $method->toCommentString());
 
         // パターン3
-        $method = (new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge', false, 'hoge hoge hoge'))
+        $method = (new KlassMethod(KlassVisibility::PUBLIC, 'hoge', false, 'hoge hoge hoge'))
             ->addArgument(new KlassArgument('string', 'fuga', null, false, 'ふが'))
             ->addArgument(new KlassArgument('bool', 'enable', true, true, '有効化'))
             ->setReturn(new KlassReturn('string', true, 'hoge and hoge'))
@@ -143,7 +141,7 @@ EXPECTED;
         $this->assertSame($expected, $method->toCommentString());
 
         // パターン4
-        $method = (new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'hoge', false, 'hoge hoge hoge'))
+        $method = (new KlassMethod(KlassVisibility::PUBLIC, 'hoge', false, 'hoge hoge hoge'))
             ->addArgument(new KlassArgument('string', 'fuga', null, false, 'ふが'))
             ->addArgument(new KlassArgument('bool', 'enable', true, true, '有効化'))
             ->setReturn(new KlassReturn('string', true, 'hoge and hoge'))

@@ -22,10 +22,10 @@ class KlassException
     use Formatable;
 
     /** @var string 型 */
-    protected $type;
+    protected string $type;
 
     /** @var string 例外コメントのフォーマット */
-    private $exception_comment_format = <<<'FORMAT'
+    private string $exception_comment_format = <<<'FORMAT'
 {{INDENT}} * @throws {{TYPE}}
 FORMAT;
 
@@ -41,8 +41,6 @@ FORMAT;
         $this->type = $type;
     }
 
-
-
     /**
      * 例外コメント文字列の返却
      *
@@ -53,7 +51,7 @@ FORMAT;
         // 置換パターン
         $replace_patterns = [
             '{{INDENT}}' => $this->callFormat()->indent,
-            '{{TYPE}}' => $this->type,
+            '{{TYPE}}'   => $this->type,
         ];
 
         // 置換して返却

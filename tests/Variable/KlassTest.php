@@ -48,19 +48,17 @@ BODY;
             ->addTrait(new KlassTrait('\\Citrus\\Variable\\Singleton'))
             ->addProperty(new KlassProperty('string', 'object_name', '\'users\'', 'テーブル|ビュー名'))
             ->addProperty(new KlassProperty('string', 'schema', '\'citrus\'', 'スキーマ名'))
-            ->addMethod((new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'up', false, 'up query'))
+            ->addMethod((new KlassMethod(KlassVisibility::PUBLIC, 'up', false, 'up query'))
                 ->setReturn(new KlassReturn('string', false, 'SQL文字列'))
                 ->setBody($body)
             )
-            ->addMethod((new KlassMethod(KlassVisibility::TYPE_PUBLIC, 'down', false, 'down query'))
+            ->addMethod((new KlassMethod(KlassVisibility::PUBLIC, 'down', false, 'down query'))
                 ->setReturn(new KlassReturn('string', false, 'SQL文字列'))
                 ->setBody($body)
             );
 
         $this->assertSame($expected, $klass->toString());
     }
-
-
 
     /**
      * @test

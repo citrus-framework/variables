@@ -33,11 +33,11 @@ class KlassProperty
     /** @var string コメント */
     private string $comment;
 
-    /** @var string アクセス権 */
-    private string $visibility;
+    /** @var KlassVisibility アクセス権 */
+    private KlassVisibility $visibility;
 
-    /** @var mixed デフォルト値 */
-    private mixed $default_value;
+    /** @var object|array|string|float|int|bool|null デフォルト値 */
+    private object|array|string|float|int|bool|null $default_value;
 
     /** @var string 出力フォーマット */
     private string $output_format = <<<'FORMAT'
@@ -50,17 +50,18 @@ FORMAT;
     /**
      * constructor.
      *
-     * @param string $type          型
-     * @param string $name          フィールド名
-     * @param mixed  $default_value デフォルト値
-     * @param string $comment       コメント
-     * @param string $visibility    アクセス権
+     * @param string                                  $type          型
+     * @param string                                  $name          フィールド名
+     * @param object|array|string|float|int|bool|null $default_value デフォルト値
+     * @param string                                  $comment       コメント
+     * @param KlassVisibility                         $visibility    アクセス権
      */
-    public function __construct(string $type,
-                                string $name,
-                                mixed $default_value = null,
-                                string $comment = '',
-                                string $visibility = KlassVisibility::TYPE_PUBLIC
+    public function __construct(
+        string $type,
+        string $name,
+        object|array|string|float|int|bool|null $default_value = null,
+        string $comment = '',
+        KlassVisibility $visibility = KlassVisibility::PUBLIC
     ) {
         $this->type = $type;
         $this->name = $name;
@@ -68,8 +69,6 @@ FORMAT;
         $this->comment = $comment;
         $this->visibility = $visibility;
     }
-
-
 
     /**
      * 出力
@@ -88,11 +87,11 @@ FORMAT;
 
         // 置換パターン
         $replace_patterns = [
-            '{{INDENT}}' => $this->callFormat()->indent,
-            '{{TYPE}}' => $this->type,
-            '{{COMMENT}}' => $this->comment,
-            '{{VISIBILITY}}' => $this->visibility,
-            '{{FIELD_NAME}}' => $this->name,
+            '{{INDENT}}'             => $this->callFormat()->indent,
+            '{{TYPE}}'               => $this->type,
+            '{{COMMENT}}'            => $this->comment,
+            '{{VISIBILITY}}'         => $this->visibility->value,
+            '{{FIELD_NAME}}'         => $this->name,
             '{{WITH_DEFAULT_VALUE}}' => $with_default_value,
         ];
 
@@ -100,33 +99,35 @@ FORMAT;
         return Strings::patternReplace($replace_patterns, $this->output_format);
     }
 
-
-
     /**
      * protected な stringプロパティを生成して取得
      *
-     * @param string $name          フィールド名
-     * @param mixed  $default_value デフォルト値
-     * @param string $comment       コメント
+     * @param string                                  $name          フィールド名
+     * @param object|array|string|float|int|bool|null $default_value デフォルト値
+     * @param string                                  $comment       コメント
      * @return self
      */
-    public static function newProtectedString(string $name, mixed $default_value = null, string $comment = ''): self
-    {
-        return new self('string', $name, $default_value, $comment, KlassVisibility::TYPE_PROTECTED);
+    public static function newProtectedString(
+        string $name,
+        object|array|string|float|int|bool|null $default_value = null,
+        string $comment = ''
+    ): self {
+        return new self('string', $name, $default_value, $comment, KlassVisibility::PROTECTED);
     }
-
-
 
     /**
      * protected な stringプロパティを生成して取得(文字列をクオートする)
      *
-     * @param string $name          フィールド名
-     * @param mixed  $default_value デフォルト値
-     * @param string $comment       コメント
+     * @param string                                  $name          フィールド名
+     * @param object|array|string|float|int|bool|null $default_value デフォルト値
+     * @param string                                  $comment       コメント
      * @return self
      */
-    public static function newProtectedQuotedString(string $name, mixed $default_value = null, string $comment = ''): self
-    {
+    public static function newProtectedQuotedString(
+        string $name,
+        object|array|string|float|int|bool|null $default_value = null,
+        string $comment = ''
+    ): self {
         // stringと決まっているので、''で囲む
         if (false === is_null($default_value))
         {
@@ -135,8 +136,6 @@ FORMAT;
 
         return self::newProtectedString($name, $default_value, $comment);
     }
-
-
 
     /**
      * 配列を文字列出力する

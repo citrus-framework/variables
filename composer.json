@@ -11,9 +11,9 @@
         }
     ],
     "require": {
-      "ext-dom": "*",
         "citrus-framework/collection": "^1.0",
-        "citrus-framework/exception": "^1.0"
+        "citrus-framework/exception": "^1.0",
+        "ext-dom": "*"
     },
     "require-dev": {
         "php": "^8.1",
@@ -22,7 +22,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Citrus\\": "src/",
+            "Citrus\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Test\\": "tests/"
         }
     },

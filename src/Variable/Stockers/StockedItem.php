@@ -15,14 +15,14 @@ namespace Citrus\Variable\Stockers;
  */
 class StockedItem
 {
-    /** @var string */
-    public $type;
+    /** @var StockedType|null */
+    public StockedType|null $type = null;
+
+    /** @var string|null */
+    public string|null $tag = null;
 
     /** @var string */
-    public $tag;
-
-    /** @var string */
-    public $content;
+    public string $content;
 
 
 
@@ -33,46 +33,47 @@ class StockedItem
      */
     public function __toString(): string
     {
-        return sprintf('type:%s, tag:%s, %s', $this->type, $this->tag, $this->content);
+        $elements = [];
+        if (false === is_null($this->type))
+        {
+            $elements[] = sprintf('type:%s', $this->type->value);
+        }
+        if (false === is_null($this->tag))
+        {
+            $elements[] = sprintf('tag:%s', $this->tag);
+        }
+        $elements[] = $this->content;
+        return implode(', ', $elements);
     }
-
-
 
     /**
      * 生成処理
      *
-     * @param string      $content
-     * @param string|null $type
-     * @param string|null $tag
+     * @param string           $content
+     * @param StockedType|null $type
+     * @param string|null      $tag
      * @return static
      */
-    public static function newItem(string $content, string $type = null, string $tag = null): self
+    public static function newItem(string $content, StockedType|null $type = null, string|null $tag = null): self
     {
-        $self = new self();
+        $self = new static();
         $self->content = $content;
         $self->type = $type;
         $self->tag = $tag;
         return $self;
     }
 
-
-
     /**
      * タイプベースの生成処理
      *
-     * @param string $type
-     * @param string $content
+     * @param StockedType $type
+     * @param string      $content
      * @return static
      */
-    public static function newType(string $type, string $content): self
+    public static function newType(StockedType $type, string $content): self
     {
-        $self = new self();
-        $self->type = $type;
-        $self->content = $content;
-        return $self;
+        return static::newItem($content, $type);
     }
-
-
 
     /**
      * タグベースの生成処理
@@ -83,9 +84,6 @@ class StockedItem
      */
     public static function newTag(string $tag, string $content): self
     {
-        $self = new self();
-        $self->tag = $tag;
-        $self->content = $content;
-        return $self;
+        return static::newItem($content, null, $tag);
     }
 }

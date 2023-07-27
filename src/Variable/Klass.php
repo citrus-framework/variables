@@ -24,44 +24,44 @@ class Klass
     use Formatable;
 
     /** @var string クラス名 */
-    private $name;
+    private string $name;
 
     /** @var string|null クラスコメント */
-    private $class_comment;
+    private string|null $class_comment;
 
     /** @var string|null ネームスペース */
-    private $namespace;
+    private string|null $namespace;
 
     /** @var string|null 継承親クラス名 */
-    private $extends_name;
+    private string|null $extends_name;
 
     /** @var string[] インターフェース名 */
-    private $implements_names = [];
+    private array $implements_names = [];
 
-    /** @var KlassFileComment ファイルコメント */
-    private $fileComment;
+    /** @var KlassFileComment|null ファイルコメント */
+    private KlassFileComment|null $fileComment;
 
     /** @var KlassTrait[] トレイト配列 */
-    private $traits = [];
+    private array $traits = [];
 
     /** @var KlassProperty[] プロパティ配列 */
-    private $properties = [];
+    private array $properties = [];
 
     /** @var KlassMethod[] メソッド配列 */
-    private $methods = [];
+    private array $methods = [];
 
     /** @var bool 厳密な型検査 */
-    private $is_strict_types = true;
+    private bool $is_strict_types = true;
 
     /** @var string クラスコメントのフォーマット */
-    private $class_comment_format = <<<'FORMAT'
+    private string $class_comment_format = <<<'FORMAT'
 /**
  * {{CLASS_COMMENT}}
  */
 FORMAT;
 
     /** @var string クラス出力用フォーマット、最終行には空行を入れておく */
-    private $class_format = <<<'FORMAT'
+    private string $class_format = <<<'FORMAT'
 <?php
 {{WITH_STRICT_TYPES}}
 {{FILE_COMMENT}}
@@ -86,8 +86,6 @@ FORMAT;
         $this->name = $name;
     }
 
-
-
     /**
      * ネームスペースの設定
      *
@@ -99,8 +97,6 @@ FORMAT;
         $this->namespace = $namespace;
         return $this;
     }
-
-
 
     /**
      * クラスコメントの追加
@@ -114,8 +110,6 @@ FORMAT;
         return $this;
     }
 
-
-
     /**
      * 継承親クラスの設定
      *
@@ -127,8 +121,6 @@ FORMAT;
         $this->extends_name = $extends_name;
         return $this;
     }
-
-
 
     /**
      * インターフェースクラスの設定
@@ -142,8 +134,6 @@ FORMAT;
         return $this;
     }
 
-
-
     /**
      * ファイルコメントの追加
      *
@@ -155,8 +145,6 @@ FORMAT;
         $this->fileComment = $fileComment;
         return $this;
     }
-
-
 
     /**
      * トレイトの追加
@@ -170,8 +158,6 @@ FORMAT;
         return $this;
     }
 
-
-
     /**
      * プロパティの追加
      *
@@ -183,8 +169,6 @@ FORMAT;
         $this->properties[] = $property;
         return $this;
     }
-
-
 
     /**
      * メソッドの追加
@@ -198,8 +182,6 @@ FORMAT;
         return $this;
     }
 
-
-
     /**
      * 厳密な型検査の設定
      *
@@ -212,8 +194,6 @@ FORMAT;
         return $this;
     }
 
-
-
     /**
      * 文字列化
      *
@@ -224,38 +204,31 @@ FORMAT;
         // フォーマット
         $format = $this->callFormat();
         // 厳密な型検査
-        $with_strict_types = '';
-        if (true === $this->is_strict_types)
-        {
-            $with_strict_types = PHP_EOL . 'declare(strict_types=1);';
-        }
+        $with_strict_types = (true === $this->is_strict_types)
+            ? PHP_EOL . 'declare(strict_types=1);'
+            : '';
         // ファイルコメント
-        $file_comment = (false === is_null($this->fileComment)
+        $file_comment = (false === is_null($this->fileComment))
             ? PHP_EOL . $this->fileComment->toCommentString()
-            : '');
+            : '';
         // ネームスペース
-        $with_namespace = (false === is_null($this->namespace)
+        $with_namespace = (false === is_null($this->namespace))
             ? PHP_EOL . sprintf('namespace %s;', $this->namespace)
-            : '');
+            : '';
         // 継承
-        $with_extends = '';
-        if (false === is_null($this->extends_name))
-        {
-            $with_extends = sprintf(' extends %s', $this->extends_name);
-        }
+        $with_extends = (false === is_null($this->extends_name))
+            ? sprintf(' extends %s', $this->extends_name)
+            : '';
         // 実装
-        $with_implements = '';
-        if (0 < count($this->implements_names))
-        {
-            $with_implements = sprintf(' implements %s', implode(', ', $this->implements_names));
-        }
+        $with_implements = (0 < count($this->implements_names))
+            ? sprintf(' implements %s', implode(', ', $this->implements_names))
+            : '';
         // トレイト
         $each_traits = KlassTrait::eachToString($this->traits, $format);
         // プロパティ
         $each_properties = KlassProperty::eachToString($this->properties, $format);
         // メソッド
         $each_methods = KlassMethod::eachToString($this->methods, $format);
-
         // トレイトとプロパティ間の空行
         $each_properties = $format->blankBetweenBlock($this->traits, $this->properties) . $each_properties;
         // プロパティとメソッド間の空行
@@ -264,29 +237,26 @@ FORMAT;
         // 置換パターン
         $replace_patterns = [
             '{{WITH_STRICT_TYPES}}' => $with_strict_types,
-            '{{FILE_COMMENT}}' => $file_comment,
-            '{{WITH_NAMESPACE}}' => $with_namespace,
-            '{{CLASS_COMMENT}}' => $this->toClassCommentString(),
-            '{{NAME}}' => $this->name,
-            '{{WITH_EXTENDS}}' => $with_extends,
-            '{{WITH_IMPLEMENTS}}' => $with_implements,
-            '{{EACH_TRAITS}}' => $each_traits,
-            '{{EACH_PROPERTIES}}' => $each_properties,
-            '{{EACH_METHODS}}' => $each_methods,
+            '{{FILE_COMMENT}}'      => $file_comment,
+            '{{WITH_NAMESPACE}}'    => $with_namespace,
+            '{{CLASS_COMMENT}}'     => $this->toClassCommentString(),
+            '{{NAME}}'              => $this->name,
+            '{{WITH_EXTENDS}}'      => $with_extends,
+            '{{WITH_IMPLEMENTS}}'   => $with_implements,
+            '{{EACH_TRAITS}}'       => $each_traits,
+            '{{EACH_PROPERTIES}}'   => $each_properties,
+            '{{EACH_METHODS}}'      => $each_methods,
         ];
-
         // 置換して返却
         return Strings::patternReplace($replace_patterns, $this->class_format);
     }
-
-
 
     /**
      * クラスコメントの出力
      *
      * @return string クラスコメント文字列
      */
-    public function toClassCommentString()
+    public function toClassCommentString(): string
     {
         // 存在しなければ空文字
         if (true === is_null($this->class_comment))

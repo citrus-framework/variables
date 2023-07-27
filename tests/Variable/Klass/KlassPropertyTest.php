@@ -32,7 +32,7 @@ class KlassPropertyTest extends TestCase
             'name',
             '\'John\'',
             '名前',
-            KlassVisibility::TYPE_PRIVATE))
+            KlassVisibility::PRIVATE))
             ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
     /** @var string 名前 */
@@ -46,7 +46,7 @@ EXPECTED;
             'name',
             null,
             '名前',
-            KlassVisibility::TYPE_PRIVATE))
+            KlassVisibility::PRIVATE))
             ->setFormat(new KlassFormat());
         $expected = <<<'EXPECTED'
     /** @var string 名前 */
@@ -54,8 +54,6 @@ EXPECTED;
 EXPECTED;
         $this->assertSame($expected, $property->toString());
     }
-
-
 
     /**
      * @test
@@ -68,7 +66,7 @@ EXPECTED;
         $comment = '名前';
 
         // 想定
-        $expected = new KlassProperty('string', $name, sprintf('%s', $default_value), $comment, KlassVisibility::TYPE_PROTECTED);
+        $expected = new KlassProperty('string', $name, sprintf('%s', $default_value), $comment, KlassVisibility::PROTECTED);
 
         // 検査対象
         $actual = KlassProperty::newProtectedString($name, $default_value, $comment);
@@ -76,8 +74,6 @@ EXPECTED;
         // 検算
         $this->assertEquals($expected, $actual);
     }
-
-
 
     /**
      * @test
@@ -90,7 +86,7 @@ EXPECTED;
         $comment = '名前';
 
         // 想定
-        $expected = new KlassProperty('string', $name, sprintf('\'%s\'', $default_value), $comment, KlassVisibility::TYPE_PROTECTED);
+        $expected = new KlassProperty('string', $name, sprintf('\'%s\'', $default_value), $comment, KlassVisibility::PROTECTED);
 
         // 検査対象
         $actual = KlassProperty::newProtectedQuotedString($name, $default_value, $comment);

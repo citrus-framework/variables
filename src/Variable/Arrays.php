@@ -20,9 +20,9 @@ class Arrays
      *
      * @param array  $values 配列
      * @param string $path   ドット区切りパス指定
-     * @return mixed
+     * @return object|array|string|float|int|bool|null
      */
-    public static function path(array $values, string $path)
+    public static function path(array $values, string $path): object|array|string|float|int|bool|null
     {
         // パス指定文字列をドット区切りで分割
         $levels = explode('.', $path);

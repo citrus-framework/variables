@@ -16,7 +16,7 @@ namespace Citrus\Variable\Klass;
 trait Formatable
 {
     /** @var KlassFormat フォーマット処理 */
-    private $format;
+    private KlassFormat $format;
 
 
 
@@ -32,8 +32,6 @@ trait Formatable
         return $this;
     }
 
-
-
     /**
      * フォーマット設定の取得
      *
@@ -41,6 +39,6 @@ trait Formatable
      */
     public function callFormat(): KlassFormat
     {
-        return ($this->format ?: new KlassFormat());
+        return $this->format ?? new KlassFormat();
     }
 }
