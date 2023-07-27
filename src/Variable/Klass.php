@@ -204,38 +204,31 @@ FORMAT;
         // フォーマット
         $format = $this->callFormat();
         // 厳密な型検査
-        $with_strict_types = '';
-        if (true === $this->is_strict_types)
-        {
-            $with_strict_types = PHP_EOL . 'declare(strict_types=1);';
-        }
+        $with_strict_types = (true === $this->is_strict_types)
+            ? PHP_EOL . 'declare(strict_types=1);'
+            : '';
         // ファイルコメント
-        $file_comment = (false === is_null($this->fileComment)
+        $file_comment = (false === is_null($this->fileComment))
             ? PHP_EOL . $this->fileComment->toCommentString()
-            : '');
+            : '';
         // ネームスペース
-        $with_namespace = (false === is_null($this->namespace)
+        $with_namespace = (false === is_null($this->namespace))
             ? PHP_EOL . sprintf('namespace %s;', $this->namespace)
-            : '');
+            : '';
         // 継承
-        $with_extends = '';
-        if (false === is_null($this->extends_name))
-        {
-            $with_extends = sprintf(' extends %s', $this->extends_name);
-        }
+        $with_extends = (false === is_null($this->extends_name))
+            ? sprintf(' extends %s', $this->extends_name)
+            : '';
         // 実装
-        $with_implements = '';
-        if (0 < count($this->implements_names))
-        {
-            $with_implements = sprintf(' implements %s', implode(', ', $this->implements_names));
-        }
+        $with_implements = (0 < count($this->implements_names))
+            ? sprintf(' implements %s', implode(', ', $this->implements_names))
+            : '';
         // トレイト
         $each_traits = KlassTrait::eachToString($this->traits, $format);
         // プロパティ
         $each_properties = KlassProperty::eachToString($this->properties, $format);
         // メソッド
         $each_methods = KlassMethod::eachToString($this->methods, $format);
-
         // トレイトとプロパティ間の空行
         $each_properties = $format->blankBetweenBlock($this->traits, $this->properties) . $each_properties;
         // プロパティとメソッド間の空行
