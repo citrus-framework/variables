@@ -13,12 +13,14 @@ namespace Citrus\Variable\Klass;
 /**
  * klassアクセス権列挙
  */
-class KlassVisibility
+enum KlassVisibility : string
 {
-    /** @var string */
-    public const TYPE_PUBLIC = 'public';
-    /** @var string  */
-    public const TYPE_PRIVATE = 'private';
-    /** @var string  */
-    public const TYPE_PROTECTED = 'protected';
+    /** public */
+    case PUBLIC = 'public';
+
+    /** private  */
+    case PRIVATE = 'private';
+
+    /** protected  */
+    case PROTECTED = 'protected';
 }
