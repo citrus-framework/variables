@@ -12,6 +12,7 @@ namespace Citrus\Variable;
 
 use Citrus\Collection;
 use Citrus\Variable\Stockers\StockedItem;
+use Citrus\Variable\Stockers\StockedType;
 
 /**
  * ストック処理
@@ -67,10 +68,10 @@ class Stockers
     /**
      * タイプでフィルタリングしてメッセージを取得する
      *
-     * @param string $type
+     * @param StockedType $type
      * @return StockedItem[]
      */
-    public static function itemsOfType(string $type): array
+    public static function itemsOfType(StockedType $type): array
     {
         return Collection::stream(self::callItems())->filter(function (StockedItem $vl) use ($type) {
             // タイプが一致しているかどうか
@@ -95,10 +96,10 @@ class Stockers
     /**
      * タイプでポップする
      *
-     * @param string $type
+     * @param StockedType $type
      * @return StockedItem[]
      */
-    public static function popWithType(string $type): array
+    public static function popWithType(StockedType $type): array
     {
         // 返す方のアイテム
         $results = self::itemsOfType($type);
@@ -139,10 +140,10 @@ class Stockers
     /**
      * メッセージのタイプごと削除
      *
-     * @param string|null $type
+     * @param StockedType $type
      * @return void
      */
-    public static function removeWithType(string $type = null): void
+    public static function removeWithType(StockedType $type): void
     {
         // 削除後メッセージを取得
         $items = Collection::stream(self::callItems())->remove(function (StockedItem $vl) use ($type) {

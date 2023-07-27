@@ -39,7 +39,7 @@ class StockersTest extends TestCase
         $this->assertFalse(Stockers::exists());
 
         // データストック
-        Stockers::addItem(StockedItem::newType('ERROR', 'サンプルエラーメッセージ'));
+        Stockers::addItem(StockedItem::newType(MessageType::ERROR, 'サンプルエラーメッセージ'));
         // 検算：データが入った
         $this->assertTrue(Stockers::exists());
     }
@@ -50,20 +50,20 @@ class StockersTest extends TestCase
     public function popWithType_想定通り()
     {
         // データストック
-        Stockers::addItem(StockedItem::newType('ERROR', 'サンプルエラーメッセージ'));
-        Stockers::addItem(StockedItem::newType('WARNING', 'サンプル警告メッセージ'));
-        Stockers::addItem(StockedItem::newType('NOTICE', 'サンプル通知メッセージ'));
+        Stockers::addItem(StockedItem::newType(MessageType::ERROR, 'サンプルエラーメッセージ'));
+        Stockers::addItem(StockedItem::newType(MessageType::WARNING, 'サンプル警告メッセージ'));
+        Stockers::addItem(StockedItem::newType(MessageType::NOTICE, 'サンプル通知メッセージ'));
 
         // 検算：3件入っている
         $this->assertCount(3, Stockers::callItems());
 
         // type:ERRORを取得する
-        $items = Stockers::popWithType('ERROR');
+        $items = Stockers::popWithType(MessageType::ERROR);
 
         // 検算：全てtype:ERROR
         foreach ($items as $item)
         {
-            $this->assertSame('ERROR', $item->type);
+            $this->assertSame(MessageType::ERROR, $item->type);
         }
 
         // 検算：2件になっている
@@ -95,4 +95,11 @@ class StockersTest extends TestCase
         // 検算：2件になっている
         $this->assertCount(2, Stockers::callItems());
     }
+}
+
+enum MessageType : string implements Stockers\StockedType
+{
+    case ERROR = 'ERROR';
+    case WARNING = 'WARNING';
+    case NOTICE = 'NOTICE';
 }
