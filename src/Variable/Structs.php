@@ -18,16 +18,14 @@ trait Structs
     /**
      * オブジェクト比較
      *
-     * @param mixed $object
+     * @param object|array|string|float|int|bool|null $object
      * @return bool
      * @deprecated
      */
-    public function equals($object): bool
+    public function equals(object|array|string|float|int|bool|null $object): bool
     {
         return ($this === $object);
     }
-
-
 
     /**
      * プロパティ取得
@@ -40,8 +38,6 @@ trait Structs
         return get_object_vars($this);
     }
 
-
-
     /**
      * シリアライズ
      *
@@ -52,8 +48,6 @@ trait Structs
     {
         return serialize($this);
     }
-
-
 
     /**
      * クラス名取得

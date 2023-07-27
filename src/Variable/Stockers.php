@@ -19,7 +19,7 @@ use Citrus\Variable\Stockers\StockedItem;
 class Stockers
 {
     /** @var StockedItem[]  */
-    private static $items = [];
+    private static array $items = [];
 
 
 
@@ -33,8 +33,6 @@ class Stockers
         return (0 < count(self::$items));
     }
 
-
-
     /**
      * メッセージの取得
      *
@@ -45,15 +43,13 @@ class Stockers
         return self::$items;
     }
 
-
-
     /**
      * メッセージの登録
      *
      * @param StockedItem|StockedItem[] $items アイテムかアイテム配列
      * @return void
      */
-    public static function addItem($items): void
+    public static function addItem(StockedItem|array $items): void
     {
         // 配列の場合は再起
         if (true === is_array($items))
@@ -68,8 +64,6 @@ class Stockers
         self::$items[] = $items;
     }
 
-
-
     /**
      * タイプでフィルタリングしてメッセージを取得する
      *
@@ -78,14 +72,11 @@ class Stockers
      */
     public static function itemsOfType(string $type): array
     {
-        return Collection::stream(self::callItems())->filter(function ($vl) use ($type) {
+        return Collection::stream(self::callItems())->filter(function (StockedItem $vl) use ($type) {
             // タイプが一致しているかどうか
-            /** @var StockedItem $vl */
             return ($vl->type === $type);
         })->toList();
     }
-
-
 
     /**
      * タグでフィルタリングしてメッセージを取得する
@@ -95,14 +86,11 @@ class Stockers
      */
     public static function itemsOfTag(string $tag): array
     {
-        return Collection::stream(self::callItems())->filter(function ($vl) use ($tag) {
+        return Collection::stream(self::callItems())->filter(function (StockedItem $vl) use ($tag) {
             // タグが一致しているかどうか
-            /** @var StockedItem $vl */
             return ($vl->tag === $tag);
         })->toList();
     }
-
-
 
     /**
      * タイプでポップする
@@ -121,8 +109,6 @@ class Stockers
         return $results;
     }
 
-
-
     /**
      * タグでポップする
      *
@@ -140,8 +126,6 @@ class Stockers
         return $results;
     }
 
-
-
     /**
      * アイテムの全削除
      *
@@ -152,8 +136,6 @@ class Stockers
         self::$items = [];
     }
 
-
-
     /**
      * メッセージのタイプごと削除
      *
@@ -163,9 +145,8 @@ class Stockers
     public static function removeWithType(string $type = null): void
     {
         // 削除後メッセージを取得
-        $items = Collection::stream(self::callItems())->remove(function ($vl) use ($type) {
+        $items = Collection::stream(self::callItems())->remove(function (StockedItem $vl) use ($type) {
             // タグが一致しているかどうか(一致しているものが削除対象)
-            /** @var StockedItem $vl */
             return ($vl->tag === $type);
         })->toList();
 
@@ -173,20 +154,17 @@ class Stockers
         self::$items = $items;
     }
 
-
-
     /**
      * メッセージのタグごと削除
      *
      * @param string $tag
      * @return void
      */
-    public static function removeWithTag(string $tag = null): void
+    public static function removeWithTag(string $tag): void
     {
         // 削除後メッセージを取得
-        $items = Collection::stream(self::callItems())->remove(function ($vl) use ($tag) {
+        $items = Collection::stream(self::callItems())->remove(function (StockedItem $vl) use ($tag) {
             // タグが一致しているかどうか(一致しているものが削除対象)
-            /** @var StockedItem $vl */
             return ($vl->tag === $tag);
         })->toList();
 

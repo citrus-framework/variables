@@ -18,8 +18,8 @@ use DateTime;
  */
 class Dates extends DateTime
 {
-    /** @var self 現時刻キャッシュ */
-    private static $NOW;
+    /** @var self|null 現時刻キャッシュ */
+    private static Dates|null $NOW = null;
 
 
 
@@ -31,7 +31,8 @@ class Dates extends DateTime
      */
     public static function new(string $date): ?self
     {
-        try {
+        try
+        {
             return new Dates($date);
         }
         catch (\Exception $e)
@@ -39,8 +40,6 @@ class Dates extends DateTime
             return null;
         }
     }
-
-
 
     /**
      * 現時刻を(未設定であれば初期化して)取得
@@ -56,8 +55,6 @@ class Dates extends DateTime
         }
         return clone self::$NOW;
     }
-
-
 
     /**
      * 現時刻を初期化する
@@ -82,8 +79,6 @@ class Dates extends DateTime
         return self::$NOW;
     }
 
-
-
     /**
      * よく使われる 2020-01-02 03:04:05 のフォーマットで返す
      *
@@ -94,8 +89,6 @@ class Dates extends DateTime
         return $this->format('Y-m-d H:i:s');
     }
 
-
-
     /**
      * よく使われる 2020-01-02 03:04:05+0900 のフォーマットで返す
      *
@@ -105,8 +98,6 @@ class Dates extends DateTime
     {
         return $this->format('Y-m-d H:i:sO');
     }
-
-
 
     /**
      * 日付の加算
@@ -119,8 +110,6 @@ class Dates extends DateTime
         return $this->addSecond(60 * 60 * 24 * $day);
     }
 
-
-
     /**
      * 日数の減算
      *
@@ -132,8 +121,6 @@ class Dates extends DateTime
         return $this->subSecond(60 * 60 * 24 * $day);
     }
 
-
-
     /**
      * 秒数の加算
      *
@@ -144,8 +131,6 @@ class Dates extends DateTime
     {
         return $this->add(DateInterval::createFromDateString(sprintf('%d seconds', $second)));
     }
-
-
 
     /**
      * 秒数の減算

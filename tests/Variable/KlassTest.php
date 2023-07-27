@@ -60,8 +60,6 @@ BODY;
         $this->assertSame($expected, $klass->toString());
     }
 
-
-
     /**
      * @test
      */

@@ -55,8 +55,6 @@ EXPECTED;
         $this->assertSame($expected, $property->toString());
     }
 
-
-
     /**
      * @test
      */
@@ -76,8 +74,6 @@ EXPECTED;
         // 検算
         $this->assertEquals($expected, $actual);
     }
-
-
 
     /**
      * @test

@@ -18,11 +18,11 @@ class StockedItem
     /** @var string */
     public $type;
 
-    /** @var string */
-    public $tag;
+    /** @var string|null */
+    public string|null $tag = null;
 
     /** @var string */
-    public $content;
+    public string $content;
 
 
 
@@ -36,43 +36,34 @@ class StockedItem
         return sprintf('type:%s, tag:%s, %s', $this->type, $this->tag, $this->content);
     }
 
-
-
     /**
      * 生成処理
      *
-     * @param string      $content
      * @param string|null $type
-     * @param string|null $tag
+     * @param string           $content
+     * @param string|null      $tag
      * @return static
      */
     public static function newItem(string $content, string $type = null, string $tag = null): self
     {
-        $self = new self();
+        $self = new static();
         $self->content = $content;
         $self->type = $type;
         $self->tag = $tag;
         return $self;
     }
 
-
-
     /**
      * タイプベースの生成処理
      *
      * @param string $type
-     * @param string $content
+     * @param string      $content
      * @return static
      */
     public static function newType(string $type, string $content): self
     {
-        $self = new self();
-        $self->type = $type;
-        $self->content = $content;
-        return $self;
+        return static::newItem($content, $type);
     }
-
-
 
     /**
      * タグベースの生成処理
@@ -83,9 +74,6 @@ class StockedItem
      */
     public static function newTag(string $tag, string $content): self
     {
-        $self = new self();
-        $self->tag = $tag;
-        $self->content = $content;
-        return $self;
+        return static::newItem($content, null, $tag);
     }
 }

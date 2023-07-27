@@ -28,8 +28,6 @@ class Strings
         return (true === is_null($value) or '' === $value);
     }
 
-
-
     /**
      * 配列での文字列置換
      *
@@ -41,8 +39,6 @@ class Strings
     {
         return str_replace(array_keys($patterns), array_values($patterns), $subject);
     }
-
-
 
     /**
      * 文字列中の重複した改行を取り除く
@@ -72,8 +68,6 @@ class Strings
         return $replaced;
     }
 
-
-
     /**
      * 文字列をアッパーキャメルケースに変換する
      *
@@ -90,10 +84,8 @@ class Strings
             return ucfirst(strtolower($vl));
         })->toValues();
         // 連結して返却
-        return implode('', $converted_parts);
+        return implode((array) $converted_parts);
     }
-
-
 
     /**
      * 文字列をスネークケースに変換する

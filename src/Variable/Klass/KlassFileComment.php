@@ -41,28 +41,28 @@ class KlassFileComment
     /** @var string CONTEXTスタック用のキー */
     private const STACK_KEY_CONTEXT = 'context';
 
-    /** @var string[] コメント配列[TYPE => CONTEXT] */
-    private $comments = [];
+    /** @var array<string, array<string, string>> コメント配列[TYPE => CONTEXT] */
+    private array $comments = [];
 
     /** @var string コメントフォーマット文字列 */
-    private $comment_format = <<<'FORMAT'
+    private string $comment_format = <<<'FORMAT'
 /**
 {{EACH_COMMENTS}}
  */
 FORMAT;
 
     /** @var string コメント一つ分のフォーマット文字列 */
-    private $comment_one_format = <<<'FORMAT'
+    private string $comment_one_format = <<<'FORMAT'
  * @{{TYPE}} {{CONTEXT}}
 FORMAT;
 
     /** @var string コメント平文のフォーマット文字列 */
-    private $comment_row_format = <<<'FORMAT'
+    private string $comment_row_format = <<<'FORMAT'
  * {{CONTEXT}}
 FORMAT;
 
     /** @var string コメントスペースフォーマット文字列 */
-    private $comment_space_format = <<<'FORMAT'
+    private string $comment_space_format = <<<'FORMAT'
  *
 FORMAT;
 
@@ -78,13 +78,11 @@ FORMAT;
     public function addComment(string $type, string $context): self
     {
         $this->comments[] = [
-            self::STACK_KEY_TYPE => $type,
+            self::STACK_KEY_TYPE    => $type,
             self::STACK_KEY_CONTEXT => $context,
         ];
         return $this;
     }
-
-
 
     /**
      * コメント文字列の返却
@@ -113,7 +111,7 @@ FORMAT;
             $is_row = (self::RAW === $type);
             // フォーマット
             $comment_contexts[] = Strings::patternReplace([
-                '{{TYPE}}' => $type,
+                '{{TYPE}}'    => $type,
                 '{{CONTEXT}}' => $context,
             ], (true === $is_row ? $this->comment_row_format : $this->comment_one_format));
             // コメントスペースが必要でタイプが平文の場合はスペースを入れておく
@@ -126,8 +124,6 @@ FORMAT;
         return str_replace('{{EACH_COMMENTS}}', implode(PHP_EOL, $comment_contexts), $this->comment_format);
     }
 
-
-
     /**
      * 平文コメントを生成して取得
      *
@@ -138,8 +134,6 @@ FORMAT;
     {
         return (new self())->addComment(KlassFileComment::RAW, $comment);
     }
-
-
 
     /**
      * 平文コメントと＠コメントの間にスペースが必要かどうか

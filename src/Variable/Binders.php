@@ -19,9 +19,9 @@ trait Binders
      * 汎用ゲッター
      *
      * @param  string $key キー
-     * @return mixed
+     * @return object|array|string|float|int|bool|null
      */
-    public function get(string $key)
+    public function get(string $key): object|array|string|float|int|bool|null
     {
         if (true === isset($this->$key))
         {
@@ -30,16 +30,14 @@ trait Binders
         return null;
     }
 
-
-
     /**
      * 汎用セッター
      *
-     * @param string  $key    キー
-     * @param mixed   $value  値
-     * @param bool    $strict 厳密設定
+     * @param string                                  $key    キー
+     * @param object|array|string|float|int|bool|null $value  値
+     * @param bool                                    $strict 厳密設定
      */
-    public function set(string $key, $value, bool $strict = false): void
+    public function set(string $key, object|array|string|float|int|bool|null $value, bool $strict = false): void
     {
         if (true === $strict)
         {
@@ -54,15 +52,13 @@ trait Binders
         }
     }
 
-
-
     /**
      * 汎用追加処理
      *
-     * @param string $key
-     * @param mixed  $value
+     * @param string                                  $key
+     * @param object|array|string|float|int|bool|null $value
      */
-    public function add($key, $value): void
+    public function add(string $key, object|array|string|float|int|bool|null $value): void
     {
         $add = &$this->$key;
 
@@ -90,8 +86,6 @@ trait Binders
         }
     }
 
-
-
     /**
      * 汎用削除
      *
@@ -112,8 +106,6 @@ trait Binders
         }
     }
 
-
-
     /**
      * 配列当て込み処理
      *
@@ -132,15 +124,13 @@ trait Binders
         }
     }
 
-
-
     /**
      * オブジェクト当て込み処理
      *
-     * @param mixed|null $object
-     * @param bool|null  $strict
+     * @param object|array|string|float|int|bool|null $object
+     * @param bool|null                               $strict
      */
-    public function bindObject($object = null, ?bool $strict = false): void
+    public function bindObject(object|array|string|float|int|bool|null $object = null, ?bool $strict = false): void
     {
         if (true === is_null($object))
         {
@@ -149,8 +139,6 @@ trait Binders
         $array = get_object_vars($object);
         $this->bindArray($array, $strict);
     }
-
-
 
     /**
      * インスタンスを生成して、変数をバインドする

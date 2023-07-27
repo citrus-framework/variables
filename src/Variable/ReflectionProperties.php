@@ -23,13 +23,13 @@ class ReflectionProperties
      *
      * @param object $object オブジェクト
      * @param string $property プロパティ
-     * @return mixed
+     * @return object|array|string|float|int|bool|null
      * @throws ReflectionException
      */
-    public static function call(object $object, string $property)
+    public static function call(object $object, string $property): object|array|string|float|int|bool|null
     {
         // リフレクション
-        $ref = new ReflectionProperty(get_class($object), $property);
+        $ref = new ReflectionProperty($object::class, $property);
         // アクセス可
         $ref->setAccessible(true);
         // プロパティの値を返却

@@ -21,32 +21,32 @@ class KlassVariable
     use Clonable;
 
     /** @var string 型 */
-    protected $type;
+    protected string $type;
 
     /** @var string 変数名 */
-    protected $name;
+    protected string $name;
 
-    /** @var mixed|null デフォルト値 */
-    protected $default_value;
+    /** @var object|array|string|float|int|bool|null デフォルト値 */
+    protected object|array|string|float|int|bool|null $default_value;
 
     /** @var bool null許容 */
-    protected $nullable = false;
+    protected bool $nullable = false;
 
-    /** @var string コメント */
-    protected $comment;
+    /** @var string|null コメント */
+    protected string|null $comment;
 
     /** @var string 引数の変数型フォーマット */
-    private $argument_type_format = <<<'FORMAT'
+    private string $argument_type_format = <<<'FORMAT'
 {{NULLABLE_MARK}}{{TYPE}}
 FORMAT;
 
     /** @var string コメントの変数型フォーマット */
-    private $comment_type_format = <<<'FORMAT'
+    private string $comment_type_format = <<<'FORMAT'
 {{TYPE}}{{WITH_NULL}}
 FORMAT;
 
     /** @var string デフォルト値フォーマット */
-    private $default_value_format = <<<'FORMAT'
+    private string $default_value_format = <<<'FORMAT'
 {{WITH_DEFAULT_VALUE}}
 FORMAT;
 
@@ -55,25 +55,25 @@ FORMAT;
     /**
      * constructor.
      *
-     * @param string      $type          型
-     * @param string      $name          変数名
-     * @param mixed|null  $default_value デフォルト値
-     * @param bool|null   $nullable      true:null許可
-     * @param string|null $comment       コメント
+     * @param string                                  $type          型
+     * @param string                                  $name          変数名
+     * @param object|array|string|float|int|bool|null $default_value デフォルト値
+     * @param bool|null                               $nullable      true:null許可
+     * @param string|null                             $comment       コメント
      */
-    public function __construct(string $type,
-                                string $name, $default_value = null,
-                                bool $nullable = false,
-                                ?string $comment = null)
-    {
+    public function __construct(
+        string $type,
+        string $name,
+        object|array|string|float|int|bool|null $default_value = null,
+        bool $nullable = false,
+        string|null $comment = null
+    ) {
         $this->type = $type;
         $this->name = $name;
         $this->default_value = $default_value;
         $this->nullable = $nullable;
         $this->comment = $comment;
     }
-
-
 
     /**
      * 引数の変数型文字列の返却
@@ -89,15 +89,13 @@ FORMAT;
 
         // 置換パターン
         $replace_patterns = [
-            '{{TYPE}}' => (false === $is_mixed ? $this->type : ''),
+            '{{TYPE}}'          => (false === $is_mixed ? $this->type : ''),
             '{{NULLABLE_MARK}}' => (true === $is_nullable_mark ? '?' : ''),
         ];
 
         // 置換して返却
         return Strings::patternReplace($replace_patterns, $this->argument_type_format);
     }
-
-
 
     /**
      * コメントの変数型文字列の返却
@@ -108,15 +106,13 @@ FORMAT;
     {
         // 置換パターン
         $replace_patterns = [
-            '{{TYPE}}' => $this->type,
+            '{{TYPE}}'      => $this->type,
             '{{WITH_NULL}}' => (true === $this->nullable ? '|null' : ''),
         ];
 
         // 置換して返却
         return Strings::patternReplace($replace_patterns, $this->comment_type_format);
     }
-
-
 
     /**
      * デフォルト値の返却

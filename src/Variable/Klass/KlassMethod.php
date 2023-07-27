@@ -21,32 +21,32 @@ class KlassMethod
     use Clonable;
     use Formatable;
 
-    /** @var string コメント */
-    private $comment;
+    /** @var string|null コメント */
+    private string|null $comment;
 
-    /** @var string アクセス権 */
-    private $visibility;
+    /** @var KlassVisibility アクセス権 */
+    private KlassVisibility $visibility;
 
     /** @var bool staticメソッドかどうか */
-    private $is_static;
+    private bool $is_static;
 
     /** @var string メソッド名 */
-    private $name;
+    private string $name;
 
     /** @var KlassArgument[] 引数リスト */
-    private $arguments = [];
+    private array $arguments = [];
 
-    /** @var KlassReturn 返却値 */
-    private $return;
+    /** @var KlassReturn|null 返却値 */
+    private KlassReturn|null $return = null;
 
     /** @var KlassException[] 例外リスト */
-    private $exceptions = [];
+    private array $exceptions = [];
 
     /** @var string メソッド内容 */
-    private $body = '';
+    private string $body = '';
 
     /** @var string コメント内容フォーマット */
-    private $comment_format = <<<'FORMAT'
+    private string $comment_format = <<<'FORMAT'
 {{INDENT}}/**
 {{INDENT}} * {{COMMENT}}
 {{COMMENT_SEPARATE}}
@@ -57,7 +57,7 @@ class KlassMethod
 FORMAT;
 
     /** @var string メソッド内容フォーマット */
-    private $method_format = <<<'FORMAT'
+    private string $method_format = <<<'FORMAT'
 {{INDENT}}{{VISIBILITY}}{{WITH_STATIC}} function {{NAME}}({{ARGUMENTS}}){{RETURN}}
 {{INDENT}}{
 {{BODY}}
@@ -69,20 +69,22 @@ FORMAT;
     /**
      * constructor.
      *
-     * @param string      $visibility アクセス権
-     * @param string      $name       メソッド名
-     * @param bool|null   $is_static  staticかどうか
-     * @param string|null $comment    コメント
+     * @param KlassVisibility $visibility アクセス権
+     * @param string          $name       メソッド名
+     * @param bool|null       $is_static  staticかどうか
+     * @param string|null     $comment    コメント
      */
-    public function __construct(string $visibility, string $name, bool $is_static = false, ?string $comment = null)
-    {
+    public function __construct(
+        KlassVisibility $visibility,
+        string $name,
+        bool $is_static = false,
+        string|null $comment = null
+    ) {
         $this->visibility = $visibility;
         $this->name = $name;
         $this->is_static = $is_static;
         $this->comment = $comment;
     }
-
-
 
     /**
      * 引数要素の追加
@@ -96,8 +98,6 @@ FORMAT;
         return $this;
     }
 
-
-
     /**
      * 返却要素の設定
      *
@@ -109,8 +109,6 @@ FORMAT;
         $this->return = $return;
         return $this;
     }
-
-
 
     /**
      * 例外要素の追加
@@ -124,8 +122,6 @@ FORMAT;
         return $this;
     }
 
-
-
     /**
      * メソッド内容の設定
      *
@@ -137,8 +133,6 @@ FORMAT;
         $this->body = $body;
         return $this;
     }
-
-
 
     /**
      * 名称の設定
@@ -152,8 +146,6 @@ FORMAT;
         return $this;
     }
 
-
-
     /**
      * コメントの設定
      *
@@ -165,8 +157,6 @@ FORMAT;
         $this->comment = $comment;
         return $this;
     }
-
-
 
     /**
      * コメント出力
@@ -187,20 +177,18 @@ FORMAT;
 
         // 置換パターン
         $replace_patterns = [
-            '{{COMMENT}}' => $this->comment,
+            '{{COMMENT}}'          => $this->comment,
             '{{COMMENT_SEPARATE}}' => (true === $is_comment_separate ? '{{INDENT}} *' . PHP_EOL : ''),
-            '{{COMMENT_PARAMS}}' => $comment_params,
-            '{{COMMENT_RETURNS}}' => $comment_returns,
-            '{{COMMENT_THROWS}}' => $comment_exceptions,
-            '{{INDENT}}' => $this->callFormat()->indent,
+            '{{COMMENT_PARAMS}}'   => $comment_params,
+            '{{COMMENT_RETURNS}}'  => $comment_returns,
+            '{{COMMENT_THROWS}}'   => $comment_exceptions,
+            '{{INDENT}}'           => $this->callFormat()->indent,
         ];
 
         // 置換して返却
         $replaced = Strings::patternReplace($replace_patterns, $this->comment_format);
         return Strings::removeDuplicateEOL($replaced, true);
     }
-
-
 
     /**
      * メソッド内容を返却
@@ -211,20 +199,18 @@ FORMAT;
     {
         // 置換パターン
         $replace_patterns = [
-            '{{INDENT}}' => $this->callFormat()->indent,
-            '{{VISIBILITY}}' => $this->visibility,
+            '{{INDENT}}'      => $this->callFormat()->indent,
+            '{{VISIBILITY}}'  => $this->visibility->value,
             '{{WITH_STATIC}}' => (true === $this->is_static ? ' static' : ''),
-            '{{NAME}}' => $this->name,
-            '{{ARGUMENTS}}' => KlassArgument::toArgumentsString($this->arguments, $this->callFormat()),
-            '{{RETURN}}' => (false === is_null($this->return) ? $this->return->toReturnHintString() : ''),
-            '{{BODY}}' => $this->body,
+            '{{NAME}}'        => $this->name,
+            '{{ARGUMENTS}}'   => KlassArgument::toArgumentsString($this->arguments, $this->callFormat()),
+            '{{RETURN}}'      => (false === is_null($this->return) ? $this->return->toReturnHintString() : ''),
+            '{{BODY}}'        => $this->body,
         ];
 
         // 置換して返却
         return Strings::patternReplace($replace_patterns, $this->method_format);
     }
-
-
 
     /**
      * 配列を文字列出力する
@@ -244,8 +230,6 @@ FORMAT;
         }
         return $each_methods;
     }
-
-
 
     /**
      * パラメータコメントを生成して返却
@@ -268,8 +252,6 @@ FORMAT;
         return $comment_params;
     }
 
-
-
     /**
      * 返却値コメントを生成して返却
      *
@@ -285,8 +267,6 @@ FORMAT;
         }
         return $comment_returns;
     }
-
-
 
     /**
      * 例外コメントを生成して返却

@@ -20,6 +20,17 @@ use PHPUnit\Framework\TestCase;
 class StockersTest extends TestCase
 {
     /**
+     * {@inheritDoc}
+     *
+     * @return void
+     */
+    public function tearDown(): void
+    {
+        // 初期化しておく
+        Stockers::removeAll();
+    }
+
+    /**
      * @test
      */
     public function exists_想定通り()
@@ -31,12 +42,7 @@ class StockersTest extends TestCase
         Stockers::addItem(StockedItem::newType('ERROR', 'サンプルエラーメッセージ'));
         // 検算：データが入った
         $this->assertTrue(Stockers::exists());
-
-        // 初期化しておく
-        Stockers::removeAll();
     }
-
-
 
     /**
      * @test
@@ -62,12 +68,7 @@ class StockersTest extends TestCase
 
         // 検算：2件になっている
         $this->assertCount(2, Stockers::callItems());
-
-        // 初期化しておく
-        Stockers::removeAll();
     }
-
-
 
     /**
      * @test
@@ -93,8 +94,5 @@ class StockersTest extends TestCase
 
         // 検算：2件になっている
         $this->assertCount(2, Stockers::callItems());
-
-        // 初期化しておく
-        Stockers::removeAll();
     }
 }

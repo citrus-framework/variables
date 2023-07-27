@@ -22,21 +22,21 @@ class KlassReturn
     use Formatable;
 
     /** @var string 型 */
-    protected $type;
+    protected string $type;
 
     /** @var bool null許容 */
-    protected $nullable = false;
+    protected bool $nullable = false;
 
-    /** @var string コメント */
-    protected $comment;
+    /** @var string|null コメント */
+    protected string|null $comment;
 
     /** @var string 返却ヒントのフォーマット */
-    private $return_hint_format = <<<'FORMAT'
+    private string $return_hint_format = <<<'FORMAT'
 {{CONJUNCTION_MARK}}{{NULLABLE_MARK}}{{TYPE}}
 FORMAT;
 
     /** @var string 返却コメントのフォーマット */
-    private $return_comment_format = <<<'FORMAT'
+    private string $return_comment_format = <<<'FORMAT'
 {{INDENT}} * @return {{TYPE}}{{WITH_NULL}}{{WITH_COMMENT_SPACE}}{{COMMENT}}
 FORMAT;
 
@@ -55,8 +55,6 @@ FORMAT;
         $this->nullable = $nullable;
         $this->comment = $comment;
     }
-
-
 
     /**
      * 返却ヒント文字列の返却
@@ -80,15 +78,13 @@ FORMAT;
         // 置換パターン
         $replace_patterns = [
             '{{CONJUNCTION_MARK}}' => (false === $is_mixed ? ': ' : ''),
-            '{{TYPE}}' => $type,
-            '{{NULLABLE_MARK}}' => (true === $is_nullable_mark ? '?' : ''),
+            '{{TYPE}}'             => $type,
+            '{{NULLABLE_MARK}}'    => (true === $is_nullable_mark ? '?' : ''),
         ];
 
         // 置換して返却
         return Strings::patternReplace($replace_patterns, $this->return_hint_format);
     }
-
-
 
     /**
      * 返却コメント文字列の返却
@@ -99,11 +95,11 @@ FORMAT;
     {
         // 置換パターン
         $replace_patterns = [
-            '{{INDENT}}' => $this->callFormat()->indent,
-            '{{TYPE}}' => $this->type,
-            '{{WITH_NULL}}' => (true === $this->nullable ? '|null' : ''),
+            '{{INDENT}}'             => $this->callFormat()->indent,
+            '{{TYPE}}'               => $this->type,
+            '{{WITH_NULL}}'          => (true === $this->nullable ? '|null' : ''),
             '{{WITH_COMMENT_SPACE}}' => (false === Strings::isEmpty($this->comment) ? ' ' : ''),
-            '{{COMMENT}}' => $this->comment,
+            '{{COMMENT}}'            => $this->comment,
         ];
 
         // 置換して返却

@@ -22,9 +22,9 @@ trait PathBinders
      * ['path1' => ['path2' => 111]]
      *
      * @param string $context_path
-     * @return mixed
+     * @return object|array|string|float|int|bool|null
      */
-    public function getPathValue(string $context_path)
+    public function getPathValue(string $context_path): object|array|string|float|int|bool|null
     {
         // ドットで分解
         $contexts = explode('.', $context_path);
@@ -62,10 +62,10 @@ trait PathBinders
      * $context_path : path1.path2
      * ['path1' => ['path2' => 111]]
      *
-     * @param string $context_path
-     * @param mixed  $value
+     * @param string                                  $context_path
+     * @param object|array|string|float|int|bool|null $value
      */
-    public function setPathValue(string $context_path, $value): void
+    public function setPathValue(string $context_path, object|array|string|float|int|bool|null $value): void
     {
         // ドットで分解
         $contexts = explode('.', $context_path);

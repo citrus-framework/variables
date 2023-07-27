@@ -28,19 +28,19 @@ class KlassFormat
     public const INDENT_SPACE8 = '        ';
 
     /** @var string インデント */
-    public $indent;
+    public string $indent;
 
     /** @var int トレイト前後の空行数 */
-    private $blank_around_trait = 0;
+    private int $blank_around_trait = 0;
 
     /** @var int プロパティ前後の空行数 */
-    private $blank_around_property = 1;
+    private int $blank_around_property = 1;
 
     /** @var int メソッド前後の空行数 */
-    private $blank_around_method = 3;
+    private int $blank_around_method = 1;
 
     /** @var int プロパティとメソッドなどブロック間の空行数 */
-    private $blank_between_block = 3;
+    private int $blank_between_block = 3;
 
 
 
@@ -54,8 +54,6 @@ class KlassFormat
         $this->indent = $indent;
     }
 
-
-
     /**
      * トレイト前後の空行数
      *
@@ -67,8 +65,6 @@ class KlassFormat
         $this->blank_around_trait = $blank_around_trait;
         return $this;
     }
-
-
 
     /**
      * プロパティ前後の空行数
@@ -82,8 +78,6 @@ class KlassFormat
         return $this;
     }
 
-
-
     /**
      * メソッド前後の空行数
      *
@@ -95,8 +89,6 @@ class KlassFormat
         $this->blank_around_method = $blank_around_method;
         return $this;
     }
-
-
 
     /**
      * トレイトの間の空行が必要かどうかを判断して返却
@@ -116,8 +108,6 @@ class KlassFormat
         return str_repeat(PHP_EOL, ($this->blank_around_trait + 1));
     }
 
-
-
     /**
      * プロパティの間の空行が必要かどうかを判断して返却
      *
@@ -135,8 +125,6 @@ class KlassFormat
 
         return str_repeat(PHP_EOL, ($this->blank_around_property + 1));
     }
-
-
 
     /**
      * メソッドの間の空行が必要かどうかを判断して返却
@@ -156,8 +144,6 @@ class KlassFormat
         // eachする場合に改行が減るので足す
         return str_repeat(PHP_EOL, ($this->blank_around_method + 1));
     }
-
-
 
     /**
      * プロパティとメソッドなどブロック間の空行が必要かどうかを判断して返却
