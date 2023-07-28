@@ -27,11 +27,11 @@ class StockedItem
 
 
     /**
-     * マジックメソッド、文字列化する
+     * 文字列化
      *
      * @return string
      */
-    public function __toString(): string
+    public function toString(): string
     {
         $elements = [];
         if (false === is_null($this->type))
@@ -44,6 +44,16 @@ class StockedItem
         }
         $elements[] = $this->content;
         return implode(', ', $elements);
+    }
+
+    /**
+     * マジックメソッド、文字列化する
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 
     /**
