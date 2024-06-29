@@ -27,19 +27,19 @@ class Klass
     private string $name;
 
     /** @var string|null クラスコメント */
-    private string|null $class_comment;
+    private string|null $class_comment = null;
 
     /** @var string|null ネームスペース */
-    private string|null $namespace;
+    private string|null $namespace = null;
 
     /** @var string|null 継承親クラス名 */
-    private string|null $extends_name;
+    private string|null $extends_name = null;
 
     /** @var string[] インターフェース名 */
     private array $implements_names = [];
 
     /** @var KlassFileComment|null ファイルコメント */
-    private KlassFileComment|null $fileComment;
+    private KlassFileComment|null $fileComment = null;
 
     /** @var KlassTrait[] トレイト配列 */
     private array $traits = [];
