@@ -21,7 +21,7 @@ abstract class HashMethod implements Hashable
      * @param string|null   $secret         秘密鍵
      */
     public function __construct(
-        protected readonly AlgorithmType $algorithmType = AlgorithmType::SHA256,
+        public readonly AlgorithmType $algorithmType = AlgorithmType::SHA256,
         public string|null $token = null,
         public string|null $secret = null,
     ) {
