@@ -12,6 +12,7 @@ namespace Citrus\Variable;
 
 use Citrus\Intersection;
 use Citrus\Variable\Hash\AlgorithmType;
+use Citrus\Variable\Hash\Hashable;
 use Citrus\Variable\Hash\HashException;
 use Citrus\Variable\Hash\Hmac;
 use Citrus\Variable\Hash\MethodType;
@@ -22,6 +23,23 @@ use Citrus\Variable\Hash\Rsa;
  */
 class Hash
 {
+    /**
+     * ロジックの取得
+     * @param MethodType    $methodType    ハッシュ化メソッド
+     * @param AlgorithmType $algorithmType ハッシュ化アルゴリズム
+     * @return Hashable
+     * @throws HashException
+     */
+    public static function logic(
+        MethodType $methodType = MethodType::RSA,
+        AlgorithmType $algorithmType = AlgorithmType::SHA256,
+    ): Hashable {
+        return Intersection::fetch($methodType->value, [
+            MethodType::HMAC->value => fn() => new Hmac($algorithmType, null, null),
+            MethodType::RSA->value => fn() => new Rsa($algorithmType, null, null),
+        ]);
+    }
+
     /**
      * 署名
      * @param MethodType    $methodType    ハッシュ化メソッド
