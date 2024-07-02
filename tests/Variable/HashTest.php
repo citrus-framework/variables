@@ -21,6 +21,22 @@ class HashTest extends TestCase
     /**
      * @test
      */
+    public function login_想定通り()
+    {
+        // 検算
+        $this->assertInstanceOf(Hash\Hmac::class, Hash::logic(
+            Hash\MethodType::HMAC,
+            Hash\AlgorithmType::SHA256,
+        ));
+        $this->assertInstanceOf(Hash\Rsa::class, Hash::logic(
+            Hash\MethodType::RSA,
+            Hash\AlgorithmType::SHA256,
+        ));
+    }
+
+    /**
+     * @test
+     */
     public function signature_想定通り()
     {
         $signature = Hash::signature(
@@ -31,7 +47,6 @@ class HashTest extends TestCase
         );
         // 検算
         $this->assertNotSame('', $signature);
-
     }
 
     /**
