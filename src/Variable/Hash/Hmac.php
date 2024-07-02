@@ -13,7 +13,7 @@ namespace Citrus\Variable\Hash;
 /**
  * ハッシュ文字列生成処理
  */
-class Hmac extends HashMethod implements Hashable
+class Hmac extends HashLogic
 {
     /**
      * {@inheritDoc}

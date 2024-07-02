@@ -11,9 +11,9 @@ declare(strict_types=1);
 namespace Citrus\Variable\Hash;
 
 /**
- * ハッシュ文字列生成処理
+ * ハッシュ文字列生成抽象
  */
-abstract class HashMethod implements Hashable
+abstract class HashLogic
 {
     /**
      * @param AlgorithmType $algorithmType  ハッシュ化アルゴリズム
@@ -26,6 +26,22 @@ abstract class HashMethod implements Hashable
         public string|null $secret = null,
     ) {
     }
+
+    /**
+     * 署名
+     * @return string
+     * @throws HashException
+     */
+    abstract public function signature(): string;
+
+    /**
+     * 検証
+     * @param string $signature 検証したい署名
+     * @return bool
+     * @throws HashException
+     */
+    abstract public function verify(string $signature): bool;
+
 
     /**
      * 事前チェックを行い、不正な場合は例外を投げる
