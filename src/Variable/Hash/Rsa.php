@@ -15,7 +15,7 @@ use Citrus\Intersection;
 /**
  * ハッシュ文字列生成処理
  */
-class Rsa extends HashMethod implements Hashable
+class Rsa extends HashLogic
 {
     /**
      * {@inheritDoc}
