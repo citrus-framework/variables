@@ -18,11 +18,8 @@ trait Formatable
     /** @var KlassFormat フォーマット処理 */
     private KlassFormat $format;
 
-
-
     /**
      * フォーマットの設定
-     *
      * @param KlassFormat $format
      * @return self
      */
@@ -34,7 +31,6 @@ trait Formatable
 
     /**
      * フォーマット設定の取得
-     *
      * @return KlassFormat
      */
     public function callFormat(): KlassFormat

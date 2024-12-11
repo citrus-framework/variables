@@ -20,7 +20,6 @@ class Xmls
     /**
      * get named item value
      * $attribute 要素の $key 指定値を取得する。
-     *
      * @param DOMNamedNodeMap $attributes
      * @param string          $key
      * @return string|null
@@ -31,12 +30,9 @@ class Xmls
         return (false === is_null($item) ? $item->nodeValue : null);
     }
 
-
-
     /**
      * DOMNamedNodeMap to list
      * $attribute 要素の $key => $value で取得する。
-     *
      * @param DOMNamedNodeMap $attributes
      * @return array
      */

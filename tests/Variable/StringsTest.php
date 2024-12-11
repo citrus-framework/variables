@@ -31,8 +31,6 @@ class StringsTest extends TestCase
         $this->assertfalse(Strings::isEmpty('0'));
     }
 
-
-
     /**
      * @test
      */
@@ -48,8 +46,6 @@ class StringsTest extends TestCase
         // 検算
         $this->assertSame($expected, Strings::patternReplace($patterns, $subject));
     }
-
-
 
     /**
      * @test

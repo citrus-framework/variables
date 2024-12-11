@@ -19,7 +19,6 @@ class Strings
 {
     /**
      * 厳密な文字列チェック(空文字 or null)
-     *
      * @param string|null $value
      * @return bool true:(空文字 or null)
      */
@@ -30,7 +29,6 @@ class Strings
 
     /**
      * 配列での文字列置換
-     *
      * @param array  $patterns ['search' => 'replace', 'search' => 'replace'... ] 検索文字列と置換文字列の配列
      * @param string $subject  置換対象の文字列
      * @return string 置換後文字列
@@ -42,7 +40,6 @@ class Strings
 
     /**
      * 文字列中の重複した改行を取り除く
-     *
      * @param string $value         処理対象文字列
      * @param bool   $with_last_EOL true:最終文字列が改行だった場合に取り除く
      * @return string 処理後文字列
@@ -70,7 +67,6 @@ class Strings
 
     /**
      * 文字列をアッパーキャメルケースに変換する
-     *
      * @param string $context   対象文字列
      * @param string $delimiter デリミタ
      * @return string
@@ -89,8 +85,7 @@ class Strings
 
     /**
      * 文字列をスネークケースに変換する
-     *
-     * @param string $context   対象文字列
+     * @param string $context 対象文字列
      * @param string $glue    グルー文字列
      * @return string
      */

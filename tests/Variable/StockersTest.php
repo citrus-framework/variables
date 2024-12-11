@@ -21,7 +21,6 @@ class StockersTest extends TestCase
 {
     /**
      * {@inheritDoc}
-     *
      * @return void
      */
     public function tearDown(): void

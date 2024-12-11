@@ -52,8 +52,6 @@ EXPECTED;
         $this->assertSame($expected, $variable->toArgumentTypeString());
     }
 
-
-
     /**
      * @test
      */
@@ -87,8 +85,6 @@ mixed
 EXPECTED;
         $this->assertSame($expected, $variable->toCommentTypeString());
     }
-
-
 
     /**
      * @test

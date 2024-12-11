@@ -20,7 +20,6 @@ class ReflectionProperties
 {
     /**
      * プライベートなプロパティの値を取得
-     *
      * @param object $object オブジェクト
      * @param string $property プロパティ
      * @return object|array|string|float|int|bool|null

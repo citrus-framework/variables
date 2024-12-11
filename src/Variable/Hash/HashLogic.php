@@ -42,7 +42,6 @@ abstract class HashLogic
      */
     abstract public function verify(string $signature): bool;
 
-
     /**
      * 事前チェックを行い、不正な場合は例外を投げる
      * @return void

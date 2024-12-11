@@ -17,7 +17,6 @@ class Measures
 {
     /**
      * callable処理を実行して時間計測し返却する
-     *
      * @param callable $exec 計測したい実行処理
      * @return float
      */

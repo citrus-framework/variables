@@ -24,11 +24,17 @@ class StockedItem
     /** @var string */
     public string $content;
 
-
+    /**
+     * マジックメソッド、文字列化する
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
 
     /**
      * 文字列化
-     *
      * @return string
      */
     public function toString(): string
@@ -47,18 +53,7 @@ class StockedItem
     }
 
     /**
-     * マジックメソッド、文字列化する
-     *
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->toString();
-    }
-
-    /**
      * 生成処理
-     *
      * @param string           $content
      * @param StockedType|null $type
      * @param string|null      $tag
@@ -75,7 +70,6 @@ class StockedItem
 
     /**
      * タイプベースの生成処理
-     *
      * @param StockedType $type
      * @param string      $content
      * @return static
@@ -87,7 +81,6 @@ class StockedItem
 
     /**
      * タグベースの生成処理
-     *
      * @param string $tag
      * @param string $content
      * @return static

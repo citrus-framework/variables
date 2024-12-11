@@ -49,7 +49,6 @@ class KlassMethod
     private string $comment_format = <<<'FORMAT'
 {{INDENT}}/**
 {{INDENT}} * {{COMMENT}}
-{{COMMENT_SEPARATE}}
 {{COMMENT_PARAMS}}
 {{COMMENT_RETURNS}}
 {{COMMENT_THROWS}}
@@ -64,11 +63,8 @@ FORMAT;
 {{INDENT}}}
 FORMAT;
 
-
-
     /**
      * constructor.
-     *
      * @param KlassVisibility $visibility アクセス権
      * @param string          $name       メソッド名
      * @param bool|null       $is_static  staticかどうか
@@ -88,7 +84,6 @@ FORMAT;
 
     /**
      * 引数要素の追加
-     *
      * @param KlassArgument $argument 引数
      * @return self
      */
@@ -100,7 +95,6 @@ FORMAT;
 
     /**
      * 返却要素の設定
-     *
      * @param KlassReturn $return 返却要素
      * @return self
      */
@@ -112,7 +106,6 @@ FORMAT;
 
     /**
      * 例外要素の追加
-     *
      * @param KlassException $exception 引数
      * @return self
      */
@@ -124,7 +117,6 @@ FORMAT;
 
     /**
      * メソッド内容の設定
-     *
      * @param string $body メソッド内容
      * @return self
      */
@@ -136,7 +128,6 @@ FORMAT;
 
     /**
      * 名称の設定
-     *
      * @param string $name 名称
      * @return self
      */
@@ -148,7 +139,6 @@ FORMAT;
 
     /**
      * コメントの設定
-     *
      * @param string $comment コメント
      * @return self
      */
@@ -160,7 +150,6 @@ FORMAT;
 
     /**
      * コメント出力
-     *
      * @return string
      */
     public function toCommentString(): string
@@ -192,7 +181,6 @@ FORMAT;
 
     /**
      * メソッド内容を返却
-     *
      * @return string
      */
     public function toMethodString(): string
@@ -214,7 +202,6 @@ FORMAT;
 
     /**
      * 配列を文字列出力する
-     *
      * @param KlassMethod[] $methods 処理対象配列
      * @param KlassFormat   $format  フォーマット
      * @return string
@@ -233,7 +220,6 @@ FORMAT;
 
     /**
      * パラメータコメントを生成して返却
-     *
      * @return string
      */
     private function buildCommentParameter(): string
@@ -254,7 +240,6 @@ FORMAT;
 
     /**
      * 返却値コメントを生成して返却
-     *
      * @return string
      */
     private function buildCommentReturn(): string
@@ -270,7 +255,6 @@ FORMAT;
 
     /**
      * 例外コメントを生成して返却
-     *
      * @return string
      */
     private function buildCommentException(): string

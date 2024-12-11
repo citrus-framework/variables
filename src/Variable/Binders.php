@@ -17,7 +17,6 @@ trait Binders
 {
     /**
      * 汎用ゲッター
-     *
      * @param  string $key キー
      * @return object|array|string|float|int|bool|null
      */
@@ -32,7 +31,6 @@ trait Binders
 
     /**
      * 汎用セッター
-     *
      * @param string                                  $key    キー
      * @param object|array|string|float|int|bool|null $value  値
      * @param bool                                    $strict 厳密設定
@@ -54,7 +52,6 @@ trait Binders
 
     /**
      * 汎用追加処理
-     *
      * @param string                                  $key
      * @param object|array|string|float|int|bool|null $value
      */
@@ -88,7 +85,6 @@ trait Binders
 
     /**
      * 汎用削除
-     *
      * @param array|string $key
      */
     public function remove($key): void
@@ -108,7 +104,6 @@ trait Binders
 
     /**
      * 配列当て込み処理
-     *
      * @param array|null $array
      * @param bool|null  $strict
      */
@@ -126,7 +121,6 @@ trait Binders
 
     /**
      * オブジェクト当て込み処理
-     *
      * @param object|array|string|float|int|bool|null $object
      * @param bool|null                               $strict
      */
@@ -142,7 +136,6 @@ trait Binders
 
     /**
      * インスタンスを生成して、変数をバインドする
-     *
      * @param object|array $data バインドする変数
      * @param bool         $strict 厳密設定
      * @return self

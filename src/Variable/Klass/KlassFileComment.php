@@ -20,26 +20,26 @@ class KlassFileComment
 {
     use Instance;
 
-    /** @var string ファイル自体のコメント */
-    public const RAW = 'raw';
+    /** ファイル自体のコメント */
+    public const string RAW = 'raw';
 
-    /** @var string コピーライト */
-    public const COPYRIGHT = 'copyright';
+    /** コピーライト */
+    public const string COPYRIGHT = 'copyright';
 
-    /** @var string 著作者 */
-    public const AUTHOR = 'author';
+    /** 著作者 */
+    public const string AUTHOR = 'author';
 
-    /** @var string ライセンス */
-    public const LICENSE = 'license';
+    /** ライセンス */
+    public const string LICENSE = 'license';
 
-    /** @var string 引用 */
-    public const SEE = 'see';
+    /** 引用 */
+    public const string SEE = 'see';
 
-    /** @var string TYPEスタック用のキー */
-    private const STACK_KEY_TYPE = 'type';
+    /** TYPEスタック用のキー */
+    private const string STACK_KEY_TYPE = 'type';
 
-    /** @var string CONTEXTスタック用のキー */
-    private const STACK_KEY_CONTEXT = 'context';
+    /** CONTEXTスタック用のキー */
+    private const string STACK_KEY_CONTEXT = 'context';
 
     /** @var array<string, array<string, string>> コメント配列[TYPE => CONTEXT] */
     private array $comments = [];
@@ -66,11 +66,8 @@ FORMAT;
  *
 FORMAT;
 
-
-
     /**
      * コメント追加
-     *
      * @param string $type    コメントタイプ
      * @param string $context コンテキスト
      * @return self
@@ -86,7 +83,6 @@ FORMAT;
 
     /**
      * コメント文字列の返却
-     *
      * @return string
      */
     public function toCommentString(): string
@@ -126,7 +122,6 @@ FORMAT;
 
     /**
      * 平文コメントを生成して取得
-     *
      * @param string $comment
      * @return static
      */
@@ -137,7 +132,6 @@ FORMAT;
 
     /**
      * 平文コメントと＠コメントの間にスペースが必要かどうか
-     *
      * @return bool true:スペースが必要
      */
     private function isNeedSpace(): bool

@@ -45,11 +45,8 @@ class KlassProperty
 {{INDENT}}{{VISIBILITY}} {{TYPE}} ${{FIELD_NAME}}{{WITH_DEFAULT_VALUE}};
 FORMAT;
 
-
-
     /**
      * constructor.
-     *
      * @param string                                  $type          型
      * @param string                                  $name          フィールド名
      * @param object|array|string|float|int|bool|null $default_value デフォルト値
@@ -72,7 +69,6 @@ FORMAT;
 
     /**
      * 出力
-     *
      * @return string
      */
     public function toString(): string
@@ -101,7 +97,6 @@ FORMAT;
 
     /**
      * protected な stringプロパティを生成して取得
-     *
      * @param string                                  $name          フィールド名
      * @param object|array|string|float|int|bool|null $default_value デフォルト値
      * @param string                                  $comment       コメント
@@ -117,7 +112,6 @@ FORMAT;
 
     /**
      * protected な stringプロパティを生成して取得(文字列をクオートする)
-     *
      * @param string                                  $name          フィールド名
      * @param object|array|string|float|int|bool|null $default_value デフォルト値
      * @param string                                  $comment       コメント
@@ -139,7 +133,6 @@ FORMAT;
 
     /**
      * 配列を文字列出力する
-     *
      * @param KlassProperty[] $properties 処理対象配列
      * @param KlassFormat     $format     フォーマット
      * @return string

@@ -17,7 +17,6 @@ trait Clonable
 {
     /**
      * clone したインスタンスを返却
-     *
      * @return self
      */
     public function clone(): self

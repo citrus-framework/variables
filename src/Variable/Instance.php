@@ -17,7 +17,6 @@ trait Instance
 {
     /**
      * call singleton instance
-     *
      * @return self
      */
     public static function getInstance(): self

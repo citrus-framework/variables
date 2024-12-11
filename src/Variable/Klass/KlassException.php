@@ -29,11 +29,8 @@ class KlassException
 {{INDENT}} * @throws {{TYPE}}
 FORMAT;
 
-
-
     /**
      * constructor.
-     *
      * @param string $type 型
      */
     public function __construct(string $type)
@@ -43,7 +40,6 @@ FORMAT;
 
     /**
      * 例外コメント文字列の返却
-     *
      * @return string
      */
     public function toExceptionCommentString(): string

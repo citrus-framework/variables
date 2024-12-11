@@ -40,11 +40,8 @@ FORMAT;
 {{INDENT}} * @return {{TYPE}}{{WITH_NULL}}{{WITH_COMMENT_SPACE}}{{COMMENT}}
 FORMAT;
 
-
-
     /**
      * constructor.
-     *
      * @param string      $type          型
      * @param bool|null   $nullable      true:null許可
      * @param string|null $comment       コメント
@@ -58,7 +55,6 @@ FORMAT;
 
     /**
      * 返却ヒント文字列の返却
-     *
      * @return string
      */
     public function toReturnHintString(): string
@@ -88,7 +84,6 @@ FORMAT;
 
     /**
      * 返却コメント文字列の返却
-     *
      * @return string
      */
     public function toReturnCommentString(): string

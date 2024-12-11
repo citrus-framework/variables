@@ -12,8 +12,8 @@ namespace Citrus\Variable;
 
 use Citrus\Intersection;
 use Citrus\Variable\Hash\AlgorithmType;
-use Citrus\Variable\Hash\HashLogic;
 use Citrus\Variable\Hash\HashException;
+use Citrus\Variable\Hash\HashLogic;
 use Citrus\Variable\Hash\Hmac;
 use Citrus\Variable\Hash\MethodType;
 use Citrus\Variable\Hash\Rsa;
@@ -35,8 +35,8 @@ class Hash
         AlgorithmType $algorithmType = AlgorithmType::SHA256,
     ): HashLogic {
         return Intersection::fetch($methodType->value, [
-            MethodType::HMAC->value => fn() => new Hmac($algorithmType, null, null),
-            MethodType::RSA->value => fn() => new Rsa($algorithmType, null, null),
+            MethodType::HMAC->value => fn () => new Hmac($algorithmType, null, null),
+            MethodType::RSA->value  => fn () => new Rsa($algorithmType, null, null),
         ]);
     }
 
@@ -56,8 +56,8 @@ class Hash
         string|null $secret = null,
     ): string {
         return Intersection::fetch($methodType->value, [
-            MethodType::HMAC->value => fn() => (new Hmac($algorithmType, $token, $secret))->signature(),
-            MethodType::RSA->value => fn() => (new Rsa($algorithmType, $token, $secret))->signature(),
+            MethodType::HMAC->value => fn () => (new Hmac($algorithmType, $token, $secret))->signature(),
+            MethodType::RSA->value  => fn () => (new Rsa($algorithmType, $token, $secret))->signature(),
         ]);
     }
 
@@ -79,8 +79,8 @@ class Hash
         string|null $secret = null,
     ): bool {
         return Intersection::fetch($methodType->value, [
-            MethodType::HMAC->value => fn() => (new Hmac($algorithmType, $token, $secret))->verify($signature),
-            MethodType::RSA->value => fn() => (new Rsa($algorithmType, $token, $secret))->verify($signature),
+            MethodType::HMAC->value => fn () => (new Hmac($algorithmType, $token, $secret))->verify($signature),
+            MethodType::RSA->value  => fn () => (new Rsa($algorithmType, $token, $secret))->verify($signature),
         ]);
     }
 }

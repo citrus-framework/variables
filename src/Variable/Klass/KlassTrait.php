@@ -27,11 +27,8 @@ class KlassTrait
 {{INDENT}}use {{TRAIT_NAME}};
 FORMAT;
 
-
-
     /**
      * constructor.
-     *
      * @param string $name トレイト名
      */
     public function __construct(string $name)
@@ -41,7 +38,6 @@ FORMAT;
 
     /**
      * 出力
-     *
      * @return string
      */
     public function toString(): string
@@ -58,7 +54,6 @@ FORMAT;
 
     /**
      * 配列を文字列出力する
-     *
      * @param KlassTrait[] $traits 処理対象配列
      * @param KlassFormat  $format フォーマット
      * @return string

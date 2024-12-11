@@ -17,7 +17,6 @@ trait Structs
 {
     /**
      * オブジェクト比較
-     *
      * @param object|array|string|float|int|bool|null $object
      * @return bool
      * @deprecated
@@ -29,7 +28,6 @@ trait Structs
 
     /**
      * プロパティ取得
-     *
      * @return array
      * @deprecated
      */
@@ -40,7 +38,6 @@ trait Structs
 
     /**
      * シリアライズ
-     *
      * @return string
      * @deprecated
      */
@@ -51,7 +48,6 @@ trait Structs
 
     /**
      * クラス名取得
-     *
      * @return string
      * @deprecated
      */

@@ -54,8 +54,6 @@ class DirectoriesTest extends TestCase
         $this->assertSame($expected_path, $suitable_path);
     }
 
-
-
     /**
      * @test
      */

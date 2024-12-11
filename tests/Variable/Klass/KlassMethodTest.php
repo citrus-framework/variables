@@ -116,7 +116,6 @@ EXPECTED;
         $expected = <<<'EXPECTED'
     /**
      * hoge hoge hoge
-     *
      * @param string $fuga ふが
      * @param bool|null $enable 有効化
      */
@@ -132,7 +131,6 @@ EXPECTED;
         $expected = <<<'EXPECTED'
     /**
      * hoge hoge hoge
-     *
      * @param string $fuga ふが
      * @param bool|null $enable 有効化
      * @return string|null hoge and hoge
@@ -150,7 +148,6 @@ EXPECTED;
         $expected = <<<'EXPECTED'
     /**
      * hoge hoge hoge
-     *
      * @param string $fuga ふが
      * @param bool|null $enable 有効化
      * @return string|null hoge and hoge
