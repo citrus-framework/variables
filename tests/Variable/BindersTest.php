@@ -41,8 +41,6 @@ class BindersTest extends TestCase
         $this->assertNull($binderSample->get('name2'));
     }
 
-
-
     /**
      * @test
      */
@@ -65,8 +63,6 @@ class BindersTest extends TestCase
         $binderSample->bindArray(['name2' => $name], true);
         $this->assertNull($binderSample->get('name2'));
     }
-
-
 
     /**
      * @test
@@ -94,8 +90,6 @@ class BindersTest extends TestCase
         $this->assertNull($binderSample->get('name2'));
     }
 
-
-
     /**
      * @test
      */
@@ -118,8 +112,6 @@ class BindersTest extends TestCase
         $this->assertSame($binderSample->get('name2'), $actual->get('name'));
     }
 
-
-
     /**
      * @test
      */
@@ -136,8 +128,6 @@ class BindersTest extends TestCase
         $binderSample->remove('name');
         $this->assertNull($binderSample->get('name'));
     }
-
-
 
     /**
      * @test

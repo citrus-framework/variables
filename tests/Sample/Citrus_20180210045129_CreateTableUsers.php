@@ -28,7 +28,6 @@ class Citrus_20180210045129_CreateTableUsers extends \Citrus\Migration\Item
 
     /**
      * up query
-     *
      * @return string SQL文字列
      */
     public function up(): string
@@ -39,7 +38,6 @@ SQL;
 
     /**
      * down query
-     *
      * @return string SQL文字列
      */
     public function down(): string

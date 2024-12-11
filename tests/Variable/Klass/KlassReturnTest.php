@@ -60,8 +60,6 @@ EXPECTED;
         $this->assertSame($expected, $return->toReturnHintString());
     }
 
-
-
     /**
      * @test
      */

@@ -28,8 +28,6 @@ class PathBindersTest extends TestCase
         $this->assertSame(111, $sample->getPathValue('object.list'));
     }
 
-
-
     /**
      * @test
      */

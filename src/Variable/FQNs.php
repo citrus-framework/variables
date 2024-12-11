@@ -17,7 +17,6 @@ class FQNs
 {
     /**
      * クラスパスの完全修飾名からクラス名を取得する
-     *
      * @param string $fqn 完全修飾名
      * @return string
      */

@@ -17,11 +17,9 @@ class Directories
 {
     /**
      * 引数のディレクトリ文字列を適切な形に修飾する
-     *
      * dir1//dir2 => dir1/dir2
      * ./dir1/dir2 => dir1/dir2
      * dir1/../dir2 => dir2
-     *
      * @param string $path
      * @return string
      */
@@ -60,13 +58,9 @@ class Directories
         return implode('/', array_reverse($paths));
     }
 
-
-
     /**
      * パスの先頭文字を大文字化して返却
-     *
      * /hoge/fuga => /Hoge/Fuga
-     *
      * @param string $path      パス
      * @param string $delimiter デリミタ
      * @return string

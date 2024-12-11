@@ -74,11 +74,8 @@ class {{NAME}}{{WITH_EXTENDS}}{{WITH_IMPLEMENTS}}
 
 FORMAT;
 
-
-
     /**
      * constructor.
-     *
      * @param string $name クラス名
      */
     public function __construct(string $name)
@@ -88,7 +85,6 @@ FORMAT;
 
     /**
      * ネームスペースの設定
-     *
      * @param string $namespace ネームスペース
      * @return $this
      */
@@ -100,7 +96,6 @@ FORMAT;
 
     /**
      * クラスコメントの追加
-     *
      * @param string $class_comment クラスコメント
      * @return $this
      */
@@ -112,7 +107,6 @@ FORMAT;
 
     /**
      * 継承親クラスの設定
-     *
      * @param string $extends_name 継承親クラス
      * @return $this
      */
@@ -124,7 +118,6 @@ FORMAT;
 
     /**
      * インターフェースクラスの設定
-     *
      * @param string $implements_name インターフェースクラス
      * @return $this
      */
@@ -136,7 +129,6 @@ FORMAT;
 
     /**
      * ファイルコメントの追加
-     *
      * @param KlassFileComment $fileComment ファイルコメント
      * @return $this
      */
@@ -148,7 +140,6 @@ FORMAT;
 
     /**
      * トレイトの追加
-     *
      * @param KlassTrait $trait
      * @return $this
      */
@@ -160,7 +151,6 @@ FORMAT;
 
     /**
      * プロパティの追加
-     *
      * @param KlassProperty $property
      * @return $this
      */
@@ -172,7 +162,6 @@ FORMAT;
 
     /**
      * メソッドの追加
-     *
      * @param KlassMethod $method
      * @return $this
      */
@@ -184,7 +173,6 @@ FORMAT;
 
     /**
      * 厳密な型検査の設定
-     *
      * @param bool $is_strict_types true:厳密な型検査
      * @return $this
      */
@@ -196,7 +184,6 @@ FORMAT;
 
     /**
      * 文字列化
-     *
      * @return string
      */
     public function toString(): string
@@ -253,7 +240,6 @@ FORMAT;
 
     /**
      * クラスコメントの出力
-     *
      * @return string クラスコメント文字列
      */
     public function toClassCommentString(): string

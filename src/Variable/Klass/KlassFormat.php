@@ -15,17 +15,17 @@ namespace Citrus\Variable\Klass;
  */
 class KlassFormat
 {
-    /** @var string インデントタブ */
-    public const INDENT_TAB = "\t";
+    /** インデントタブ */
+    public const string INDENT_TAB = "\t";
 
-    /** @var string インデントスペース2 */
-    public const INDENT_SPACE2 = '  ';
+    /** インデントスペース2 */
+    public const string INDENT_SPACE2 = '  ';
 
-    /** @var string インデントスペース4 */
-    public const INDENT_SPACE4 = '    ';
+    /** インデントスペース4 */
+    public const string INDENT_SPACE4 = '    ';
 
-    /** @var string インデントスペース8 */
-    public const INDENT_SPACE8 = '        ';
+    /** インデントスペース8 */
+    public const string INDENT_SPACE8 = '        ';
 
     /** @var string インデント */
     public string $indent;
@@ -42,11 +42,8 @@ class KlassFormat
     /** @var int プロパティとメソッドなどブロック間の空行数 */
     private int $blank_between_block = 3;
 
-
-
     /**
      * constructor.
-     *
      * @param string $indent インデント
      */
     public function __construct(string $indent = self::INDENT_SPACE4)
@@ -56,7 +53,6 @@ class KlassFormat
 
     /**
      * トレイト前後の空行数
-     *
      * @param int $blank_around_trait
      * @return self
      */
@@ -68,7 +64,6 @@ class KlassFormat
 
     /**
      * プロパティ前後の空行数
-     *
      * @param int $blank_around_property
      * @return self
      */
@@ -80,7 +75,6 @@ class KlassFormat
 
     /**
      * メソッド前後の空行数
-     *
      * @param int $blank_around_method
      * @return self
      */
@@ -92,7 +86,6 @@ class KlassFormat
 
     /**
      * トレイトの間の空行が必要かどうかを判断して返却
-     *
      * @param KlassTrait   $target
      * @param KlassTrait[] $traits
      * @return string
@@ -110,7 +103,6 @@ class KlassFormat
 
     /**
      * プロパティの間の空行が必要かどうかを判断して返却
-     *
      * @param KlassProperty   $target
      * @param KlassProperty[] $properties
      * @return string
@@ -128,7 +120,6 @@ class KlassFormat
 
     /**
      * メソッドの間の空行が必要かどうかを判断して返却
-     *
      * @param KlassMethod   $target
      * @param KlassMethod[] $methods
      * @return string
@@ -147,7 +138,6 @@ class KlassFormat
 
     /**
      * プロパティとメソッドなどブロック間の空行が必要かどうかを判断して返却
-     *
      * @param array $targets1
      * @param array $targets2
      * @return string

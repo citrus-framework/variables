@@ -21,11 +21,8 @@ class Dates extends DateTime
     /** @var self|null 現時刻キャッシュ */
     private static Dates|null $NOW = null;
 
-
-
     /**
      * 日付文字列から生成する
-     *
      * @param string $date 日付文字列
      * @return $this|null
      */
@@ -43,7 +40,6 @@ class Dates extends DateTime
 
     /**
      * 現時刻を(未設定であれば初期化して)取得
-     *
      * @return $this
      * @throws VariableException
      */
@@ -58,7 +54,6 @@ class Dates extends DateTime
 
     /**
      * 現時刻を初期化する
-     *
      * @see https://www.php.net/manual/ja/datetime.construct.php
      * > 5.3.0 time が 日付と時刻の書式 として無効な場合に、例外がスローされるようになりました。
      * 親のDateTimeの第1引数に起因する例外のため、未指定の今回は握りつぶす
@@ -81,7 +76,6 @@ class Dates extends DateTime
 
     /**
      * よく使われる 2020-01-02 03:04:05 のフォーマットで返す
-     *
      * @return string
      */
     public function formatTimestamp(): string
@@ -91,7 +85,6 @@ class Dates extends DateTime
 
     /**
      * よく使われる 2020-01-02 03:04:05+0900 のフォーマットで返す
-     *
      * @return string
      */
     public function formatTimestampWithTimezone(): string
@@ -101,7 +94,6 @@ class Dates extends DateTime
 
     /**
      * 日付の加算
-     *
      * @param int $day 加算日数
      * @return $this
      */
@@ -112,7 +104,6 @@ class Dates extends DateTime
 
     /**
      * 日数の減算
-     *
      * @param int $day 減算日数
      * @return $this
      */
@@ -123,7 +114,6 @@ class Dates extends DateTime
 
     /**
      * 秒数の加算
-     *
      * @param int $second 追加秒数
      * @return $this
      */
@@ -134,7 +124,6 @@ class Dates extends DateTime
 
     /**
      * 秒数の減算
-     *
      * @param int $second 追加秒数
      * @return $this
      */

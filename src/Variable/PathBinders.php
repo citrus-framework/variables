@@ -17,10 +17,8 @@ trait PathBinders
 {
     /**
      * パスを利用して値を取得する
-     *
      * $context_path : path1.path2
      * ['path1' => ['path2' => 111]]
-     *
      * @param string $context_path
      * @return object|array|string|float|int|bool|null
      */
@@ -37,31 +35,26 @@ trait PathBinders
             $method_name = sprintf('get%s', Strings::upperCamelCase($contexts[$i]));
             switch (true)
             {
-                // getterがあれば利用する
                 case method_exists($object, $method_name):
+                    // getterがあれば利用する
                     $object = $object->$method_name();
                     break;
-                // 汎用getterがあれば利用する
                 case method_exists($object, 'get'):
+                    // 汎用getterがあれば利用する
                     $object = $object->get($contexts[$i]);
                     break;
-                // 直接指定する
                 default:
+                    // 直接指定する
                     $object = $object->{$contexts[$i]};
             }
         }
-
         return $object;
     }
 
-
-
     /**
      * パスを利用して値を設定する
-     *
      * $context_path : path1.path2
      * ['path1' => ['path2' => 111]]
-     *
      * @param string                                  $context_path
      * @param object|array|string|float|int|bool|null $value
      */
@@ -80,16 +73,16 @@ trait PathBinders
                 $method_name = sprintf('set%s', Strings::upperCamelCase($property_name));
                 switch (true)
                 {
-                    // setterがあれば利用する
                     case method_exists($object, $method_name):
+                        // setterがあれば利用する
                         $object->$method_name($value);
                         break;
-                    // 汎用setterがあれば利用する
                     case method_exists($object, 'set'):
+                        // 汎用setterがあれば利用する
                         $object->set($property_name, $value);
                         break;
-                    // 直接指定する
                     default:
+                        // 直接指定する
                         $object->$property_name = $value;
                 }
                 break;

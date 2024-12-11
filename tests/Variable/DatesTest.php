@@ -34,8 +34,6 @@ class DatesTest extends TestCase
         $this->assertLessThanOrEqual(1, abs($ts1 - $ts2));
     }
 
-
-
     /**
      * @test
      */
@@ -51,8 +49,6 @@ class DatesTest extends TestCase
         $this->assertSame($dt1->format('u'), $dt2->format('u'));
     }
 
-
-
     /**
      * @test
      */
@@ -65,8 +61,6 @@ class DatesTest extends TestCase
         $this->assertSame($dt1, $dt2);
     }
 
-
-
     /**
      * @test
      */
@@ -78,8 +72,6 @@ class DatesTest extends TestCase
         // 検算(時間文字列が一致)
         $this->assertSame($dt1, $dt2);
     }
-
-
 
     /**
      * @test
@@ -98,8 +90,6 @@ class DatesTest extends TestCase
         $this->assertNull($dt2);
     }
 
-
-
     /**
      * @test
      */
@@ -112,8 +102,6 @@ class DatesTest extends TestCase
         $this->assertSame(1, $dt1->diff($dt2)->d);
         $this->assertTrue($dt1 < $dt2);
     }
-
-
 
     /**
      * @test

@@ -79,8 +79,6 @@ EXPECTED;
         $this->assertSame($expected, $fileComment->toCommentString());
     }
 
-
-
     /**
      * @test
      */

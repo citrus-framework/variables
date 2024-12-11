@@ -17,7 +17,6 @@ trait Singleton
 {
     /**
      * call singleton instance
-     *
      * @return self
      */
     public static function sharedInstance(): self

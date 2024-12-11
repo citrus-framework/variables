@@ -50,11 +50,8 @@ FORMAT;
 {{WITH_DEFAULT_VALUE}}
 FORMAT;
 
-
-
     /**
      * constructor.
-     *
      * @param string                                  $type          型
      * @param string                                  $name          変数名
      * @param object|array|string|float|int|bool|null $default_value デフォルト値
@@ -77,7 +74,6 @@ FORMAT;
 
     /**
      * 引数の変数型文字列の返却
-     *
      * @return string
      */
     public function toArgumentTypeString(): string
@@ -99,7 +95,6 @@ FORMAT;
 
     /**
      * コメントの変数型文字列の返却
-     *
      * @return string
      */
     public function toCommentTypeString(): string
@@ -116,7 +111,6 @@ FORMAT;
 
     /**
      * デフォルト値の返却
-     *
      * @return string
      */
     public function toWithDefaultValueString(): string

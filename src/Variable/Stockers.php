@@ -22,11 +22,8 @@ class Stockers
     /** @var StockedItem[]  */
     private static array $items = [];
 
-
-
     /**
      * メッセージが1件でもあるかどうか
-     *
      * @return bool
      */
     public static function exists(): bool
@@ -36,7 +33,6 @@ class Stockers
 
     /**
      * メッセージの取得
-     *
      * @return StockedItem[]
      */
     public static function callItems(): array
@@ -46,7 +42,6 @@ class Stockers
 
     /**
      * メッセージの登録
-     *
      * @param StockedItem|StockedItem[] $items アイテムかアイテム配列
      * @return void
      */
@@ -67,7 +62,6 @@ class Stockers
 
     /**
      * タイプでフィルタリングしてメッセージを取得する
-     *
      * @param StockedType $type
      * @return StockedItem[]
      */
@@ -81,7 +75,6 @@ class Stockers
 
     /**
      * タグでフィルタリングしてメッセージを取得する
-     *
      * @param string $tag
      * @return StockedItem[]
      */
@@ -95,7 +88,6 @@ class Stockers
 
     /**
      * タイプでポップする
-     *
      * @param StockedType $type
      * @return StockedItem[]
      */
@@ -112,7 +104,6 @@ class Stockers
 
     /**
      * タグでポップする
-     *
      * @param string $tag
      * @return StockedItem[]
      */
@@ -129,7 +120,6 @@ class Stockers
 
     /**
      * アイテムの全削除
-     *
      * @return void
      */
     public static function removeAll(): void
@@ -139,7 +129,6 @@ class Stockers
 
     /**
      * メッセージのタイプごと削除
-     *
      * @param StockedType $type
      * @return void
      */
@@ -157,7 +146,6 @@ class Stockers
 
     /**
      * メッセージのタグごと削除
-     *
      * @param string $tag
      * @return void
      */

@@ -29,11 +29,8 @@ FORMAT;
 {{INDENT}} * @param {{TYPE}}{{ALIGNMENT_SPACE1}}${{NAME}}{{ALIGNMENT_SPACE2}}{{COMMENT}}
 FORMAT;
 
-
-
     /**
      * 出力
-     *
      * @return string
      */
     public function toArgumentString(): string
@@ -59,7 +56,6 @@ FORMAT;
 
     /**
      * 出力
-     *
      * @return string
      */
     public function toCommentString(): string
@@ -95,7 +91,6 @@ FORMAT;
 
     /**
      * 引数要素の配列から文字列を生成する
-     *
      * @param self[]      $arguments 引数要素の配列
      * @param KlassFormat $format    フォーマット
      * @return string
