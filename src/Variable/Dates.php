@@ -39,6 +39,25 @@ class Dates extends DateTime
     }
 
     /**
+     * UnixTimestampから生成する
+     * @param int $timestamp UnixTimestamp
+     * @return $this|null
+     */
+    public static function fromTimestamp(int $timestamp): ?self
+    {
+        try
+        {
+            $date = new Dates();
+            $date->setTimestamp($timestamp);
+            return $date;
+        }
+        catch (\Exception $e)
+        {
+            return null;
+        }
+    }
+
+    /**
      * 現時刻を(未設定であれば初期化して)取得
      * @return $this
      * @throws VariableException
