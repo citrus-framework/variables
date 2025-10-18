@@ -21,6 +21,17 @@ class DatesTest extends TestCase
     /**
      * @test
      */
+    public function fromTimestamp_想定通り()
+    {
+        $dt = Dates::fromTimestamp(1758067200);
+
+        // 検算(日数差は1日)
+        $this->assertSame('2025-09-17 00:00:00+0000', $dt->formatTimestampWithTimezone());
+    }
+
+    /**
+     * @test
+     */
     public function 現時刻取得()
     {
         // 現時点のタイムスタンプ
