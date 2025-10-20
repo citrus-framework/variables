@@ -74,7 +74,7 @@ class Directories
         $results = [];
         foreach ($paths as $row)
         {
-            $results[] = ucfirst(strtolower($row));
+            $results[] = ucfirst($row);
         }
 
         // デリミタで結合

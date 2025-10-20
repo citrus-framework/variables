@@ -65,7 +65,7 @@ class DirectoriesTest extends TestCase
         // 先頭スラッシュ有り
         $this->assertSame('/Hoge/Fuga', Directories::upperFirstPath('/hoge/fuga'));
 
-        // 先頭以外は小文字化する
-        $this->assertSame('/Hoge/Fuga', Directories::upperFirstPath('/HOGE/FUGA'));
+        // 先頭以外は変更しない
+        $this->assertSame('/HogeFuga', Directories::upperFirstPath('/hogeFuga'));
     }
 }
