@@ -13,7 +13,9 @@
     "require": {
         "citrus-framework/collection": "^1.0",
         "citrus-framework/exception": "^1.0",
-        "citrus-framework/intersection": "^1.0",
+        "citrus-framework/intersection": "^1.0"
+    },
+    "suggest": {
         "ext-dom": "*",
         "ext-openssl": "*"
     },
