@@ -104,6 +104,74 @@ class DatesTest extends TestCase
     /**
      * @test
      */
+    public function addYear_想定通り()
+    {
+        $dt1 = Dates::new('2020-03-04');
+        $dt2 = (clone $dt1)->addYear(1);
+
+        // 検算
+        $diff = $dt1->diff($dt2);
+        $this->assertSame(1, $diff->y);
+        $this->assertSame(0, $diff->m);
+        $this->assertSame(0, $diff->d);
+        $this->assertSame(365, $diff->days);
+        $this->assertTrue($dt1 < $dt2);
+    }
+
+    /**
+     * @test
+     */
+    public function subYear_想定通り()
+    {
+        $dt1 = Dates::new('2020-03-04');
+        $dt2 = (clone $dt1)->subYear(1);
+
+        // 検算
+        $diff = $dt1->diff($dt2);
+        $this->assertSame(1, $diff->y);
+        $this->assertSame(0, $diff->m);
+        $this->assertSame(0, $diff->d);
+        $this->assertSame(366, $diff->days);
+        $this->assertTrue($dt1 > $dt2);
+    }
+
+    /**
+     * @test
+     */
+    public function addMonth_想定通り()
+    {
+        $dt1 = Dates::new('2020-03-04');
+        $dt2 = (clone $dt1)->addMonth(1);
+
+        // 検算
+        $diff = $dt1->diff($dt2);
+        $this->assertSame(0, $diff->y);
+        $this->assertSame(1, $diff->m);
+        $this->assertSame(0, $diff->d);
+        $this->assertSame(31, $diff->days);
+        $this->assertTrue($dt1 < $dt2);
+    }
+
+    /**
+     * @test
+     */
+    public function subMonth_想定通り()
+    {
+        $dt1 = Dates::new('2020-03-04');
+        $dt2 = (clone $dt1)->subMonth(1);
+
+        // 検算
+        $diff = $dt1->diff($dt2);
+        $this->assertSame(0, $diff->y);
+        $this->assertSame(1, $diff->m);
+        $this->assertSame(0, $diff->d);
+        $this->assertSame(29, $diff->days);
+        $this->assertTrue($dt1 > $dt2);
+    }
+
+    /**
+     * @test
+     */
     public function addDay_想定通り()
     {
         $dt1 = Dates::new('2020-03-04');
@@ -125,5 +193,22 @@ class DatesTest extends TestCase
         // 検算(日数差は1日)
         $this->assertSame(1, $dt1->diff($dt2)->d);
         $this->assertTrue($dt1 > $dt2);
+    }
+
+    /**
+     * @test
+     */
+    public function monthLastDay_想定通り()
+    {
+        $dt1 = Dates::new('2020-03-04');
+        $dt2 = (clone $dt1)->monthLastDay();
+
+        // 検算
+        $diff = $dt1->diff($dt2);
+        $this->assertSame(0, $diff->y);
+        $this->assertSame(0, $diff->m);
+        $this->assertSame(27, $diff->d);
+        $this->assertSame(27, $diff->days);
+        $this->assertTrue($dt1 < $dt2);
     }
 }

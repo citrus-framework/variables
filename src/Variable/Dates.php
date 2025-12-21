@@ -112,6 +112,46 @@ class Dates extends DateTime
     }
 
     /**
+     * 年の加算
+     * @param int $year 加算年数
+     * @return $this
+     */
+    public function addYear(int $year): self
+    {
+        return $this->add(DateInterval::createFromDateString(sprintf('%d years', $year)));
+    }
+
+    /**
+     * 年の減算
+     * @param int $year 減算年数
+     * @return $this
+     */
+    public function subYear(int $year): self
+    {
+        return $this->sub(DateInterval::createFromDateString(sprintf('%d years', $year)));
+    }
+
+    /**
+     * 月の加算
+     * @param int $month 加算月数
+     * @return $this
+     */
+    public function addMonth(int $month): self
+    {
+        return $this->add(DateInterval::createFromDateString(sprintf('%d months', $month)));
+    }
+
+    /**
+     * 月の減算
+     * @param int $month 減算月数
+     * @return $this
+     */
+    public function subMonth(int $month): self
+    {
+        return $this->sub(DateInterval::createFromDateString(sprintf('%d months', $month)));
+    }
+
+    /**
      * 日付の加算
      * @param int $day 加算日数
      * @return $this
@@ -149,5 +189,17 @@ class Dates extends DateTime
     public function subSecond(int $second): self
     {
         return $this->sub(DateInterval::createFromDateString(sprintf('%d seconds', $second)));
+    }
+
+    /**
+     * 月の最終日
+     * @return $this
+     */
+    public function monthLastDay(): self
+    {
+        $year = (int)$this->format('Y');
+        $month = (int)$this->format('m');
+
+        return $this->setDate($year, $month + 1, 1)->subDay(1);
     }
 }
