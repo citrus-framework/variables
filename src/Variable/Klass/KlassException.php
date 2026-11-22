@@ -47,7 +47,7 @@ FORMAT;
         // 置換パターン
         $replace_patterns = [
             '{{INDENT}}' => $this->callFormat()->indent,
-            '{{TYPE}}'   => $this->type,
+            '{{TYPE}}' => $this->type,
         ];
 
         // 置換して返却

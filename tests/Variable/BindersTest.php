@@ -149,6 +149,7 @@ class BindersTest extends TestCase
 }
 
 
+#[\AllowDynamicProperties]
 class BinderSample
 {
     use Binders;

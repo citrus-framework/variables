@@ -40,11 +40,11 @@ class StockedItem
     public function toString(): string
     {
         $elements = [];
-        if (false === is_null($this->type))
+        if ($this->type !== null)
         {
             $elements[] = sprintf('type:%s', $this->type->value);
         }
-        if (false === is_null($this->tag))
+        if ($this->tag !== null)
         {
             $elements[] = sprintf('tag:%s', $this->tag);
         }

@@ -22,7 +22,7 @@ trait Singleton
     public static function sharedInstance(): self
     {
         static $singletons = [];
-        if (false === array_key_exists(static::class, $singletons))
+        if (array_key_exists(static::class, $singletons) === false)
         {
             $singletons[static::class] = new static();
         }

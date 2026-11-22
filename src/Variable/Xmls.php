@@ -27,7 +27,7 @@ class Xmls
     public static function getNamedItemValue(DOMNamedNodeMap $attributes, string $key): ?string
     {
         $item = $attributes->getNamedItem($key);
-        return (false === is_null($item) ? $item->nodeValue : null);
+        return ($item !== null ? $item->nodeValue : null);
     }
 
     /**

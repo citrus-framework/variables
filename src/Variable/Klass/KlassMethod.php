@@ -161,17 +161,13 @@ FORMAT;
         // 例外部分
         $comment_exceptions = $this->buildCommentException();
 
-        // コメントセパレータ
-        $is_comment_separate = ('' !== $comment_params or '' !== $comment_returns or '' !== $comment_exceptions);
-
         // 置換パターン
         $replace_patterns = [
-            '{{COMMENT}}'          => $this->comment,
-            '{{COMMENT_SEPARATE}}' => (true === $is_comment_separate ? '{{INDENT}} *' . PHP_EOL : ''),
-            '{{COMMENT_PARAMS}}'   => $comment_params,
-            '{{COMMENT_RETURNS}}'  => $comment_returns,
-            '{{COMMENT_THROWS}}'   => $comment_exceptions,
-            '{{INDENT}}'           => $this->callFormat()->indent,
+            '{{COMMENT}}' => $this->comment,
+            '{{COMMENT_PARAMS}}' => $comment_params,
+            '{{COMMENT_RETURNS}}' => $comment_returns,
+            '{{COMMENT_THROWS}}' => $comment_exceptions,
+            '{{INDENT}}' => $this->callFormat()->indent,
         ];
 
         // 置換して返却
@@ -187,13 +183,13 @@ FORMAT;
     {
         // 置換パターン
         $replace_patterns = [
-            '{{INDENT}}'      => $this->callFormat()->indent,
-            '{{VISIBILITY}}'  => $this->visibility->value,
-            '{{WITH_STATIC}}' => (true === $this->is_static ? ' static' : ''),
-            '{{NAME}}'        => $this->name,
-            '{{ARGUMENTS}}'   => KlassArgument::toArgumentsString($this->arguments, $this->callFormat()),
-            '{{RETURN}}'      => (false === is_null($this->return) ? $this->return->toReturnHintString() : ''),
-            '{{BODY}}'        => $this->body,
+            '{{INDENT}}' => $this->callFormat()->indent,
+            '{{VISIBILITY}}' => $this->visibility->value,
+            '{{WITH_STATIC}}' => ($this->is_static === true ? ' static' : ''),
+            '{{NAME}}' => $this->name,
+            '{{ARGUMENTS}}' => KlassArgument::toArgumentsString($this->arguments, $this->callFormat()),
+            '{{RETURN}}' => ($this->return !== null ? $this->return->toReturnHintString() : ''),
+            '{{BODY}}' => $this->body,
         ];
 
         // 置換して返却
@@ -224,18 +220,12 @@ FORMAT;
      */
     private function buildCommentParameter(): string
     {
-        $comment_params = '';
-        if (0 < count($this->arguments))
-        {
-            $params = [];
-            foreach ($this->arguments as $argument)
-            {
-                $argument->setFormat($this->callFormat());
-                $params[] = $argument->toCommentString();
-            }
-            $comment_params = implode(PHP_EOL, $params);
-        }
-        return $comment_params;
+        $format = $this->callFormat();
+        $params = array_map(
+            static fn (KlassArgument $argument): string => $argument->setFormat($format)->toCommentString(),
+            $this->arguments
+        );
+        return implode(PHP_EOL, $params);
     }
 
     /**
@@ -245,7 +235,7 @@ FORMAT;
     private function buildCommentReturn(): string
     {
         $comment_returns = '';
-        if (false === is_null($this->return))
+        if ($this->return !== null)
         {
             $this->return->setFormat($this->callFormat());
             $comment_returns = $this->return->toReturnCommentString();
@@ -259,17 +249,11 @@ FORMAT;
      */
     private function buildCommentException(): string
     {
-        $comment_exceptions = '';
-        if (0 < count($this->exceptions))
-        {
-            $exceptions = [];
-            foreach ($this->exceptions as $exception)
-            {
-                $exception->setFormat($this->callFormat());
-                $exceptions[] = $exception->toExceptionCommentString();
-            }
-            $comment_exceptions = implode(PHP_EOL, $exceptions);
-        }
-        return $comment_exceptions;
+        $format = $this->callFormat();
+        $exceptions = array_map(
+            static fn (KlassException $exception): string => $exception->setFormat($format)->toExceptionCommentString(),
+            $this->exceptions
+        );
+        return implode(PHP_EOL, $exceptions);
     }
 }

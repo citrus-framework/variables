@@ -27,11 +27,7 @@ class ReflectionProperties
      */
     public static function call(object $object, string $property): object|array|string|float|int|bool|null
     {
-        // リフレクション
-        $ref = new ReflectionProperty($object::class, $property);
-        // アクセス可
-        $ref->setAccessible(true);
-        // プロパティの値を返却
-        return $ref->getValue($object);
+        // プロパティの値を返却(PHP 8.1 から、private・protected も setAccessible なしで読める)
+        return (new ReflectionProperty($object::class, $property))->getValue($object);
     }
 }

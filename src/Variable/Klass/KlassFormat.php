@@ -40,7 +40,7 @@ class KlassFormat
     private int $blank_around_method = 1;
 
     /** @var int プロパティとメソッドなどブロック間の空行数 */
-    private int $blank_between_block = 3;
+    private int $blank_between_block = 1;
 
     /**
      * constructor.
@@ -92,13 +92,7 @@ class KlassFormat
      */
     public function blankAroundTrait(KlassTrait $target, array $traits): string
     {
-        // 配列が0版目の場合は空行はいらない
-        if (0 === array_search($target, $traits))
-        {
-            return '';
-        }
-
-        return str_repeat(PHP_EOL, ($this->blank_around_trait + 1));
+        return KlassBlank::around($target, $traits, $this->blank_around_trait);
     }
 
     /**
@@ -109,13 +103,7 @@ class KlassFormat
      */
     public function blankAroundProperty(KlassProperty $target, array $properties): string
     {
-        // 配列が0版目の場合は空行はいらない
-        if (0 === array_search($target, $properties))
-        {
-            return '';
-        }
-
-        return str_repeat(PHP_EOL, ($this->blank_around_property + 1));
+        return KlassBlank::around($target, $properties, $this->blank_around_property);
     }
 
     /**
@@ -126,14 +114,7 @@ class KlassFormat
      */
     public function blankAroundMethod(KlassMethod $target, array $methods): string
     {
-        // 配列が0版目の場合は空行はいらない
-        if (0 === array_search($target, $methods))
-        {
-            return '';
-        }
-
-        // eachする場合に改行が減るので足す
-        return str_repeat(PHP_EOL, ($this->blank_around_method + 1));
+        return KlassBlank::around($target, $methods, $this->blank_around_method);
     }
 
     /**
@@ -144,12 +125,6 @@ class KlassFormat
      */
     public function blankBetweenBlock(array $targets1, array $targets2): string
     {
-        // プロパティとメソッドの配列がどちらかでも0なら空行はいらない
-        if (0 === count($targets1) or 0 === count($targets2))
-        {
-            return '';
-        }
-
-        return str_repeat(PHP_EOL, ($this->blank_between_block + 1));
+        return KlassBlank::between($targets1, $targets2, $this->blank_between_block);
     }
 }

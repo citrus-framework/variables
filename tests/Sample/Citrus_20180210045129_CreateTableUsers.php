@@ -16,15 +16,11 @@ class Citrus_20180210045129_CreateTableUsers extends \Citrus\Migration\Item
     use \Citrus\Variable\Instance;
     use \Citrus\Variable\Singleton;
 
-
-
     /** @var string テーブル|ビュー名 */
     public string $object_name = 'users';
 
     /** @var string スキーマ名 */
     public string $schema = 'citrus';
-
-
 
     /**
      * up query

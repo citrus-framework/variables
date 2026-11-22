@@ -26,27 +26,20 @@ trait PathBinders
     {
         // ドットで分解
         $contexts = explode('.', $context_path);
-        $context_size = count($contexts);
-        $context_get_limit = $context_size - 1;
 
         $object = $this;
-        for ($i = 0; $i <= $context_get_limit; $i++)
+        foreach ($contexts as $context)
         {
-            $method_name = sprintf('get%s', Strings::upperCamelCase($contexts[$i]));
-            switch (true)
+            $method_name = sprintf('get%s', Strings::upperCamelCase($context));
+            $object = match (true)
             {
-                case method_exists($object, $method_name):
-                    // getterがあれば利用する
-                    $object = $object->$method_name();
-                    break;
-                case method_exists($object, 'get'):
-                    // 汎用getterがあれば利用する
-                    $object = $object->get($contexts[$i]);
-                    break;
-                default:
-                    // 直接指定する
-                    $object = $object->{$contexts[$i]};
-            }
+                // getterがあれば利用する
+                method_exists($object, $method_name) => $object->$method_name(),
+                // 汎用getterがあれば利用する
+                method_exists($object, 'get') => $object->get($context),
+                // 直接指定する
+                default => $object->{$context},
+            };
         }
         return $object;
     }
@@ -71,20 +64,15 @@ trait PathBinders
             if ($index === ($context_size - 1))
             {
                 $method_name = sprintf('set%s', Strings::upperCamelCase($property_name));
-                switch (true)
+                match (true)
                 {
-                    case method_exists($object, $method_name):
-                        // setterがあれば利用する
-                        $object->$method_name($value);
-                        break;
-                    case method_exists($object, 'set'):
-                        // 汎用setterがあれば利用する
-                        $object->set($property_name, $value);
-                        break;
-                    default:
-                        // 直接指定する
-                        $object->$property_name = $value;
-                }
+                    // setterがあれば利用する
+                    method_exists($object, $method_name) => $object->$method_name($value),
+                    // 汎用setterがあれば利用する
+                    method_exists($object, 'set') => $object->set($property_name, $value),
+                    // 直接指定する
+                    default => $object->$property_name = $value,
+                };
                 break;
             }
 

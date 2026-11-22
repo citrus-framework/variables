@@ -41,7 +41,7 @@ class KlassProperty
 
     /** @var string 出力フォーマット */
     private string $output_format = <<<'FORMAT'
-{{INDENT}}/** @var {{TYPE}} {{COMMENT}} */
+{{INDENT}}/** @var {{TYPE}}{{WITH_COMMENT}} */
 {{INDENT}}{{VISIBILITY}} {{TYPE}} ${{FIELD_NAME}}{{WITH_DEFAULT_VALUE}};
 FORMAT;
 
@@ -76,18 +76,19 @@ FORMAT;
         // デフォルト値
         $with_default_value = '';
         // デフォルト値がnull以外の場合
-        if (false === is_null($this->default_value))
+        if ($this->default_value !== null)
         {
             $with_default_value = sprintf(' = %s', $this->default_value);
         }
 
         // 置換パターン
         $replace_patterns = [
-            '{{INDENT}}'             => $this->callFormat()->indent,
-            '{{TYPE}}'               => $this->type,
-            '{{COMMENT}}'            => $this->comment,
-            '{{VISIBILITY}}'         => $this->visibility->value,
-            '{{FIELD_NAME}}'         => $this->name,
+            '{{INDENT}}' => $this->callFormat()->indent,
+            '{{TYPE}}' => $this->type,
+            // コメントが空なら、型の後ろに空白を残さない
+            '{{WITH_COMMENT}}' => ($this->comment === '' ? '' : ' ' . $this->comment),
+            '{{VISIBILITY}}' => $this->visibility->value,
+            '{{FIELD_NAME}}' => $this->name,
             '{{WITH_DEFAULT_VALUE}}' => $with_default_value,
         ];
 
@@ -123,7 +124,7 @@ FORMAT;
         string $comment = ''
     ): self {
         // stringと決まっているので、''で囲む
-        if (false === is_null($default_value))
+        if ($default_value !== null)
         {
             $default_value = sprintf('\'%s\'', $default_value);
         }

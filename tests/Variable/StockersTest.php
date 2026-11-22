@@ -94,6 +94,44 @@ class StockersTest extends TestCase
         // 検算：2件になっている
         $this->assertCount(2, Stockers::callItems());
     }
+
+    /**
+     * @test
+     */
+    public function removeWithType_想定通り()
+    {
+        // データストック
+        Stockers::addItem(StockedItem::newType(MessageType::ERROR, 'サンプルエラーメッセージ'));
+        Stockers::addItem(StockedItem::newType(MessageType::WARNING, 'サンプル警告メッセージ'));
+        Stockers::addItem(StockedItem::newType(MessageType::ERROR, 'サンプルエラーメッセージ2'));
+
+        // type:ERRORを削除する
+        Stockers::removeWithType(MessageType::ERROR);
+
+        // 検算：type:WARNINGの1件だけが残っている
+        $items = Stockers::callItems();
+        $this->assertCount(1, $items);
+        $this->assertSame(MessageType::WARNING, array_values($items)[0]->type);
+    }
+
+    /**
+     * @test
+     */
+    public function removeWithTag_想定通り()
+    {
+        // データストック
+        Stockers::addItem(StockedItem::newTag('ERROR', 'サンプルエラーメッセージ'));
+        Stockers::addItem(StockedItem::newTag('WARNING', 'サンプル警告メッセージ'));
+        Stockers::addItem(StockedItem::newTag('ERROR', 'サンプルエラーメッセージ2'));
+
+        // tag:ERRORを削除する
+        Stockers::removeWithTag('ERROR');
+
+        // 検算：tag:WARNINGの1件だけが残っている
+        $items = Stockers::callItems();
+        $this->assertCount(1, $items);
+        $this->assertSame('WARNING', array_values($items)[0]->tag);
+    }
 }
 
 enum MessageType : string implements Stockers\StockedType

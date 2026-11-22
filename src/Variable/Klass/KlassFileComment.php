@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace Citrus\Variable\Klass;
 
 use Citrus\Variable\Instance;
-use Citrus\Variable\Strings;
 
 /**
  * klassファイルコメント
@@ -51,21 +50,6 @@ class KlassFileComment
  */
 FORMAT;
 
-    /** @var string コメント一つ分のフォーマット文字列 */
-    private string $comment_one_format = <<<'FORMAT'
- * @{{TYPE}} {{CONTEXT}}
-FORMAT;
-
-    /** @var string コメント平文のフォーマット文字列 */
-    private string $comment_row_format = <<<'FORMAT'
- * {{CONTEXT}}
-FORMAT;
-
-    /** @var string コメントスペースフォーマット文字列 */
-    private string $comment_space_format = <<<'FORMAT'
- *
-FORMAT;
-
     /**
      * コメント追加
      * @param string $type    コメントタイプ
@@ -75,7 +59,7 @@ FORMAT;
     public function addComment(string $type, string $context): self
     {
         $this->comments[] = [
-            self::STACK_KEY_TYPE    => $type,
+            self::STACK_KEY_TYPE => $type,
             self::STACK_KEY_CONTEXT => $context,
         ];
         return $this;
@@ -88,7 +72,7 @@ FORMAT;
     public function toCommentString(): string
     {
         // コメントが1件もなければ空文字を返却
-        if (0 === count($this->comments))
+        if (count($this->comments) === 0)
         {
             return '';
         }
@@ -100,21 +84,12 @@ FORMAT;
         $comment_contexts = [];
         foreach ($this->comments as $comment)
         {
-            // 配列分解
-            $type = $comment[self::STACK_KEY_TYPE];
-            $context = $comment[self::STACK_KEY_CONTEXT];
-            // コメントの分類
-            $is_row = (self::RAW === $type);
-            // フォーマット
-            $comment_contexts[] = Strings::patternReplace([
-                '{{TYPE}}'    => $type,
-                '{{CONTEXT}}' => $context,
-            ], (true === $is_row ? $this->comment_row_format : $this->comment_one_format));
-            // コメントスペースが必要でタイプが平文の場合はスペースを入れておく
-            if (true === $is_need_space and true === $is_row)
-            {
-                $comment_contexts[] = $this->comment_space_format;
-            }
+            $lines = KlassFileCommentLine::toLines(
+                $comment[self::STACK_KEY_TYPE],
+                $comment[self::STACK_KEY_CONTEXT],
+                $is_need_space
+            );
+            $comment_contexts = array_merge($comment_contexts, $lines);
         }
 
         return str_replace('{{EACH_COMMENTS}}', implode(PHP_EOL, $comment_contexts), $this->comment_format);
@@ -136,35 +111,18 @@ FORMAT;
      */
     private function isNeedSpace(): bool
     {
-        $is_need_space = false;
-        $is_row = false;
-        $is_other = false;
-        foreach ($this->comments as $comment)
-        {
-            $type = $comment[self::STACK_KEY_TYPE];
-            // 平文コメントがあるか
-            if (false === $is_row)
-            {
-                $is_row = (self::RAW === $type);
-            }
-            // 平文以外のコメントがあるか
-            if (false === $is_other)
-            {
-                $is_other = in_array($type, [
-                    self::COPYRIGHT,
-                    self::AUTHOR,
-                    self::LICENSE,
-                    self::SEE,
-                ], true);
-            }
-            // 両方あった時点で処理を終わる
-            if (true === $is_row and true === $is_other)
-            {
-                $is_need_space = true;
-                break;
-            }
-        }
+        $types = array_column($this->comments, self::STACK_KEY_TYPE);
+        // 平文コメントがあるか
+        $is_row = in_array(self::RAW, $types, true);
+        // 平文以外のコメントがあるか
+        $is_other = (count(array_intersect([
+            self::COPYRIGHT,
+            self::AUTHOR,
+            self::LICENSE,
+            self::SEE,
+        ], $types)) > 0);
 
-        return $is_need_space;
+        // 両方あればスペースが必要
+        return ($is_row === true and $is_other === true);
     }
 }
