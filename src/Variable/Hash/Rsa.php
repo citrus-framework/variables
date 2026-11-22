@@ -45,7 +45,7 @@ class Rsa extends HashLogic
     {
         // 検証
         // 検証時の再生成でチェックが入る
-        return (1 === openssl_verify($this->signature(), $signature, $this->secret, $this->convertOpensslAlgorithm()));
+        return (openssl_verify($this->signature(), $signature, $this->secret, $this->convertOpensslAlgorithm()) === 1);
     }
 
     /**

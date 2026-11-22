@@ -28,30 +28,26 @@ class Directories
         // パスを分解して逆順にする
         $paths = array_reverse(explode('/', $path));
 
+        // 動かないパスは消す
+        $paths = array_filter($paths, static fn (string $vl): bool => $vl !== '.');
+
         // 相殺レベル
         $offset_level = 0;
         // 走査
         foreach ($paths as $ky => $vl)
         {
-            // 動かないパスは消す
-            if ('.' === $vl)
-            {
-                unset($paths[$ky]);
-                continue;
-            }
             // 親指定がある場合は次にパスを削除する
-            if ('..' === $vl)
+            if ($vl === '..')
             {
                 unset($paths[$ky]);
                 $offset_level++;
                 continue;
             }
             // 相殺レベルがある場合は削除
-            if (0 < $offset_level)
+            if ($offset_level > 0)
             {
                 unset($paths[$ky]);
                 $offset_level--;
-                continue;
             }
         }
         // 正順に戻して、返却
@@ -67,17 +63,7 @@ class Directories
      */
     public static function upperFirstPath(string $path, string $delimiter = '/'): string
     {
-        // デリミタで分割
-        $paths = explode($delimiter, $path);
-
-        // 先頭文字だけ大文字化
-        $results = [];
-        foreach ($paths as $row)
-        {
-            $results[] = ucfirst($row);
-        }
-
-        // デリミタで結合
-        return implode($delimiter, $results);
+        // デリミタで分割して、先頭文字だけ大文字化し、デリミタで結合
+        return implode($delimiter, array_map('ucfirst', explode($delimiter, $path)));
     }
 }

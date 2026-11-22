@@ -28,7 +28,7 @@ class Stockers
      */
     public static function exists(): bool
     {
-        return (0 < count(self::$items));
+        return (count(self::$items) > 0);
     }
 
     /**
@@ -48,7 +48,7 @@ class Stockers
     public static function addItem(StockedItem|array $items): void
     {
         // 配列の場合は再起
-        if (true === is_array($items))
+        if (is_array($items) === true)
         {
             foreach ($items as $item)
             {
@@ -67,10 +67,10 @@ class Stockers
      */
     public static function itemsOfType(StockedType $type): array
     {
-        return Collection::stream(self::callItems())->filter(function (StockedItem $vl) use ($type) {
-            // タイプが一致しているかどうか
-            return ($vl->type === $type);
-        })->toList();
+        // タイプが一致しているかどうか
+        return Collection::stream(self::callItems())
+            ->filter(static fn (StockedItem $vl) => $vl->type === $type)
+            ->toList();
     }
 
     /**
@@ -80,10 +80,10 @@ class Stockers
      */
     public static function itemsOfTag(string $tag): array
     {
-        return Collection::stream(self::callItems())->filter(function (StockedItem $vl) use ($tag) {
-            // タグが一致しているかどうか
-            return ($vl->tag === $tag);
-        })->toList();
+        // タグが一致しているかどうか
+        return Collection::stream(self::callItems())
+            ->filter(static fn (StockedItem $vl) => $vl->tag === $tag)
+            ->toList();
     }
 
     /**
@@ -134,11 +134,10 @@ class Stockers
      */
     public static function removeWithType(StockedType $type): void
     {
-        // 削除後メッセージを取得
-        $items = Collection::stream(self::callItems())->remove(function (StockedItem $vl) use ($type) {
-            // タグが一致しているかどうか(一致しているものが削除対象)
-            return ($vl->tag === $type);
-        })->toList();
+        // 削除後メッセージを取得(タイプが一致しているものが削除対象)
+        $items = Collection::stream(self::callItems())
+            ->remove(static fn (StockedItem $vl) => $vl->type === $type)
+            ->toList();
 
         // 再設定
         self::$items = $items;
@@ -151,11 +150,10 @@ class Stockers
      */
     public static function removeWithTag(string $tag): void
     {
-        // 削除後メッセージを取得
-        $items = Collection::stream(self::callItems())->remove(function (StockedItem $vl) use ($tag) {
-            // タグが一致しているかどうか(一致しているものが削除対象)
-            return ($vl->tag === $tag);
-        })->toList();
+        // 削除後メッセージを取得(タグが一致しているものが削除対象)
+        $items = Collection::stream(self::callItems())
+            ->remove(static fn (StockedItem $vl) => $vl->tag === $tag)
+            ->toList();
 
         // 再設定
         self::$items = $items;

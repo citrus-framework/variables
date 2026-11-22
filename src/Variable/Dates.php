@@ -64,7 +64,7 @@ class Dates extends DateTime
      */
     public static function now(): self
     {
-        if (true === is_null(self::$NOW))
+        if (self::$NOW === null)
         {
             self::clear();
         }

@@ -12,9 +12,12 @@ namespace Citrus\Variable;
 
 use Citrus\Variable\Klass\Formatable;
 use Citrus\Variable\Klass\KlassFileComment;
+use Citrus\Variable\Klass\KlassHeader;
 use Citrus\Variable\Klass\KlassMethod;
 use Citrus\Variable\Klass\KlassProperty;
+use Citrus\Variable\Klass\KlassSignature;
 use Citrus\Variable\Klass\KlassTrait;
+use Citrus\Variable\Klass\KlassUses;
 
 /**
  * クラスジェネレータ
@@ -41,6 +44,9 @@ class Klass
     /** @var KlassFileComment|null ファイルコメント */
     private KlassFileComment|null $fileComment = null;
 
+    /** @var string[] use するクラス名 */
+    private array $uses = [];
+
     /** @var KlassTrait[] トレイト配列 */
     private array $traits = [];
 
@@ -65,7 +71,7 @@ FORMAT;
 <?php
 {{WITH_STRICT_TYPES}}
 {{FILE_COMMENT}}
-{{WITH_NAMESPACE}}
+{{WITH_NAMESPACE}}{{WITH_USES}}
 {{CLASS_COMMENT}}
 class {{NAME}}{{WITH_EXTENDS}}{{WITH_IMPLEMENTS}}
 {
@@ -139,6 +145,17 @@ FORMAT;
     }
 
     /**
+     * use の追加
+     * @param string $name use するクラス名
+     * @return $this
+     */
+    public function addUse(string $name): self
+    {
+        $this->uses[] = $name;
+        return $this;
+    }
+
+    /**
      * トレイトの追加
      * @param KlassTrait $trait
      * @return $this
@@ -190,49 +207,23 @@ FORMAT;
     {
         // フォーマット
         $format = $this->callFormat();
-        // 厳密な型検査
-        $with_strict_types = (true === $this->is_strict_types)
-            ? PHP_EOL . 'declare(strict_types=1);'
-            : '';
-        // ファイルコメント
-        $file_comment = (false === is_null($this->fileComment))
-            ? PHP_EOL . $this->fileComment->toCommentString()
-            : '';
-        // ネームスペース
-        $with_namespace = (false === is_null($this->namespace))
-            ? PHP_EOL . sprintf('namespace %s;', $this->namespace)
-            : '';
-        // 継承
-        $with_extends = (false === is_null($this->extends_name))
-            ? sprintf(' extends %s', $this->extends_name)
-            : '';
-        // 実装
-        $with_implements = (0 < count($this->implements_names))
-            ? sprintf(' implements %s', implode(', ', $this->implements_names))
-            : '';
-        // トレイト
-        $each_traits = KlassTrait::eachToString($this->traits, $format);
-        // プロパティ
-        $each_properties = KlassProperty::eachToString($this->properties, $format);
-        // メソッド
-        $each_methods = KlassMethod::eachToString($this->methods, $format);
-        // トレイトとプロパティ間の空行
-        $each_properties = $format->blankBetweenBlock($this->traits, $this->properties) . $each_properties;
-        // プロパティとメソッド間の空行
-        $each_methods = $format->blankBetweenBlock($this->properties, $this->methods) . $each_methods;
+        // トレイトとプロパティ間の空行、プロパティとメソッド間の空行
+        $blank_properties = $format->blankBetweenBlock($this->traits, $this->properties);
+        $blank_methods = $format->blankBetweenBlock($this->properties, $this->methods);
 
         // 置換パターン
         $replace_patterns = [
-            '{{WITH_STRICT_TYPES}}' => $with_strict_types,
-            '{{FILE_COMMENT}}'      => $file_comment,
-            '{{WITH_NAMESPACE}}'    => $with_namespace,
-            '{{CLASS_COMMENT}}'     => $this->toClassCommentString(),
-            '{{NAME}}'              => $this->name,
-            '{{WITH_EXTENDS}}'      => $with_extends,
-            '{{WITH_IMPLEMENTS}}'   => $with_implements,
-            '{{EACH_TRAITS}}'       => $each_traits,
-            '{{EACH_PROPERTIES}}'   => $each_properties,
-            '{{EACH_METHODS}}'      => $each_methods,
+            '{{WITH_STRICT_TYPES}}' => KlassHeader::strictTypes($this->is_strict_types),
+            '{{FILE_COMMENT}}' => KlassHeader::fileComment($this->fileComment),
+            '{{WITH_NAMESPACE}}' => KlassHeader::namespace($this->namespace),
+            '{{WITH_USES}}' => KlassUses::toString($this->uses, $this->namespace),
+            '{{CLASS_COMMENT}}' => $this->toClassCommentString(),
+            '{{NAME}}' => $this->name,
+            '{{WITH_EXTENDS}}' => KlassSignature::extends($this->extends_name),
+            '{{WITH_IMPLEMENTS}}' => KlassSignature::implements($this->implements_names),
+            '{{EACH_TRAITS}}' => KlassTrait::eachToString($this->traits, $format),
+            '{{EACH_PROPERTIES}}' => $blank_properties . KlassProperty::eachToString($this->properties, $format),
+            '{{EACH_METHODS}}' => $blank_methods . KlassMethod::eachToString($this->methods, $format),
         ];
         // 置換して返却
         return Strings::patternReplace($replace_patterns, $this->class_format);
@@ -244,18 +235,6 @@ FORMAT;
      */
     public function toClassCommentString(): string
     {
-        // 存在しなければ空文字
-        if (true === is_null($this->class_comment))
-        {
-            return '';
-        }
-
-        // 置換パターン
-        $replace_patterns = [
-            '{{CLASS_COMMENT}}' => $this->class_comment,
-        ];
-
-        // 置換して返却
-        return PHP_EOL . Strings::patternReplace($replace_patterns, $this->class_comment_format);
+        return KlassSignature::classComment($this->class_comment, $this->class_comment_format);
     }
 }

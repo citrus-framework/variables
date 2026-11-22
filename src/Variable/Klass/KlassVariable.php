@@ -78,15 +78,10 @@ FORMAT;
      */
     public function toArgumentTypeString(): string
     {
-        // mixedの場合
-        $is_mixed = ('mixed' === $this->type);
-        // ?マークでnullを表す
-        $is_nullable_mark = (true === $this->nullable and false === $is_mixed);
-
-        // 置換パターン
+        // 置換パターン(mixedは型を書かず、?マークでnullを表す)
         $replace_patterns = [
-            '{{TYPE}}'          => (false === $is_mixed ? $this->type : ''),
-            '{{NULLABLE_MARK}}' => (true === $is_nullable_mark ? '?' : ''),
+            '{{TYPE}}' => KlassTypeName::forArgument($this->type),
+            '{{NULLABLE_MARK}}' => KlassTypeMark::nullable($this->type, $this->nullable),
         ];
 
         // 置換して返却
@@ -101,8 +96,8 @@ FORMAT;
     {
         // 置換パターン
         $replace_patterns = [
-            '{{TYPE}}'      => $this->type,
-            '{{WITH_NULL}}' => (true === $this->nullable ? '|null' : ''),
+            '{{TYPE}}' => $this->type,
+            '{{WITH_NULL}}' => KlassTypeMark::withNull($this->nullable),
         ];
 
         // 置換して返却
@@ -116,20 +111,10 @@ FORMAT;
     public function toWithDefaultValueString(): string
     {
         // デフォルト値
-        $default_value = $this->default_value;
-        // デフォルト値がnull、且つ、変数がnullableの場合
-        if (true === is_null($this->default_value) and true === $this->nullable)
-        {
-            $default_value = 'null';
-        }
-        // デフォルト値に指定がある、且つ、型がboolの場合
-        if (false === is_null($this->default_value) and 'bool' === $this->type)
-        {
-            $default_value = (true === $this->default_value ? 'true' : 'false');
-        }
+        $default_value = KlassDefaultValue::resolve($this->default_value, $this->type, $this->nullable);
 
         // デフォルト値の文字列がある場合は、イコールを付与
-        $with_default_value = (false === is_null($default_value) ? sprintf(' = %s', $default_value) : '');
+        $with_default_value = ($default_value !== null ? sprintf(' = %s', $default_value) : '');
 
         // 置換パターン
         $replace_patterns = [

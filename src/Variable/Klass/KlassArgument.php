@@ -38,15 +38,15 @@ FORMAT;
         // タイプ文字列
         $type = $this->toArgumentTypeString();
         // タイプセパレータ
-        $type_separate = ('' === $type ? '' : ' ');
+        $type_separate = ($type === '' ? '' : ' ');
         // イコールをつける
         $with_default_value = $this->toWithDefaultValueString();
 
         // 置換パターン
         $replace_patterns = [
-            '{{TYPE}}'               => $type,
-            '{{TYPE_SEPARATE}}'      => $type_separate,
-            '{{NAME}}'               => $this->name,
+            '{{TYPE}}' => $type,
+            '{{TYPE_SEPARATE}}' => $type_separate,
+            '{{NAME}}' => $this->name,
             '{{WITH_DEFAULT_VALUE}}' => $with_default_value,
         ];
 
@@ -63,26 +63,14 @@ FORMAT;
         // タイプ
         $type = $this->toCommentTypeString();
 
-        // デフォルト値
-        $default_value = $this->default_value;
-        // デフォルト値がnullではない場合
-        if (false === is_null($default_value))
-        {
-            // タイプがstringの場合
-            if ('string' === $this->type)
-            {
-                $default_value = sprintf('\'%s\'', $default_value);
-            }
-        }
-
         // 置換パターン
         $replace_patterns = [
-            '{{INDENT}}'           => $this->callFormat()->indent,
-            '{{TYPE}}'             => $type,
+            '{{INDENT}}' => $this->callFormat()->indent,
+            '{{TYPE}}' => $type,
             '{{ALIGNMENT_SPACE1}}' => ' ',
-            '{{ALIGNMENT_SPACE2}}' => (false === is_null($this->comment) ? ' ' : ''),
-            '{{NAME}}'             => $this->name,
-            '{{COMMENT}}'          => $this->comment,
+            '{{ALIGNMENT_SPACE2}}' => ($this->comment !== null ? ' ' : ''),
+            '{{NAME}}' => $this->name,
+            '{{COMMENT}}' => $this->comment,
         ];
 
         // 置換して返却

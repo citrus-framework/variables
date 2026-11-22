@@ -17,6 +17,7 @@ use Citrus\Variable\Klass\KlassProperty;
 use Citrus\Variable\Klass\KlassReturn;
 use Citrus\Variable\Klass\KlassTrait;
 use Citrus\Variable\Klass\KlassVisibility;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -76,6 +77,95 @@ BODY;
                 ->addComment(KlassFileComment::RAW, 'generated Citrus Condition file at 2018-03-30 06:47:18')
             )
             ->addTrait(new KlassTrait('\\Citrus\\Sqlmap\\Condition'));
+
+        $this->assertSame($expected, $klass->toString());
+    }
+
+    #[Test]
+    public function addUse_プロパティとメソッドあり()
+    {
+        $expected = <<<'EXPECTED'
+<?php
+
+declare(strict_types=1);
+
+/**
+ * generated Citrus Property file at 2026-11-05 10:00:00
+ */
+
+namespace Social\Integration\Property;
+
+use Citrus\Query\RawExpr;
+
+/**
+ * TagProperty
+ */
+class TagProperty extends \Citrus\Query\ResultSet\Record
+{
+    /** @var string|RawExpr|null タグのID */
+    public string|RawExpr|null $tag_id = null;
+
+    /** @var string|RawExpr|null タグの名前 */
+    public string|RawExpr|null $name = null;
+
+    /**
+     * call primary keys
+     * @return string[]
+     */
+    public function primaryKeys(): array
+    {
+        return ['tag_id'];
+    }
+}
+
+EXPECTED;
+
+        $klass = (new Klass('TagProperty'))
+            ->setExtends('\\Citrus\\Query\\ResultSet\\Record')
+            ->setNamespace('Social\\Integration\\Property')
+            ->addUse('Citrus\\Query\\RawExpr')
+            ->setClassComment('TagProperty')
+            ->setFileComment(KlassFileComment::newRaw('generated Citrus Property file at 2026-11-05 10:00:00'))
+            ->addProperty(new KlassProperty('string|RawExpr|null', 'tag_id', 'null', 'タグのID'))
+            ->addProperty(new KlassProperty('string|RawExpr|null', 'name', 'null', 'タグの名前'))
+            ->addMethod((new KlassMethod(KlassVisibility::PUBLIC, 'primaryKeys', false, 'call primary keys'))
+                ->setReturn(new KlassReturn('string[]'))
+                ->setBody('        return [\'tag_id\'];')
+            );
+
+        $this->assertSame($expected, $klass->toString());
+    }
+
+    #[Test]
+    public function toString_traitのみ_useなし()
+    {
+        $expected = <<<'EXPECTED'
+<?php
+
+declare(strict_types=1);
+
+/**
+ * generated Citrus Condition file at 2026-11-05 10:00:00
+ */
+
+namespace Social\Integration\Condition;
+
+/**
+ * TagCondition
+ */
+class TagCondition extends \Social\Integration\Property\TagProperty
+{
+    use \Citrus\Variable\PathBinders;
+}
+
+EXPECTED;
+
+        $klass = (new Klass('TagCondition'))
+            ->setExtends('\\Social\\Integration\\Property\\TagProperty')
+            ->setNamespace('Social\\Integration\\Condition')
+            ->setClassComment('TagCondition')
+            ->setFileComment(KlassFileComment::newRaw('generated Citrus Condition file at 2026-11-05 10:00:00'))
+            ->addTrait(new KlassTrait('\\Citrus\\Variable\\PathBinders'));
 
         $this->assertSame($expected, $klass->toString());
     }

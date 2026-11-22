@@ -59,23 +59,11 @@ FORMAT;
      */
     public function toReturnHintString(): string
     {
-        // mixedの場合
-        $is_mixed = ('mixed' === $this->type);
-        // ?マークでnullを表す
-        $is_nullable_mark = (true === $this->nullable and false === $is_mixed);
-        // 型
-        $type = (false === $is_mixed ? $this->type : '');
-        if (true === str_ends_with($type, '[]'))
-        {
-            // string[]、int[]のような場合に配列に変換する
-            $type = 'array';
-        }
-
-        // 置換パターン
+        // 置換パターン(mixedは型を書かない、string[]、int[]のような場合は配列に変換する)
         $replace_patterns = [
-            '{{CONJUNCTION_MARK}}' => (false === $is_mixed ? ': ' : ''),
-            '{{TYPE}}'             => $type,
-            '{{NULLABLE_MARK}}'    => (true === $is_nullable_mark ? '?' : ''),
+            '{{CONJUNCTION_MARK}}' => KlassTypeMark::conjunction($this->type),
+            '{{TYPE}}' => KlassTypeName::forReturn($this->type),
+            '{{NULLABLE_MARK}}' => KlassTypeMark::nullable($this->type, $this->nullable),
         ];
 
         // 置換して返却
@@ -90,11 +78,11 @@ FORMAT;
     {
         // 置換パターン
         $replace_patterns = [
-            '{{INDENT}}'             => $this->callFormat()->indent,
-            '{{TYPE}}'               => $this->type,
-            '{{WITH_NULL}}'          => (true === $this->nullable ? '|null' : ''),
-            '{{WITH_COMMENT_SPACE}}' => (false === Strings::isEmpty($this->comment) ? ' ' : ''),
-            '{{COMMENT}}'            => $this->comment,
+            '{{INDENT}}' => $this->callFormat()->indent,
+            '{{TYPE}}' => $this->type,
+            '{{WITH_NULL}}' => KlassTypeMark::withNull($this->nullable),
+            '{{WITH_COMMENT_SPACE}}' => (Strings::isEmpty($this->comment) === false ? ' ' : ''),
+            '{{COMMENT}}' => $this->comment,
         ];
 
         // 置換して返却

@@ -24,7 +24,7 @@ class Strings
      */
     public static function isEmpty(?string $value): bool
     {
-        return (true === is_null($value) or '' === $value);
+        return ($value === null or $value === '');
     }
 
     /**
@@ -52,12 +52,12 @@ class Strings
         $replaced = str_replace($from, $to, $value);
 
         // 更に複数改行があれば再起
-        if (false !== str_contains($replaced, $from))
+        if (str_contains($replaced, $from) !== false)
         {
             $replaced = self::removeDuplicateEOL($replaced);
         }
         // 最終文字列が改行だった場合取り除くフラグON 且つ 最終文字列が改行だった場合
-        if (true === $with_last_EOL and PHP_EOL === substr($replaced, -1))
+        if ($with_last_EOL === true and substr($replaced, -1) === PHP_EOL)
         {
             $replaced = substr($replaced, 0, -1);
         }
@@ -75,12 +75,10 @@ class Strings
     {
         // デリミタで分割する
         $parts = explode($delimiter, $context);
-        $converted_parts = Collection::stream($parts)->map(function ($vl) {
-            // 小文字化して、先頭文字だけ大文字に変更
-            return ucfirst(strtolower($vl));
-        })->toValues();
+        // 小文字化して、先頭文字だけ大文字に変更
+        $converted_parts = Collection::stream($parts)->map(static fn ($vl) => ucfirst(strtolower($vl)))->toValues();
         // 連結して返却
-        return implode((array) $converted_parts);
+        return implode((array)$converted_parts);
     }
 
     /**
@@ -91,26 +89,6 @@ class Strings
      */
     public static function snakeCase(string $context, string $glue = '_'): string
     {
-        $result = '';
-        $ascii_a = ord('A');
-        $ascii_z = ord('Z');
-
-        $length = strlen($context);
-        for ($pos = 0; $pos < $length; $pos++)
-        {
-            $char = substr($context, $pos, 1);
-            $ascii_dec = ord($char);
-            // 先頭文字以外で
-            // 文字が大文字の範囲
-            if (0 < $pos and ($ascii_a <= $ascii_dec and $ascii_dec <= $ascii_z))
-            {
-                // 大文字の前にグルー文字列をつける
-                $result .= $glue;
-            }
-
-            $result .= strtolower($char);
-        }
-
-        return $result;
+        return SnakeCases::convert($context, $glue);
     }
 }

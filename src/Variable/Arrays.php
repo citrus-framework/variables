@@ -32,7 +32,7 @@ class Arrays
         $values = ($values[$first_level] ?? null);
 
         // 下位階層がある場合か、検索対象が配列の場合は再起
-        if (0 < count($levels) and true === is_array($values))
+        if (count($levels) > 0 and is_array($values) === true)
         {
             $values = self::path($values, implode('.', $levels));
         }

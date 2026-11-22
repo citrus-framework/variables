@@ -44,7 +44,7 @@ FORMAT;
     {
         // 置換パターン
         $replace_patterns = [
-            '{{INDENT}}'     => $this->callFormat()->indent,
+            '{{INDENT}}' => $this->callFormat()->indent,
             '{{TRAIT_NAME}}' => $this->name,
         ];
 

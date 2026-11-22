@@ -22,7 +22,7 @@ trait Binders
      */
     public function get(string $key): object|array|string|float|int|bool|null
     {
-        if (true === isset($this->$key))
+        if (isset($this->$key) === true)
         {
             return $this->$key;
         }
@@ -37,14 +37,7 @@ trait Binders
      */
     public function set(string $key, object|array|string|float|int|bool|null $value, bool $strict = false): void
     {
-        if (true === $strict)
-        {
-            if (true === property_exists($this, $key))
-            {
-                $this->$key = $value;
-            }
-        }
-        else
+        if (BinderSupports::isSettable($this, $key, $strict) === true)
         {
             $this->$key = $value;
         }
@@ -57,30 +50,7 @@ trait Binders
      */
     public function add(string $key, object|array|string|float|int|bool|null $value): void
     {
-        $add = &$this->$key;
-
-        if (true === is_null($add))
-        {
-            $add = (true === is_array($value) ? $value : [$value]);
-        }
-        else
-        {
-            if (true === is_array($add))
-            {
-                if (true === is_array($value))
-                {
-                    $add += $value;
-                }
-                else
-                {
-                    array_push($add, $value);
-                }
-            }
-            else
-            {
-                $add = [$add, $value];
-            }
-        }
+        BinderAppend::append($this->$key, $value);
     }
 
     /**
@@ -89,17 +59,10 @@ trait Binders
      */
     public function remove($key): void
     {
-        if (true === is_array($key))
-        {
-            foreach ($key as $one)
-            {
-                unset($this->$one);
-            }
-        }
-        else
-        {
-            unset($this->$key);
-        }
+        $keys = BinderSupports::toKeys($key);
+        array_walk($keys, function ($one): void {
+            unset($this->$one);
+        });
     }
 
     /**
@@ -109,14 +72,10 @@ trait Binders
      */
     public function bindArray(?array $array = null, ?bool $strict = false): void
     {
-        if (true === is_null($array))
-        {
-            return;
-        }
-        foreach ($array as $ky => $vl)
-        {
+        $items = BinderSupports::orEmpty($array);
+        array_walk($items, function ($vl, $ky) use ($strict): void {
             $this->set($ky, $vl, $strict);
-        }
+        });
     }
 
     /**
@@ -126,7 +85,7 @@ trait Binders
      */
     public function bindObject(object|array|string|float|int|bool|null $object = null, ?bool $strict = false): void
     {
-        if (true === is_null($object))
+        if ($object === null)
         {
             return;
         }
@@ -144,11 +103,11 @@ trait Binders
     {
         $self = new static();
 
-        if (true === is_object($data))
+        if (is_object($data) === true)
         {
             $self->bindObject($data, $strict);
         }
-        else if (true === is_array($data))
+        else
         {
             $self->bindArray($data, $strict);
         }
