@@ -46,6 +46,23 @@ class StockersTest extends TestCase
     /**
      * @test
      */
+    public function addItem_配列を渡したときは中の項目だけが入る_想定通り()
+    {
+        // データストック(配列で渡す)
+        Stockers::addItem([StockedItem::newItem('1件目'), StockedItem::newItem('2件目')]);
+
+        // 検算：配列そのものは入らず、中の2件だけが入っている
+        $items = array_values(Stockers::callItems());
+        $this->assertCount(2, $items);
+        $this->assertInstanceOf(StockedItem::class, $items[0]);
+        $this->assertInstanceOf(StockedItem::class, $items[1]);
+        $this->assertSame('1件目', $items[0]->content);
+        $this->assertSame('2件目', $items[1]->content);
+    }
+
+    /**
+     * @test
+     */
     public function popWithType_想定通り()
     {
         // データストック
