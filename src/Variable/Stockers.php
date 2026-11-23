@@ -54,6 +54,7 @@ class Stockers
             {
                 self::addItem($item);
             }
+            return;
         }
 
         // 追加
